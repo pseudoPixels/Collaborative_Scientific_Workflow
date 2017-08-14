@@ -1,0 +1,15 @@
+<br/>
+Select Input Files Directory: <select  class="setting_param" name="image_location"> <!-- CHANGE IN THIS LINE -->
+      <option value="in_file_path = 'bioFiles/'" selected>Directory 1</option>
+      <option value="in_file_path = 'bioFiles_out/'" >Directory 2</option>
+      
+</select>
+ <br/><br/>
+
+Select Output Files Directory: <select  class="setting_param" name="image_location"> <!-- CHANGE IN THIS LINE -->
+      <option value="out_file_path = 'bioFiles/'" selected>Directory 1</option>
+      <option value="out_file_path = 'bioFiles_out/'" >Directory 2</option>
+</select> 
+
+
+<br/><br/>
