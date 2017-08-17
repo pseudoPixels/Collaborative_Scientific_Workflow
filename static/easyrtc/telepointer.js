@@ -1,6 +1,18 @@
-/*$(document).mousemove(function(e){
-    $("#mouse_pointer").css({left:e.pageX-50, top:e.pageY-50});
-});*/
+var all_occupants_list = "";
+var selfEasyrtcid = "";
+
+
+$(document).mousemove(function(e){
+    //$("#mouse_pointer").css({left:e.pageX-50, top:e.pageY-50});
+
+    var telepointer_info = { "left":e.pageX-50, "top":e.pageY-50, "email":"golammostaeen@gmail.com", "rtcid": selfEasyrtcid};
+
+
+    for(var otherEasyrtcid in all_occupants_list) {
+        easyrtc.sendDataWS(otherEasyrtcid, "message",  telepointer_info);
+    }
+
+});
 
 
 
@@ -30,13 +42,17 @@
 //ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //POSSIBILITY OF SUCH DAMAGE.
 //
-var selfEasyrtcid = "";
+
 function addToConversation(who, msgType, content) {
     // Escape html special characters, then add linefeeds.
-    content = content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    /*content = content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     content = content.replace(/\n/g, '<br />');
     document.getElementById('conversation').innerHTML +=
-    "<b>" + who + ":</b>&nbsp;" + content + "<br />";
+    "<b>" + who + ":</b>&nbsp;" + content + "<br />";*/
+
+    //$("#mouse_pointer").css({left:parseInt(content.left), top:parseInt(content.top)});
+    $('#telepointer_name_'+content.rtcid).css({position:'absolute',left:parseInt(content.left), top:parseInt(content.top)});
+
 }
 
 
@@ -49,6 +65,34 @@ function connect() {
 
 
 function convertListToButtons (roomName, occupants, isPrimary) {
+    //update the global occupants list for this user.
+    all_occupants_list = occupants;
+
+    //==================================================
+    //spawn the telepointers for all the connected users.
+    //==================================================
+    var telepointer_spawn_point = document.getElementById('telepointer_spawn_point');
+    //first remove any existing telepointer for a fresh start
+    while (telepointer_spawn_point.hasChildNodes()) {
+        telepointer_spawn_point.removeChild(telepointer_spawn_point.lastChild);
+    }
+    //and then create elements for occupants with corresponding easyrtcid
+    for(var easyrtcid in occupants) {
+            var ele = document.createElement("div");
+            ele.setAttribute("id","telepointer_name_"+easyrtcid);
+            //ele.setAttribute("class","inner");
+            ele.innerHTML="hi "+easyrtcid;
+            telepointer_spawn_point.appendChild(ele);
+    }
+
+
+
+
+
+
+
+
+
     var otherClientDiv = document.getElementById('otherClients');
     while (otherClientDiv.hasChildNodes()) {
         otherClientDiv.removeChild(otherClientDiv.lastChild);
