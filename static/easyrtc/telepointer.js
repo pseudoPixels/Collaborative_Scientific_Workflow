@@ -1,11 +1,19 @@
 var all_occupants_list = "";
 var selfEasyrtcid = "";
 
+//user info required for rtc
+var user_name = "";
+
+$(document).ready(function(){
+    user_name = $("#user_name").text();
+});
+
+
 
 $(document).mousemove(function(e){
     //$("#mouse_pointer").css({left:e.pageX-50, top:e.pageY-50});
 
-    var telepointer_info = { "left":e.pageX-50, "top":e.pageY-50, "email":"golammostaeen@gmail.com", "rtcid": selfEasyrtcid};
+    var telepointer_info = { "left":e.pageX-50, "top":e.pageY-50, "email":"golammostaeen@gmail.com", "rtcid": selfEasyrtcid, "user_name":user_name};
 
 
     for(var otherEasyrtcid in all_occupants_list) {
@@ -52,7 +60,7 @@ function addToConversation(who, msgType, content) {
 
     //$("#mouse_pointer").css({left:parseInt(content.left), top:parseInt(content.top)});
     $('#telepointer_name_'+content.rtcid).css({position:'absolute',left:parseInt(content.left), top:parseInt(content.top)});
-
+    if($('#telepointer_name_'+content.rtcid).text()=="")$('#telepointer_name_'+content.rtcid).html(content.user_name);
 }
 
 
@@ -80,8 +88,12 @@ function convertListToButtons (roomName, occupants, isPrimary) {
     for(var easyrtcid in occupants) {
             var ele = document.createElement("div");
             ele.setAttribute("id","telepointer_name_"+easyrtcid);
+
+            ele.style.color = "#000";
+            ele.style.backgroundColor =  "#fff";
+            ele.style.boxShadow = "2px 2px 3px coral";
             //ele.setAttribute("class","inner");
-            ele.innerHTML="hi "+easyrtcid;
+            //ele.innerHTML="hi "+easyrtcid;
             telepointer_spawn_point.appendChild(ele);
     }
 
@@ -92,7 +104,7 @@ function convertListToButtons (roomName, occupants, isPrimary) {
 
 
 
-
+/*
     var otherClientDiv = document.getElementById('otherClients');
     while (otherClientDiv.hasChildNodes()) {
         otherClientDiv.removeChild(otherClientDiv.lastChild);
@@ -113,6 +125,10 @@ function convertListToButtons (roomName, occupants, isPrimary) {
     if( !otherClientDiv.hasChildNodes() ) {
         otherClientDiv.innerHTML = "<em>Nobody else logged in to talk to...</em>";
     }
+
+    */
+
+
 }
 
 
@@ -130,7 +146,7 @@ function sendStuffWS(otherEasyrtcid) {
 
 function loginSuccess(easyrtcid) {
     selfEasyrtcid = easyrtcid;
-    document.getElementById("iam").innerHTML = "I am " + easyrtcid;
+    //document.getElementById("iam").innerHTML = "I am " + easyrtcid;
 }
 
 
