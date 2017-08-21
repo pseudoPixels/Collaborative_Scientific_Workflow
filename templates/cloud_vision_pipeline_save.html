@@ -740,7 +740,9 @@ $('.letuschat').on('click', function() {
 
                        <!-- USERS ONLINE SECTION -->
 						<h3 style="background:#222222;color:#CCCCCC;">Available Users</h3>
-                      <!-- First Member -->
+
+                      <!--
+
                       <div class="desc">
                       	<div class="thumb">
                       		<img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
@@ -752,7 +754,8 @@ $('.letuschat').on('click', function() {
                       		</p>
                       	</div>
                       </div>
-                      <!-- Second Member -->
+
+
                       <div class="desc">
                         <div class="thumb">
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
@@ -766,7 +769,7 @@ $('.letuschat').on('click', function() {
 
 
 
-                      <!-- Third Member -->
+
                       <div class="desc">
                         <div class="thumb">
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
@@ -777,7 +780,7 @@ $('.letuschat').on('click', function() {
                           </p>
                         </div>
                       </div>
-                      <!-- Fourth Member -->
+
                       <div class="desc">
                         <div class="thumb">
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
@@ -788,7 +791,7 @@ $('.letuschat').on('click', function() {
                           </p>
                         </div>
                       </div>
-                      <!-- Fifth Member -->
+
                       <div class="desc">
                         <div class="thumb">
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
@@ -799,20 +802,23 @@ $('.letuschat').on('click', function() {
                           </p>
                         </div>
                       </div>
+                    -->
 
-                      {% for dict_item in all_other_users %}
+
+                   <!-- Fetching the user list from the database -->
+                  {% for dict_item in all_other_users %}
                       <div class="desc">
                         <div class="thumb">
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
                         </div>
                         <div class="details">
                           <p><a href="#">{{dict_item['userName']}}</a><br/>
-                             <muted>Phenotyping Tool Developer</muted>
+                             <muted>{{dict_item['userRole']}}</muted>
                           </p>
                         </div>
                       </div>
 
-                      {% endfor %}
+                  {% endfor %}
 
 
 
