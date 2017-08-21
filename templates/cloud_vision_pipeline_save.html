@@ -598,7 +598,7 @@
 
  <!--Collaborative Features Contents (WebRTC)-->
 <img src="{{ url_for('static',filename='images/mouse_pointer.png') }}" id="mouse_pointer" style="height:30px;width:30px;z-index:5;position:absolute;"/>
-<p id="user_name" style="visibility:none;">{{first_name + " " +last_name}} </p>
+<p id="user_name" style="display:none;">{{first_name + " " +last_name}} </p>
  <div id="telepointer_spawn_point"></div>
 
 
@@ -763,6 +763,9 @@ $('.letuschat').on('click', function() {
                           </p>
                         </div>
                       </div>
+
+
+
                       <!-- Third Member -->
                       <div class="desc">
                         <div class="thumb">
@@ -796,6 +799,22 @@ $('.letuschat').on('click', function() {
                           </p>
                         </div>
                       </div>
+
+                      {% for dict_item in all_other_users %}
+                      <div class="desc">
+                        <div class="thumb">
+                          <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
+                        </div>
+                        <div class="details">
+                          <p><a href="#">{{dict_item['userName']}}</a><br/>
+                             <muted>Phenotyping Tool Developer</muted>
+                          </p>
+                        </div>
+                      </div>
+
+                      {% endfor %}
+
+
 
                        <!--COMPLETED ACTIONS DONUTS CHART-->
             <h3 style="background:#222222;color:#CCCCCC;">Data Set</h3>

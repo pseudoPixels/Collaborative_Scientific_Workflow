@@ -85,6 +85,8 @@ views_by_saved_pipeline = ViewDefinition('hello', 'saved_pipeline', '''
 
 
 
+
+
 manager = CouchDBManager()
 manager.setup(app)
 manager.add_viewdef([views_by_user, views_by_non_validated_clones, views_by_pipeline_module, views_by_email, views_by_saved_pipeline])
@@ -455,7 +457,25 @@ def getSharedPipelines(author):
 
 	return shared_pipelines
 
-	
+
+#get all the other user details, except this user
+def getAllUsersDetails(thisUserEmail):
+	all_user_details = []
+	for row in (views_by_email(g.couch)):
+		doc_id = row.value
+		thisUser = P2IRC_User.load(doc_id)
+
+		#do not add this user to the list
+		if thisUser.email != thisUserEmail:
+			userName = thisUser.first_name + " " +thisUser.last_name
+			userEmail = thisUser.email
+			userRole = thisUser.user_role
+
+			#append this user to the list
+			all_user_details.append({'userName':userName, 'userEmail': userEmail, 'userRole':userRole})
+
+	return all_user_details
+
 
 import html
 @app.route('/cvs')
@@ -479,9 +499,18 @@ def cvs():
 	#store the user role in session
 	session['user_role'] = user_role
 
-	
+	#get the list of all saved pipelines from DB
 	saved_pipelines = getSavedPipelines(session.get('p2irc_user_email'))
+	#get the list of all shared pipelines with this user from DB
 	shared_pipelines = getSharedPipelines(session.get('p2irc_user_email'))
+	#get all other user details
+	all_other_users = getAllUsersDetails(session.get('p2irc_user_email'))
+
+
+
+
+
+
 
 	return render_template('cloud_vision_pipeline_save.html', 
 	module_name = module.module_name,
@@ -494,7 +523,8 @@ def cvs():
 	email = email,
 	user_role = user_role,
 	saved_pipelines = saved_pipelines,
-	shared_pipelines = shared_pipelines) 
+	shared_pipelines = shared_pipelines,
+    all_other_users=all_other_users)
 
 
 @app.route('/webrtctest')

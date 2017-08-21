@@ -18,11 +18,6 @@ $(document).mousemove(function(e){
                              "user_name":user_name
                             };
 
-    /*
-    for(var otherEasyrtcid in all_occupants_list) {
-        easyrtc.sendDataWS(otherEasyrtcid, "message",  telepointer_info);
-    }*/
-
     notifyAll("telepointer_info", my_telepointer_info);
 
 
@@ -42,15 +37,8 @@ function notifyAll(messageType, message){
 
 
 
-//update the telepointer for the other clients
-//the 'content' should contain the required info for telepointer update
-//along with other client easyrtcid; which is used for selecting the specific
-//element from dom
-function updateTelepointer(content){
-    $('#telepointer_name_'+content.rtcid).css({position:'absolute',left:parseInt(content.left), top:parseInt(content.top)});
-    if($('#telepointer_name_'+content.rtcid).text()=="")$('#telepointer_name_'+content.rtcid).html(content.user_name);
 
-}
+
 
 
 
@@ -67,6 +55,12 @@ function onMessageRecieved(who, msgType, content) {
 }
 
 
+
+
+
+
+
+
 function connect() {
     easyrtc.setSocketUrl(":8080");
     easyrtc.setPeerListener(onMessageRecieved);
@@ -75,9 +69,33 @@ function connect() {
 }
 
 
+
+
+
+
+
 function userLoggedInListener (roomName, occupants, isPrimary) {
     //update the global occupants list for this user.
     all_occupants_list = occupants;
+
+    //spawn telepointers for the logged in users.
+    spawnTelepointers(occupants);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//spawn the telepointers for the passed occupants
+function spawnTelepointers(occupants){
 
     //==================================================
     //spawn the telepointers for all the connected users.
@@ -94,11 +112,12 @@ function userLoggedInListener (roomName, occupants, isPrimary) {
 
             ele.style.color = "#000";
             ele.style.backgroundColor =  "#fff";
-            ele.style.boxShadow = "2px 2px 3px coral";
+            ele.style.boxShadow = "2px 2px 3px grey";
             //ele.setAttribute("class","inner");
             //ele.innerHTML="hi "+easyrtcid;
             telepointer_spawn_point.appendChild(ele);
     }
+}
 
 
 
@@ -107,32 +126,27 @@ function userLoggedInListener (roomName, occupants, isPrimary) {
 
 
 
-/*
-    var otherClientDiv = document.getElementById('otherClients');
-    while (otherClientDiv.hasChildNodes()) {
-        otherClientDiv.removeChild(otherClientDiv.lastChild);
-    }
 
-    for(var easyrtcid in occupants) {
-        var button = document.createElement('button');
-        button.onclick = function(easyrtcid) {
-            return function() {
-                sendStuffWS(easyrtcid);
-            };
-        }(easyrtcid);
-        var label = document.createTextNode("Send to " + easyrtc.idToName(easyrtcid));
-        button.appendChild(label);
 
-        otherClientDiv.appendChild(button);
-    }
-    if( !otherClientDiv.hasChildNodes() ) {
-        otherClientDiv.innerHTML = "<em>Nobody else logged in to talk to...</em>";
-    }
 
-    */
 
+//update the telepointer for the other clients
+//the 'content' should contain the required info for telepointer update
+//along with other client easyrtcid; which is used for selecting the specific
+//element from dom
+function updateTelepointer(content){
+    //telepointer was spawned according to the easyrtc id.
+    //telepointer selected first and then updatee the css for rendering
+    $('#telepointer_name_'+content.rtcid).css({position:'absolute',left:parseInt(content.left), top:parseInt(content.top)});
+    if($('#telepointer_name_'+content.rtcid).text()=="")$('#telepointer_name_'+content.rtcid).html(content.user_name);
 
 }
+
+
+
+
+
+
 
 
 function sendStuffWS(otherEasyrtcid) {
@@ -147,10 +161,20 @@ function sendStuffWS(otherEasyrtcid) {
 }
 
 
+
+
+
+
+
 function loginSuccess(easyrtcid) {
     selfEasyrtcid = easyrtcid;
     //document.getElementById("iam").innerHTML = "I am " + easyrtcid;
 }
+
+
+
+
+
 
 
 function loginFailure(errorCode, message) {
