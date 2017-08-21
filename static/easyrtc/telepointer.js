@@ -11,68 +11,71 @@ $(document).ready(function(){
 
 
 $(document).mousemove(function(e){
-    //$("#mouse_pointer").css({left:e.pageX-50, top:e.pageY-50});
+    var my_telepointer_info = {"left":e.pageX-50,
+                             "top":e.pageY-50,
+                             "email":"golammostaeen@gmail.com",
+                             "rtcid": selfEasyrtcid,
+                             "user_name":user_name
+                            };
 
-    var telepointer_info = { "left":e.pageX-50, "top":e.pageY-50, "email":"golammostaeen@gmail.com", "rtcid": selfEasyrtcid, "user_name":user_name};
-
-
+    /*
     for(var otherEasyrtcid in all_occupants_list) {
         easyrtc.sendDataWS(otherEasyrtcid, "message",  telepointer_info);
-    }
+    }*/
+
+    notifyAll("telepointer_info", my_telepointer_info);
+
 
 });
 
 
 
 
-//
-//Copyright (c) 2016, Skedans Systems, Inc.
-//All rights reserved.
-//
-//Redistribution and use in source and binary forms, with or without
-//modification, are permitted provided that the following conditions are met:
-//
-//    * Redistributions of source code must retain the above copyright notice,
-//      this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above copyright
-//      notice, this list of conditions and the following disclaimer in the
-//      documentation and/or other materials provided with the distribution.
-//
-//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-//AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-//IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-//ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-//LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-//CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-//SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-//INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-//CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-//ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-//POSSIBILITY OF SUCH DAMAGE.
-//
+//Notify all the other clients of the message with the passed message type.
+function notifyAll(messageType, message){
+    //loop through all the other clients and send the message.
+    for(var otherEasyrtcid in all_occupants_list) {
+        easyrtc.sendDataWS(otherEasyrtcid, messageType,  message);
+    }
+}
 
-function addToConversation(who, msgType, content) {
-    // Escape html special characters, then add linefeeds.
-    /*content = content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    content = content.replace(/\n/g, '<br />');
-    document.getElementById('conversation').innerHTML +=
-    "<b>" + who + ":</b>&nbsp;" + content + "<br />";*/
 
-    //$("#mouse_pointer").css({left:parseInt(content.left), top:parseInt(content.top)});
+
+
+//update the telepointer for the other clients
+//the 'content' should contain the required info for telepointer update
+//along with other client easyrtcid; which is used for selecting the specific
+//element from dom
+function updateTelepointer(content){
     $('#telepointer_name_'+content.rtcid).css({position:'absolute',left:parseInt(content.left), top:parseInt(content.top)});
     if($('#telepointer_name_'+content.rtcid).text()=="")$('#telepointer_name_'+content.rtcid).html(content.user_name);
+
+}
+
+
+
+
+//Message reciver for the message sent from other clients.
+//this method performs actions according to the received msgType
+function onMessageRecieved(who, msgType, content) {
+
+    switch(msgType) {
+        case "telepointer_info":
+            updateTelepointer(content);
+            break;
+    }
 }
 
 
 function connect() {
     easyrtc.setSocketUrl(":8080");
-    easyrtc.setPeerListener(addToConversation);
-    easyrtc.setRoomOccupantListener(convertListToButtons);
+    easyrtc.setPeerListener(onMessageRecieved);
+    easyrtc.setRoomOccupantListener(userLoggedInListener);
     easyrtc.connect("easyrtc.instantMessaging", loginSuccess, loginFailure);
 }
 
 
-function convertListToButtons (roomName, occupants, isPrimary) {
+function userLoggedInListener (roomName, occupants, isPrimary) {
     //update the global occupants list for this user.
     all_occupants_list = occupants;
 
