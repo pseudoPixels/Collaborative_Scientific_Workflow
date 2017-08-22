@@ -1,5 +1,6 @@
-var all_occupants_list = "";
-var selfEasyrtcid = "";
+var all_occupants_list = ""; //list of easyrtcid of all the logged in clients
+var all_occupants_details = []; //list of logged in clients along with email, name and corresponding easyrtcid
+var selfEasyrtcid = ""; //my own easyrtc id
 
 //user info required for rtc
 var user_name = "";
@@ -51,14 +52,39 @@ function onMessageRecieved(who, msgType, content) {
         case "telepointer_info":
             updateTelepointer(content);
             break;
+        case "inform_my_details_to_all_other_clients":
+            addNewClientToAllOccupantsDetails(content);
+            updateOnlineStatusOfClients(all_occupants_details);
+            break;
+
     }
 }
 
 
+//add the newly obtained client details to the list (e.g. like phonebook)
+function addNewClientToAllOccupantsDetails(newClientDetails){
+    all_occupants_details.push(newClientDetails);
+}
 
 
 
+//update online status based on the available clients
+function updateOnlineStatusOfClients(all_occupants_details){
+    for(var i=0; i<all_occupants_details.length; i++){
+        var userEmail = all_occupants_details[i].email;
+        //userEmail = userEmail.replace('@', '_'); //id can not have @
+        //userEmail = userEmail.replace('.', '_');
+        //$('#online_status_'+userEmail).text(' (Online) ');
+        $('#online_status_'+convertEmailToID(userEmail)).text(' (Online) ').css('color', '#0f0');
+    }
+}
 
+
+function convertEmailToID(email){
+    //an email to be id, must not contain some special characters
+    //TODO: currently removed occurance of any . or @ by _ need to handle other special characters too
+    return email.replace(/\.|@/g, '_');
+}
 
 
 function connect() {
@@ -80,13 +106,25 @@ function userLoggedInListener (roomName, occupants, isPrimary) {
 
     //spawn telepointers for the logged in users.
     spawnTelepointers(occupants);
+
+    //inform my email, name along with easyrtc id, which is later used for different tracking
+    informMyDetailsToAllOtherClients(occupants);
+
 }
 
 
 
 
+//inform all other clients about my details: name, email, easyrtcid
+//these additional info along with easyrtcid (which is available in
+//'all_occupants_list') are used for mapping (e.g. which easyrtcid
+//is for which emails and so on)
+function informMyDetailsToAllOtherClients(occupants){
+    var myInfo = {'email': $("#user_email").text(), 'easyrtcid': selfEasyrtcid, 'name': $("#user_name").text()};
 
-
+    //notify all other clients for email for corresponding easyrtcid
+    notifyAll('inform_my_details_to_all_other_clients', myInfo);
+}
 
 
 

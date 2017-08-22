@@ -599,6 +599,7 @@
  <!--Collaborative Features Contents (WebRTC)-->
 <img src="{{ url_for('static',filename='images/mouse_pointer.png') }}" id="mouse_pointer" style="height:30px;width:30px;z-index:5;position:absolute;"/>
 <p id="user_name" style="display:none;">{{first_name + " " +last_name}} </p>
+<p id="user_email" style="display:none;">{{email}} </p>
  <div id="telepointer_spawn_point"></div>
 
 
@@ -812,7 +813,11 @@ $('.letuschat').on('click', function() {
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
                         </div>
                         <div class="details">
-                          <p><a href="#">{{dict_item['userName']}}</a><br/>
+                          <p><a href="#">{{dict_item['userName']}}</a>
+                              <!-- Initially the online status is offline for all the users -->
+                              <span id="online_status_{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}"> (Offline)</span>
+
+                              <br/>
                              <muted>{{dict_item['userRole']}}</muted>
                           </p>
                         </div>
