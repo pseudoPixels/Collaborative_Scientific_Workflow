@@ -4,9 +4,12 @@ var selfEasyrtcid = ""; //my own easyrtc id
 
 //user info required for rtc
 var user_name = "";
+var user_email = "";
+
 
 $(document).ready(function(){
     user_name = $("#user_name").text();
+    user_email = $("#user_email").text();
 });
 
 
@@ -14,7 +17,7 @@ $(document).ready(function(){
 $(document).mousemove(function(e){
     var my_telepointer_info = {"left":e.pageX-50,
                              "top":e.pageY-50,
-                             "email":"golammostaeen@gmail.com",
+                             "email":user_email,
                              "rtcid": selfEasyrtcid,
                              "user_name":user_name
                             };
