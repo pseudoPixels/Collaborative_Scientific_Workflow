@@ -815,7 +815,7 @@ $('.letuschat').on('click', function() {
                         <div class="details">
                           <p><a href="#">{{dict_item['userName']}}</a>
                               <!-- Initially the online status is offline for all the users -->
-                              <span id="online_status_{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}"> (Offline)</span>
+                              <span class="online_status" id="online_status_{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}"> (Offline)</span>
 
                               <br/>
                              <muted>{{dict_item['userRole']}}</muted>

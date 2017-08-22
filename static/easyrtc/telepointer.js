@@ -31,7 +31,7 @@ $(document).mousemove(function(e){
 function notifyAll(messageType, message){
     //loop through all the other clients and send the message.
     for(var otherEasyrtcid in all_occupants_list) {
-        easyrtc.sendDataWS(otherEasyrtcid, messageType,  message);
+            easyrtc.sendDataWS(otherEasyrtcid, messageType,  message);
     }
 }
 
@@ -56,6 +56,9 @@ function onMessageRecieved(who, msgType, content) {
             addNewClientToAllOccupantsDetails(content);
             updateOnlineStatusOfClients(all_occupants_details);
             break;
+        case "disconnected":
+            alert("Disconnected : " + content);
+            break;
 
     }
 }
@@ -68,16 +71,24 @@ function addNewClientToAllOccupantsDetails(newClientDetails){
 
 
 
+
+
 //update online status based on the available clients
 function updateOnlineStatusOfClients(all_occupants_details){
+    //first every user's status label to offline
+    $(".online_status").text(' (Offline) ').css('color', '#C0C0C0');
+
+    //then update the online status based on logged in clients.
     for(var i=0; i<all_occupants_details.length; i++){
         var userEmail = all_occupants_details[i].email;
-        //userEmail = userEmail.replace('@', '_'); //id can not have @
-        //userEmail = userEmail.replace('.', '_');
-        //$('#online_status_'+userEmail).text(' (Online) ');
         $('#online_status_'+convertEmailToID(userEmail)).text(' (Online) ').css('color', '#0f0');
     }
 }
+
+
+
+
+
 
 
 function convertEmailToID(email){
@@ -87,6 +98,9 @@ function convertEmailToID(email){
 }
 
 
+
+
+
 function connect() {
     easyrtc.setSocketUrl(":8080");
     easyrtc.setPeerListener(onMessageRecieved);
@@ -94,15 +108,27 @@ function connect() {
     easyrtc.connect("easyrtc.instantMessaging", loginSuccess, loginFailure);
 }
 
+/*
+easyrtc.events.on('disconnect', function(connectionObj, next){
+
+    notifyAll('disconnected', connectionObj.getEasyrtcid());
+
+});
+*/
 
 
-
-
-
-
+//callback function, called upon new client connection or disconnection
 function userLoggedInListener (roomName, occupants, isPrimary) {
     //update the global occupants list for this user.
     all_occupants_list = occupants;
+
+    //as this callback method is also called on any user disconnection...
+    //remove any 'zombie' easyrtc id from 'all_occupants_details' variable
+    removeZombieClientsFromOccupantsDetails(occupants);
+
+    //update the online/offline status as per the new list.
+    //this update is important for someone leaves the connection.
+    updateOnlineStatusOfClients(all_occupants_details);
 
     //spawn telepointers for the logged in users.
     spawnTelepointers(occupants);
@@ -110,7 +136,41 @@ function userLoggedInListener (roomName, occupants, isPrimary) {
     //inform my email, name along with easyrtc id, which is later used for different tracking
     informMyDetailsToAllOtherClients(occupants);
 
+    //notifyAll('disconnected', "Hello");
 }
+
+
+//removes any invalid ids (the users of whom have left/disconnect)
+//from the server. the passed occupants is the updated list of easyrctid
+//the occupants_details are updated (removed the invalids) accordingly
+function removeZombieClientsFromOccupantsDetails(occupants){
+    var temp_occupants_details = [];
+
+    for(var i=0;i < all_occupants_details.length; i++){
+        var aClient = all_occupants_details[i];
+
+        var isValid = 0;
+
+        for(aEasyrtcid in occupants){
+            if(aEasyrtcid == aClient.easyrtcid){
+                isValid = 1; //this client is still on the list and online (connected and valid)
+                break;
+            }
+        }
+
+        //add the valid client to the temporary updated list
+        if(isValid ==1){
+            temp_occupants_details.push(aClient);
+        }
+
+    }
+
+    //finally assign the temp new occupants details as the updated occupants details.
+    all_occupants_details = temp_occupants_details;
+
+
+}
+
 
 
 
