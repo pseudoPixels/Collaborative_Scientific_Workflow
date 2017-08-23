@@ -10,6 +10,34 @@ var user_email = "";
 $(document).ready(function(){
     user_name = $("#user_name").text();
     user_email = $("#user_email").text();
+
+
+    //chat room communication
+    $("#chatRoom_send_msg_btn").click("on", function(){
+
+        var text = $("#chatRoom_send_msg_txt").val(); //get the msg content
+
+        if(text.replace(/\s/g, "").length === 0) { // Don"t send just whitespace
+            return;
+        }
+
+        //empty the text box for further msg
+        $("#chatRoom_send_msg_txt").val("");
+
+        //create the telegram for all the clients.
+        //as its a chat room msg, we don't specify the reciever.
+        var telegram = {"sender": user_name, "msg": text};
+        var telegram_for_myself = {"sender": "Me", "msg": text};
+
+        //add to my chat room conversation
+        addToChatRoomConversation(telegram_for_myself);
+
+        //and also send to all other clients for adding to their chat room conversation
+        notifyAll("chat_room_msg", telegram);
+
+    });
+
+
 });
 
 
@@ -26,6 +54,12 @@ $(document).mousemove(function(e){
 
 
 });
+
+
+
+
+
+
 
 
 
@@ -62,6 +96,9 @@ function onMessageRecieved(who, msgType, content) {
         case "disconnected":
             alert("Disconnected : " + content);
             break;
+        case "chat_room_msg":
+            addToChatRoomConversation(content);
+            break;
 
     }
 }
@@ -73,7 +110,20 @@ function addNewClientToAllOccupantsDetails(newClientDetails){
 }
 
 
+function addToChatRoomConversation(telegram){
+  // Escape html special characters, then add linefeeds.
+  var content = telegram.msg;
+  var sender = telegram.sender;
+  content = content.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  content = content.replace(/\n/g, "<br />");
 
+  sender = "<strong>" + sender + "</strong>";
+
+  var previous_messages = $("#chatRoom_all_msg").html();
+
+  $("#chatRoom_all_msg").html(previous_messages + sender + ": " +content + "<br/>");
+
+}
 
 
 //update online status based on the available clients
@@ -111,13 +161,6 @@ function connect() {
     easyrtc.connect("easyrtc.instantMessaging", loginSuccess, loginFailure);
 }
 
-/*
-easyrtc.events.on('disconnect', function(connectionObj, next){
-
-    notifyAll('disconnected', connectionObj.getEasyrtcid());
-
-});
-*/
 
 
 //callback function, called upon new client connection or disconnection
