@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -579,11 +579,13 @@
 
 
 <!-- Collaborative Tools -->
-<div id="collaboration_tools">
+ <a id="id_collaborativeToolsDiv" href="#"> <strong> Collaboration Tools </strong> (show/hide)</a><br/>
+<div id="collaboration_tools" style="display:none;">
 
 
 
 <!-- Chat Room -->
+  <p id="id_chatRoomDiv"> <strong> Chat Room </strong> (show/hide)</p>
   <div id="chatRoom_all_msg" style="overflow-y: auto; height:150px;width:100%;background-color:#EEE;">
   </div>
 
@@ -593,6 +595,11 @@
 
 
   <br/><br/>
+
+
+ <!-- White Board -->
+  <p id="id_canvasDiv"> <strong> Collaborative White Board </strong> (show/hide)</p>
+  <canvas id="mycanvas" width="800" height="300" style="background-color:#EEE;"></canvas>
 
 
 

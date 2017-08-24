@@ -38,6 +38,95 @@ $(document).ready(function(){
     });
 
 
+
+        //Collaborative white board
+    var canvas = document.getElementById("mycanvas");
+    var context = canvas.getContext('2d');
+
+    var clickX = new Array();
+    var clickY = new Array();
+    var clickDrag = new Array();
+    var paint;
+
+    function addClick(x, y, dragging) {
+      clickX.push(x);
+      clickY.push(y);
+      clickDrag.push(dragging);
+    }
+
+
+    $('#mycanvas').mousedown(function(e) {
+            var rect = e.currentTarget.getBoundingClientRect(),
+          offsetX = e.clientX - rect.left,
+          offsetY = e.clientY - rect.top;
+
+      var mouseX = e.pageX - this.offsetLeft;
+      var mouseY = e.pageY - this.offsetTop;
+
+
+
+      paint = true;
+      addClick(offsetX, offsetY);
+      redraw();
+    });
+
+
+    $('#mycanvas').mousemove(function(e) {
+            var rect = e.currentTarget.getBoundingClientRect(),
+          offsetX = e.clientX - rect.left,
+          offsetY = e.clientY - rect.top;
+
+          //alert(offsetX);
+
+      if (paint) {
+        addClick(offsetX, offsetY, true);
+        redraw();
+      }
+    });
+
+
+    $('#mycanvas').mouseup(function(e) {
+      paint = false;
+    });
+
+
+    $('#mycanvas').mouseleave(function(e) {
+      paint = false;
+    });
+
+
+    function redraw() {
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+
+      context.strokeStyle = "#df4b26";
+      context.lineJoin = "round";
+      context.lineWidth = 3;
+
+      for (var i = 0; i < clickX.length; i++) {
+        context.beginPath();
+        if (clickDrag[i] && i) {
+          context.moveTo(clickX[i - 1], clickY[i - 1]);
+        } else {
+          context.moveTo(clickX[i] - 1, clickY[i]);
+        }
+        context.lineTo(clickX[i], clickY[i]);
+        context.closePath();
+        context.stroke();
+      }
+    }
+    //collaborative white board ends
+
+
+
+    //Hidden Display controls
+    $("#id_collaborativeToolsDiv").click("on", function(){
+        $("#collaboration_tools").toggle(750);
+    });
+
+
+
+
+
 });
 
 
