@@ -123,6 +123,15 @@ $(document).ready(function(){
         $("#collaboration_tools").toggle(750);
     });
 
+    $("#id_chatRoomDiv").click("on", function(){
+        $("#chatRoom").toggle(750);
+    });
+
+    $("#id_canvasDiv").click("on", function(){
+        $("#whiteBoard").toggle(750);
+    });
+
+
 
 
 

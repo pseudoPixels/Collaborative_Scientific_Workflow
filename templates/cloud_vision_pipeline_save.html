@@ -585,26 +585,28 @@
 
 
 <!-- Chat Room -->
-  <p id="id_chatRoomDiv"> <strong> Chat Room </strong> (show/hide)</p>
+  <a id="id_chatRoomDiv" href="#"> <strong> Chat Room </strong> (show/hide)</a><br/>
+    <div id="chatRoom" style="display:none;">
   <div id="chatRoom_all_msg" style="overflow-y: auto; height:150px;width:100%;background-color:#EEE;">
   </div>
 
   <textarea id="chatRoom_send_msg_txt" style="width:350px;"></textarea><br/>
 
   <button id="chatRoom_send_msg_btn">Send</button>
+    </div>
 
 
-  <br/><br/>
 
 
  <!-- White Board -->
-  <p id="id_canvasDiv"> <strong> Collaborative White Board </strong> (show/hide)</p>
+  <a id="id_canvasDiv" href="#"> <strong> Collaborative White Board </strong> (show/hide)</a>
+    <div id="whiteBoard" style="display:none;">
   <canvas id="mycanvas" width="800" height="300" style="background-color:#EEE;"></canvas>
-
+    </div>
 
 
 </div>
-
+<br/><br/>
 
 
 
