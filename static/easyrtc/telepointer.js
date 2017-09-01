@@ -369,7 +369,8 @@ function onNewFloorRequest(requestor_id){
     //push the new requestor to the end of the waiting list.
     floor_requests_queue.push(requestor_id);
 
-    //TODO: update the ui, showing updated list
+    //show the updated floor information...
+    updateUI_floorInformation();
 }
 
 function onFloorRelease(){
@@ -388,16 +389,63 @@ function onFloorRelease(){
 function onFloorOwnerChanged(newFloorOwner){
     current_floor_owner = newFloorOwner;
 
-    //TODO: change lockings (if current user is me...) and other UIs (waiting list)
+
+
+    //TODO: change lockings (if current user is me...)
     if(isItMyFloor() == true){
 
         $("#collaboration_controls_request_turn").text('Release Floor');
         alert("You have Got the Floor");
         $("#collaboration_controls_request_turn").prop('disabled', false);
         $("#collaboration_controls_request_turn").css('background-color', 'salmon');
+    }else{
+        //as its not this user's turn... lock all the param settings...
+        lockParamsSettings();
     }
 
+
+
+
+    //update current owner and floor requests queue
+    updateUI_floorInformation();
+
 }
+
+
+//lock the UIs (setting params) from changing for this user...
+function lockParamsSettings(){
+    $(".setting_param").prop("disabled", true);
+}
+
+
+
+
+//update the ui showing new floor owner and floor requests queue
+function updateUI_floorInformation(){
+
+    //update ui: current floor owner
+    if(isItMyFloor() == true)$("#collaboration_controls_current_floor_owner").text("Current Floor Owner: Me");
+    else $("#collaboration_controls_current_floor_owner").text("Current Floor Owner: " + getNameForAnEmail(current_floor_owner) );
+
+
+
+
+
+
+    //update ui: floor requests queue
+    $("#collaboration_controls_floor_requests_queue").text("Floor Requests Queue: ");
+    for(var i=0;i < floor_requests_queue.length; i++){
+        //append this user to the end of ui
+        $("#collaboration_controls_floor_requests_queue").append("<i>" + getNameForAnEmail(floor_requests_queue[i]) +"</i>");
+
+        //extra: show arrow for intuition
+        if(i != floor_requests_queue.length - 1)$("#collaboration_controls_floor_requests_queue").append(" => ");
+    }
+
+
+}
+
+
 
 
 
@@ -530,6 +578,21 @@ function informMyDetailsToAllOtherClients(occupants){
     notifyAll('inform_my_details_to_all_other_clients', myInfo);
 }
 
+
+
+//returns the corresponding name for a given email id
+function getNameForAnEmail(clientEmail) {
+  for (var i = 0; i < all_occupants_details.length; i++) {
+    if (all_occupants_details[i].email == clientEmail) return all_occupants_details[i].name;
+  }
+
+  //own email id is not available in all_occupants_details...
+  //so return own user_name in that case...
+  if(clientEmail == user_email)return user_name;
+
+  //the email not found...
+  return "NONE";
+}
 
 
 
