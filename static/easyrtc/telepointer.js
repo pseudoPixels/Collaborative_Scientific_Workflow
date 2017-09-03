@@ -12,6 +12,11 @@ var current_floor_owner = "NONE";
 var floor_requests_queue = [];
 
 
+//IMPORTANT
+//this id remain unique throughout the pipeline for a module
+var unique_module_id = 1;
+
+
 
 $(document).ready(function(){
 
@@ -358,11 +363,30 @@ function onMessageRecieved(who, msgType, content) {
         case "release_floor":
             onFloorRelease();
             break;
+        case "remote_module_addition":
+            onRemoteModuleAddition(content);
+            break;
 
 
 
     }
 }
+
+
+function onRemoteModuleAddition(moduleInfo){
+    //making sure the snychronization is ok...
+    if(getNextUniqueModuleID() == moduleInfo.newModuleID){
+        addModuleToPipeline(moduleInfo.newModuleID, moduleInfo.newModuleName);
+        updateNextUniqueModuleID();//update my own unique module id for later use too...
+
+        //as its remote module addition... most likely its not my floor...
+        //doing a further check for safety before locking the param settings...
+        lockParamsSettings();
+    }else{
+        alert("Some Error Occured while Remote Module Addition. Synchronization Failed!");
+    }
+}
+
 
 
 function onNewFloorRequest(requestor_id){
@@ -398,6 +422,8 @@ function onFloorOwnerChanged(newFloorOwner){
         alert("You have Got the Floor");
         $("#collaboration_controls_request_turn").prop('disabled', false);
         $("#collaboration_controls_request_turn").css('background-color', 'salmon');
+        //as I have got the floor... unlock every para settings for me to work...
+        unlockParamsSettings();
     }else{
         //as its not this user's turn... lock all the param settings...
         lockParamsSettings();
@@ -415,6 +441,10 @@ function onFloorOwnerChanged(newFloorOwner){
 //lock the UIs (setting params) from changing for this user...
 function lockParamsSettings(){
     $(".setting_param").prop("disabled", true);
+}
+//unlock the UIs (setting params) from changing for this user...
+function unlockParamsSettings(){
+    $(".setting_param").prop("disabled", false);
 }
 
 
@@ -926,6 +956,14 @@ $("#design_pipelines_menu_rgb2gray_id").click(function () {
 
 
 
+function getNextUniqueModuleID(){
+
+    return unique_module_id;
+}
+
+function updateNextUniqueModuleID(){
+    unique_module_id = unique_module_id + 1;
+}
 
 
 
@@ -934,6 +972,25 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 
     //allowed iff the user has the floor currently...
     if(isItMyFloor() == true){
+        var newModuleID = getNextUniqueModuleID();
+        var newModuleName = 'biodatacleaning';
+        addModuleToPipeline(newModuleID, newModuleName);
+
+        //prepare the next valid unique module id
+        updateNextUniqueModuleID();
+
+        //add the module to all remote clients as well...
+        var moduleInfo = {"newModuleID": newModuleID, "newModuleName": newModuleName};
+        notifyAll("remote_module_addition", moduleInfo);
+    }
+
+});
+
+
+
+//adds the module to the pipeline. moduleID is unique throughout the whole pipeline
+//moduleName is the name of the module like: rgb2gray, medianFilter and so on
+function addModuleToPipeline(moduleID, moduleName){
 
         var module_name = ''
         var documentation = ''
@@ -945,7 +1002,7 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
             type: "POST",
             cache: false,
             url: "/get_module_details",
-            data: 'p_module_key=' + 'biodatacleaning',
+            data: 'p_module_key=' + moduleName,
             success: function (option) {
 
                 module_name = option.module_name
@@ -965,7 +1022,7 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 
                 //append new module to the pipeline...
                 $("#img_processing_screen").append(
-                    '<div style="background-color:#EEE;width:100%">' +
+                    '<div style="background-color:#EEE;width:100%" class="module" id="module_id_'+ moduleID +'">' +
 
                 '<!-- Documentation -->' +
                 '<div style="margin:10px;font-size:17px;color:#000000;">' +
@@ -1002,6 +1059,7 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 
             );//end of append
 
+            if(isItMyFloor() == false)lockParamsSettings();
 
                 $('pre code').each(function (i, block) {
                     hljs.highlightBlock(block);
@@ -1015,11 +1073,14 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 
         });//end of ajax
 
-    }
+
+}
 
 
 
-});
+
+
+
 
 
 
