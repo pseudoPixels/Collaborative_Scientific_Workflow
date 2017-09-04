@@ -366,11 +366,22 @@ function onMessageRecieved(who, msgType, content) {
         case "remote_module_addition":
             onRemoteModuleAddition(content);
             break;
+        case "moduleSettingsChanged":
+            onModuleSettingsChanged(content);
+            break;
+
 
 
 
     }
 }
+
+
+
+function onModuleSettingsChanged(changeInfo){
+    $(changeInfo.elementInfo).eq(changeInfo.paramIndex).val(changeInfo.newParamValue).change();
+}
+
 
 
 function onRemoteModuleAddition(moduleInfo){
@@ -784,6 +795,27 @@ $(".setting_param").live('change',function () {
     });
     var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
     $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val(prev_code + "\n" + $(this).val());
+
+
+
+    //get module id and param information for change in the remote clients
+    //var myPar = $(this).closest(".module");
+    //alert(myPar.attr('id'));
+    //alert($(this).index("#" + myPar.attr('id') + "  .setting_param"));
+
+    //inform of this change to all the other clients...
+    if(isItMyFloor() == true){
+        var myParent = $(this).closest(".module");
+        var elementInfo = "#" + myParent.attr('id') + "  .setting_param";
+        var paramIndex = $(this).index(elementInfo);
+        var newParamValue = $(this).val();
+        var changeInfo = {"elementInfo": elementInfo, "paramIndex": paramIndex, "newParamValue": newParamValue};
+        notifyAll("moduleSettingsChanged", changeInfo);
+    }
+
+
+
+
 });
 
 $("#run_pipeline").click(function () {
