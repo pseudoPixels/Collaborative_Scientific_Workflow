@@ -796,7 +796,7 @@ function redrawWorkflowStructure(){
 
 
   tree_nodes.push(config);
-
+  tree_nodes.reverse();
 
 new Treant(tree_nodes);
 
@@ -841,11 +841,15 @@ $(".setting_param").live('change',function () {
 
 
     //get module id and param information for change in the remote clients
-    //var myPar = $(this).closest(".module");
-    //alert(myPar.attr('id'));
+    var myPar = $(this).closest(".module");
+    //myPar.attr('id');
     //alert($(this).index("#" + myPar.attr('id') + "  .setting_param"));
 
     //inform of this change to all the other clients...
+
+    workflow.changeParent(myPar.attr('id'), $(this).val(), workflow.traverseDF);
+
+    redrawWorkflowStructure();
 
 });
 
@@ -973,7 +977,7 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
         //prepare the next valid unique module id
         updateNextUniqueModuleID();
 
-        workflow.add("Module_"+newModuleID + " (" + newModuleName +")", "workflow", workflow.traverseDF);
+        workflow.add("module_id_"+newModuleID, "workflow", workflow.traverseDF);
 
         redrawWorkflowStructure();
 
