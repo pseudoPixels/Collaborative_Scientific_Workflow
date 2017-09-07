@@ -7,6 +7,13 @@ var user_name = "";
 var user_email = "";
 
 
+
+//IMPORTANT
+//this id remain unique throughout the pipeline for a module
+var unique_module_id = 1;
+
+
+
 $(document).ready(function(){
 
 //========================================================
@@ -646,42 +653,36 @@ function loginFailure(errorCode, message) {
 
   //create parent workflow
   var workflow = new Tree("workflow");
-  workflow.add("node1", "workflow", workflow.traverseDF);
-  workflow.add("node2", "node1", workflow.traverseDF);
-  workflow.add("node3", "node1", workflow.traverseDF);
-  workflow.add("node4", "node1", workflow.traverseDF);
+  //workflow.add("node1", "workflow", workflow.traverseDF);
+  //workflow.add("node2", "node1", workflow.traverseDF);
+  //workflow.add("node3", "node1", workflow.traverseDF);
+  //workflow.add("node4", "node1", workflow.traverseDF);
 
-  workflow.add("node5", "node4", workflow.traverseDF);
-  workflow.add("node6", "node4", workflow.traverseDF);
-  workflow.add("node7", "node4", workflow.traverseDF);
+  //workflow.add("node5", "node4", workflow.traverseDF);
+  //workflow.add("node6", "node4", workflow.traverseDF);
+  //workflow.add("node7", "node4", workflow.traverseDF);
 
   //workflow.remove("node2", "node1", workflow.traverseDF);
 
   //workflow.add("node2", "node3", workflow.traverseDF);
 	//workflow.changeParent("node2", "node3", workflow.traverseDF);
-
+/*
 	var all_nodes = [];
   workflow.traverseDF(function(node) {
-    //console.log(node.data);
+
     all_nodes.push(node);
   });
 
   all_nodes.reverse();
 
 
-  function getParentJSON(parentNodeData, tree_nodes){
-    for(var i=0; i< tree_nodes.length; i++){
-      if(tree_nodes[i].text.name == parentNodeData)return tree_nodes[i];
-    }
 
-    return null;
-  }
 
 
   var tree_nodes = [];
-	//alert("Total Nodes: " + totalNodes);
+
   for(var i=0; i<all_nodes.length; i++){
-    //alert(all_nodes[i].data);
+
 
     var aNode = null;
 
@@ -708,36 +709,285 @@ function loginFailure(errorCode, message) {
   }
 
 
-  //alert(tree_nodes[0].text.name);
+
 
 
  config = {
     container: "#tree-simple",
-            animateOnInit: true,
-
-        node: {
-            collapsable: true
-        },
-        animation: {
-            nodeAnimation: "easeOutBounce",
-            nodeSpeed: 700,
-            connectorsAnimation: "bounce",
-            connectorsSpeed: 700
-        }
+    node: {
+        collapsable: true
+    },
+    connectors:{
+        type: "bCurve"
+    },
+    padding: 0
 };
 
 
   tree_nodes.push(config);
 
 
-
-
-
-
-
-
-
 var my_chart = new Treant(tree_nodes);
+*/
+
+  function getParentJSON(parentNodeData, tree_nodes){
+    for(var i=0; i< tree_nodes.length; i++){
+      if(tree_nodes[i].text.name == parentNodeData)return tree_nodes[i];
+    }
+
+    return null;
+  }
+
+
+function redrawWorkflowStructure(){
+    	var all_nodes = [];
+  workflow.traverseDF(function(node) {
+
+    all_nodes.push(node);
+  });
+
+  all_nodes.reverse();
+
+
+
+
+
+  var tree_nodes = [];
+
+  for(var i=0; i<all_nodes.length; i++){
+
+
+    var aNode = null;
+
+    if(all_nodes[i].parent){
+      aNode = {
+        "parent": getParentJSON(all_nodes[i].parent.data, tree_nodes),
+        "text" : {
+          "name": all_nodes[i].data
+        }
+      }
+    }else{
+      aNode = {
+        "text" : {
+          "name": all_nodes[i].data
+        }
+      }
+    }
+
+    tree_nodes.push(aNode);
+
+
+
+
+  }
+
+
+
+   config = {
+    container: "#tree-simple",
+    node: {
+        collapsable: true
+    },
+    connectors:{
+        type: "bCurve"
+    },
+    padding: 0
+};
+
+
+  tree_nodes.push(config);
+
+
+new Treant(tree_nodes);
+
+}
+
+
+
+
+
+
+//source code in pre tag... toggle show/hides
+$(".code_show_hide").live('click', function () {
+    $(this).siblings('.pre_highlighted_code').children(".highlighted_code").toggle(1000);
+});
+
+$(".documentation_show_hide").live('click', function () {
+    $(this).siblings('.documentation').toggle(300);
+});
+
+$(".settings_show_hide").live('click', function () {
+    $(this).siblings('.settings').toggle(300);
+});
+
+$(".btn_edit_code").live('click',function () {
+    $(this).siblings('.edit_code').toggle(1000);
+});
+
+$(".setting_param").live('change',function () {
+    //alert("you changed my value");
+    //var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
+    //alert(prev_code);
+    //$(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val(prev_code + "\n" + $(this).val());
+    $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val('');
+    $(this).siblings(".setting_param").each(function () {
+        //alert($(this).val());
+        var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
+        $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val(prev_code + "\n" + $(this).val());
+    });
+    var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
+    $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val(prev_code + "\n" + $(this).val());
+
+
+
+    //get module id and param information for change in the remote clients
+    //var myPar = $(this).closest(".module");
+    //alert(myPar.attr('id'));
+    //alert($(this).index("#" + myPar.attr('id') + "  .setting_param"));
+
+    //inform of this change to all the other clients...
+
+});
+
+
+
+
+
+
+
+
+
+//adds the module to the pipeline. moduleID is unique throughout the whole pipeline
+//moduleName is the name of the module like: rgb2gray, medianFilter and so on
+function addModuleToPipeline(moduleID, moduleName){
+
+        var module_name = ''
+        var documentation = ''
+        var moduleSourceCode_settings = ''
+        var moduleSourceCode_main = ''
+        var moduleSourceCode_html = ''
+
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: "/get_module_details",
+            data: 'p_module_key=' + moduleName,
+            success: function (option) {
+
+                module_name = option.module_name
+                documentation = option.documentation
+                moduleSourceCode_settings = option.moduleSourceCode_settings
+                moduleSourceCode_main = option.moduleSourceCode_main
+                moduleSourceCode_html = option.moduleSourceCode_html
+                user_role = option.user_role
+
+                user_role_based_edit = ''
+                if (user_role == 'image_researcher') {
+                    user_role_based_edit = '| <a style="font-size:12px;color:#000000;" href="#" class="btn_edit_code"> Edit </a> | <a style="font-size:12px;color:#000000;" href="#" > Contact Author </a>';
+                }
+
+
+
+
+                //append new module to the pipeline...
+                $("#img_processing_screen").append(
+                    '<div style="background-color:#EEE;width:100%" class="module" id="module_id_'+ moduleID +'">' +
+
+                '<!-- Documentation -->' +
+                '<div style="margin:10px;font-size:17px;color:#000000;">' +
+                  ' ' + module_name + '<hr/>' +
+                   ' Documentation: <a style="font-size:12px;color:#000000;" href="#" class="documentation_show_hide">(Show/Hide)</a>' +
+                    '<div class="documentation" style="background-color:#888888;display:none;font-size:14px;">' + documentation + '</div>' +
+                '</div>' +
+
+
+                '<!-- Settings -->' +
+                '<div style="margin:10px;font-size:17px;color:#000000;">' +
+                 '   Settings: <a style="font-size:12px;color:#000000;" href="#" class="settings_show_hide">(Show/Hide)</a>' +
+                 '   <div class="settings" style="background-color:#888888;display:none;font-size:14px;">' + moduleSourceCode_html + '</div>' +
+                '</div>' +
+
+
+                '<div style="margin:10px;font-size:17px;color:#000000;" class="setting_section">' +
+                '    Source Code: <a style="font-size:12px;color:#000000;" href="#" class="code_show_hide">(Show/Hide)</a>' + user_role_based_edit +
+
+                 '   <div class="edit_code" style="background-color:#888888;display:none;font-size:14px;">' +
+                  '          <textarea rows=7 cols=180 class="code_settings">' + moduleSourceCode_settings + '</textarea>' +
+                   '         <p style="color:#000000;">Main Implementation: </p>' +
+                    '        <textarea rows=10 cols=180>' + moduleSourceCode_main + '</textarea>' +
+                    '</div>' +
+
+                   ' <pre style="background-color:#333333;width:100%;" class="pre_highlighted_code">' + '<code class="python highlighted_code" style="display:none;">' + moduleSourceCode_settings +
+                   ' ' +
+                moduleSourceCode_main + '</code></pre>' +
+
+               ' </div>' +
+
+                '</div>'
+
+
+            );//end of append
+
+            //if(isItMyFloor() == false)lockParamsSettings();
+
+                $('pre code').each(function (i, block) {
+                    hljs.highlightBlock(block);
+                });
+
+
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+
+        });//end of ajax
+
+
+}
+
+
+
+
+function getNextUniqueModuleID(){
+
+    return unique_module_id;
+}
+
+function updateNextUniqueModuleID(){
+    unique_module_id = unique_module_id + 1;
+}
+
+
+
+
+
+    //bio test starts
+$("#design_pipelines_menu_biodatacleaning_id").click(function () {
+
+    //allowed iff the user has the floor currently...
+    //if(isItMyFloor() == true){
+        var newModuleID = getNextUniqueModuleID();
+        var newModuleName = 'biodatacleaning';
+        addModuleToPipeline(newModuleID, newModuleName);
+
+        //prepare the next valid unique module id
+        updateNextUniqueModuleID();
+
+        workflow.add("Module_"+newModuleID + " (" + newModuleName +")", "workflow", workflow.traverseDF);
+
+        redrawWorkflowStructure();
+
+        //add the module to all remote clients as well...
+        //var moduleInfo = {"newModuleID": newModuleID, "newModuleName": newModuleName};
+        //notifyAll("remote_module_addition", moduleInfo);
+    //}
+
+});
+
+
+
+
+
 
 
 //========================================================
