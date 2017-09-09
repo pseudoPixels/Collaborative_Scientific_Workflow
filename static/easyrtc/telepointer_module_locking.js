@@ -256,6 +256,9 @@ function onMessageRecieved(who, msgType, content) {
         case "chat_room_msg":
             addToChatRoomConversation(content);
             break;
+        case "remote_module_addition":
+            onWorkflowModuleAdditionRequest(content.whoAdded, content.newModuleID, content.newModuleName);
+            break;
 
     }
 }
@@ -501,17 +504,23 @@ function loginFailure(errorCode, message) {
 //========================================================
 
   //tree implementation starts
+
+  //node construct
   function Node(data) {
     this.data = data;
     this.parent = null;
+    this.isLocked = false;
+    this.currentOwner = "NONE";
     this.children = [];
   }
 
+  //tree construct
   function Tree(data) {
     var node = new Node(data);
     this._root = node;
   }
 
+  //traverse the tree by df default starting from the root of the tree
   Tree.prototype.traverseDF = function(callback) {
 
     // this is a recurse and immediately-invoking function
@@ -530,12 +539,32 @@ function loginFailure(errorCode, message) {
 
   };
 
+  //traverse by depth first search from a specified start node (parent)
+  Tree.prototype.traverseDF_FromNode = function(startNode, callback) {
 
+        // this is a recurse and immediately-invoking function
+        (function recurse(currentNode) {
+            // step 2
+            for (var i = 0, length = currentNode.children.length; i < length; i++) {
+                // step 3
+                recurse(currentNode.children[i]);
+            }
 
+            // step 4
+            callback(currentNode);
+
+            // step 1
+        })(startNode);
+
+    };
+
+  //scans through all the nodes of the tree
   Tree.prototype.contains = function(callback, traversal) {
     traversal.call(this, callback);
+
   };
 
+  //add a new node to a specific parent of the tree
   Tree.prototype.add = function(data, toData, traversal) {
     var child = new Node(data),
       parent = null,
@@ -553,8 +582,12 @@ function loginFailure(errorCode, message) {
     } else {
       throw new Error('Cannot add node to a non-existent parent.');
     }
+    //return the newly created node
+    return child;
   };
 
+  //change the parent of a node to a new specified parent. the whole subtree (descendants)
+  //moves along the node.
   Tree.prototype.changeParent = function(data, newParentData, traversal) {
     var targetNode = null,
     	oldParent = null,
@@ -602,10 +635,7 @@ function loginFailure(errorCode, message) {
 
   };
 
-
-
-
-
+  //removes a particular node from its parent.
   Tree.prototype.remove = function(data, fromData, traversal) {
     var tree = this,
       parent = null,
@@ -635,6 +665,62 @@ function loginFailure(errorCode, message) {
     return childToRemove;
   };
 
+  //returns node object, given its node data
+  Tree.prototype.getNode = function(nodeData,  traversal) {
+    var theNode = null,
+        callback = function(node) {
+            if (node.data === nodeData) {
+                theNode = node;
+            }
+        };
+    this.contains(callback, traversal);
+
+    return theNode;
+
+  }
+
+  //check if the node or any of its descendants are locked currently.
+  //if not, the node floor is available as per the client request.
+  Tree.prototype.isNodeFloorAvailable = function(nodeData,  traversal) {
+    var theNode = this.getNode(nodeData, traversal);
+    if(theNode == null){
+        throw new Error('The requested node for access does not exist!');
+    }
+
+    //if the node is itself locked, then its NOT available for the requested user
+    if(theNode.isLocked == false)return false;
+
+    //if the node itself is not locked, check if any of its children are locked or not
+    //if any of them are locked, the access is NOT granted...
+    var nodeFloorAvailability = true;
+    this.traverseDF_FromNode(theNode, function(node){
+        //if any of its descendants are locked currently, the node access is not available
+        if(node.isLocked == true)nodeFloorAvailability = false;
+    });
+
+
+    return nodeFloorAvailability;
+
+  }
+
+  //someone has got the access to this node, so lock it and all its descendants
+  Tree.prototype.lockThisNodeAndDescendants = function(newOwner,nodeData,  traversal) {
+    this.traverseDF_FromNode(theNode, function(node){
+         //use helper function to load this node for the corresponding user
+         lockNode(theNode, newOwner);
+    });
+  }
+
+  //someone has released the access to this node, so UNLOCK it and all its descendants
+  Tree.prototype.unlockThisNodeAndDescendants = function(nodeData,  traversal) {
+    this.traverseDF_FromNode(theNode, function(node){
+         //use the helper function to unlock the node.
+         unlockNode(theNode);
+    });
+  }
+
+
+  //HELPER FUNCTION: child index
   function findIndex(arr, data) {
     var index;
 
@@ -646,128 +732,63 @@ function loginFailure(errorCode, message) {
 
     return index;
   }
-  //tree implementation ends
 
-
-
-
-  //create parent workflow
-  var workflow = new Tree("workflow");
-  //workflow.add("node1", "workflow", workflow.traverseDF);
-  //workflow.add("node2", "node1", workflow.traverseDF);
-  //workflow.add("node3", "node1", workflow.traverseDF);
-  //workflow.add("node4", "node1", workflow.traverseDF);
-
-  //workflow.add("node5", "node4", workflow.traverseDF);
-  //workflow.add("node6", "node4", workflow.traverseDF);
-  //workflow.add("node7", "node4", workflow.traverseDF);
-
-  //workflow.remove("node2", "node1", workflow.traverseDF);
-
-  //workflow.add("node2", "node3", workflow.traverseDF);
-	//workflow.changeParent("node2", "node3", workflow.traverseDF);
-/*
-	var all_nodes = [];
-  workflow.traverseDF(function(node) {
-
-    all_nodes.push(node);
-  });
-
-  all_nodes.reverse();
-
-
-
-
-
-  var tree_nodes = [];
-
-  for(var i=0; i<all_nodes.length; i++){
-
-
-    var aNode = null;
-
-    if(all_nodes[i].parent){
-      aNode = {
-        "parent": getParentJSON(all_nodes[i].parent.data, tree_nodes),
-        "text" : {
-          "name": all_nodes[i].data
-        }
-      }
-    }else{
-      aNode = {
-        "text" : {
-          "name": all_nodes[i].data
-        }
-      }
-    }
-
-    tree_nodes.push(aNode);
-
-
-
-
+  //HELPER FUNCTION: lock a given node with corresponding owner name
+  function lockNode(node, nodeOwner){
+    node.isLocked = true;
+    node.currentOwner = nodeOwner;
   }
 
+  //HELPER FUNCTION: unlock a node
+  function unlockNode(node){
+    node.isLocked = false;
+    node.currentOwner = "NONE";
+  }
+
+   //====================
+   //tree implementation ends
+   //====================
 
 
 
-
- config = {
-    container: "#tree-simple",
-    node: {
-        collapsable: true
-    },
-    connectors:{
-        type: "bCurve"
-    },
-    padding: 0
-};
-
-
-  tree_nodes.push(config);
-
-
-var my_chart = new Treant(tree_nodes);
-*/
-
-  function getParentJSON(parentNodeData, tree_nodes){
+function getParentJSON(parentNodeData, tree_nodes){
     for(var i=0; i< tree_nodes.length; i++){
       if(tree_nodes[i].text.name == parentNodeData)return tree_nodes[i];
     }
 
-    return null;
-  }
+return null;
+}
 
 
 function redrawWorkflowStructure(){
-    	var all_nodes = [];
+  var all_nodes = [];
   workflow.traverseDF(function(node) {
-
     all_nodes.push(node);
   });
 
   all_nodes.reverse();
 
-
-
-
-
   var tree_nodes = [];
 
   for(var i=0; i<all_nodes.length; i++){
 
-
     var aNode = null;
+
+    //assign color as per access for visulaization...
+    var nodeClass = "";
+    if(all_nodes[i].currentOwner == user_email)nodeClass = "lockedByMe";
 
     if(all_nodes[i].parent){
       aNode = {
         "parent": getParentJSON(all_nodes[i].parent.data, tree_nodes),
+        "HTMLclass": nodeClass,
         "text" : {
           "name": all_nodes[i].data
         }
       }
     }else{
       aNode = {
+        "HTMLclass": nodeClass,
         "text" : {
           "name": all_nodes[i].data
         }
@@ -776,14 +797,8 @@ function redrawWorkflowStructure(){
 
     tree_nodes.push(aNode);
 
-
-
-
   }
-
-
-
-   config = {
+  config = {
     container: "#tree-simple",
     node: {
         collapsable: true
@@ -792,18 +807,19 @@ function redrawWorkflowStructure(){
         type: "bCurve"
     },
     padding: 0
-};
+  };
 
 
   tree_nodes.push(config);
   tree_nodes.reverse();
 
-new Treant(tree_nodes);
+  new Treant(tree_nodes);
 
 }
 
 
-
+  //create parent workflow at the starting
+  var workflow = new Tree("workflow");
 
 
 
@@ -854,8 +870,12 @@ $(".setting_param").live('change',function () {
 });
 
 
-
-
+//lock all the param settings for the provided moduleID
+function lockParamsSettings(moduleToLock){
+    //select all the param settings for the module descendants...
+    $("#"+moduleToLock+" .setting_param").prop("disabled", true);
+    alert("disabled");
+}
 
 
 
@@ -863,7 +883,7 @@ $(".setting_param").live('change',function () {
 
 //adds the module to the pipeline. moduleID is unique throughout the whole pipeline
 //moduleName is the name of the module like: rgb2gray, medianFilter and so on
-function addModuleToPipeline(moduleID, moduleName){
+function addModuleToPipeline(whoAdded, moduleID, moduleName){
 
         var module_name = ''
         var documentation = ''
@@ -899,7 +919,8 @@ function addModuleToPipeline(moduleID, moduleName){
 
                 '<!-- Documentation -->' +
                 '<div style="margin:10px;font-size:17px;color:#000000;">' +
-                  ' ' + module_name + '<hr/>' +
+                  ' ' + module_name + ' (Module ' + moduleID + ')'+
+                  '<button class="node_floor_req" style="float:right;margin:5px;font-size:13px;">Request Node Access</button>'+'<hr/>' +
                    ' Documentation: <a style="font-size:12px;color:#000000;" href="#" class="documentation_show_hide">(Show/Hide)</a>' +
                     '<div class="documentation" style="background-color:#888888;display:none;font-size:14px;">' + documentation + '</div>' +
                 '</div>' +
@@ -932,7 +953,11 @@ function addModuleToPipeline(moduleID, moduleName){
 
             );//end of append
 
-            //if(isItMyFloor() == false)lockParamsSettings();
+            //if I did not added this module... lock the param settings...
+            if(whoAdded != user_email){
+                var modID = "module_id_"+moduleID;
+                lockParamsSettings(modID);
+            }
 
                 $('pre code').each(function (i, block) {
                     hljs.highlightBlock(block);
@@ -963,28 +988,53 @@ function updateNextUniqueModuleID(){
 
 
 
+$(".node_floor_req").live("click", function(){
+    var myPar = $(this).closest(".module");
+    var node_id = myPar.attr('id');
+    alert("Node ID: " + node_id);
+});
+
+
+//this function is invoked on new module addition request
+function onWorkflowModuleAdditionRequest(whoAdded, moduleID, moduleName){
+
+    if(getNextUniqueModuleID() != moduleID){
+        throw new Error('Synchronization Problem. Module IDs are not consistent over the network !!!');
+    }else{
+        //if synchronization is ok... add this node to the workflow
+        addModuleToPipeline(whoAdded,moduleID, moduleName);
+
+        //add the node to the workflow tree, default parent is 'workflow'
+        var addedNode = workflow.add("module_id_"+moduleID, "workflow", workflow.traverseDF);
+        //by default the newly added node/module is locked by its creater (unless he releases it)
+        lockNode(addedNode, whoAdded);
+
+
+        //prepare the next valid unique module id
+        updateNextUniqueModuleID();
+
+        //finally redraw the workflow structure (tree view)
+        redrawWorkflowStructure();
+    }
+}
+
+
 
 
     //bio test starts
 $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 
-    //allowed iff the user has the floor currently...
-    //if(isItMyFloor() == true){
         var newModuleID = getNextUniqueModuleID();
         var newModuleName = 'biodatacleaning';
-        addModuleToPipeline(newModuleID, newModuleName);
 
-        //prepare the next valid unique module id
-        updateNextUniqueModuleID();
+        //add the module to self...
+        onWorkflowModuleAdditionRequest(user_email, newModuleID, newModuleName);
 
-        workflow.add("module_id_"+newModuleID, "workflow", workflow.traverseDF);
-
-        redrawWorkflowStructure();
 
         //add the module to all remote clients as well...
-        //var moduleInfo = {"newModuleID": newModuleID, "newModuleName": newModuleName};
-        //notifyAll("remote_module_addition", moduleInfo);
-    //}
+        var moduleInfo = {"whoAdded":user_email,"newModuleID": newModuleID, "newModuleName": newModuleName};
+        notifyAll("remote_module_addition", moduleInfo);
+
 
 });
 
