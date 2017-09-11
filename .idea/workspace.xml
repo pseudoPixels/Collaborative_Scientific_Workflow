@@ -76,36 +76,47 @@
       <file leaf-file-name="telepointer_module_locking.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_module_locking.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="959" column="13" lean-forward="true" selection-start-line="959" selection-start-column="13" selection-end-line="959" selection-end-column="13" />
+            <state relative-caret-position="281">
+              <caret line="1203" column="0" lean-forward="true" selection-start-line="1203" selection-start-column="0" selection-end-line="1203" selection-end-column="0" />
               <folding>
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
-                <element signature="e#0#29377#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
+                <element signature="e#0#38075#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -144,8 +155,8 @@
       <file leaf-file-name="telepointer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="436" column="18" lean-forward="false" selection-start-line="436" selection-start-column="10" selection-end-line="436" selection-end-column="18" />
+            <state relative-caret-position="55">
+              <caret line="411" column="25" lean-forward="false" selection-start-line="411" selection-start-column="20" selection-end-line="411" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -173,15 +184,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>user_name</find>
-      <find>petty</find>
-      <find>chatRoom_send_msg_btn</find>
-      <find>hljs</find>
-      <find>addToConversation</find>
-      <find>collaboration_controls_request_turn</find>
-      <find>floor_owner_changed</find>
-      <find>isItMyFloor</find>
-      <find>requestFloor</find>
       <find>onFloorOwnerChanged</find>
       <find>cyan</find>
       <find>onFloor</find>
@@ -193,9 +195,25 @@
       <find>user</find>
       <find>remote_module_addition</find>
       <find>notifyALL</find>
-      <find>case</find>
       <find>lockParamsSettings</find>
       <find>lockPara</find>
+      <find>all_occupants_details</find>
+      <find>onFloorRe</find>
+      <find>lockThisNodeAndDescendants</find>
+      <find>onFloorOwn</find>
+      <find>unlockParamsSettings</find>
+      <find>Release No</find>
+      <find>notifyAll</find>
+      <find>changeParent</find>
+      <find>changeInfo</find>
+      <find>case</find>
+      <find>eq()</find>
+      <find>owner</find>
+      <find>unlockThisNodeAndDescendants</find>
+      <find>node_access_release</find>
+      <find>Requested</find>
+      <find>updateView_unlockThisNodeAndDescendants</find>
+      <find>onNodeAccessRequest</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -998,44 +1016,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="436" column="18" lean-forward="false" selection-start-line="436" selection-start-column="10" selection-end-line="436" selection-end-column="18" />
+        <state relative-caret-position="55">
+          <caret line="411" column="25" lean-forward="false" selection-start-line="411" selection-start-column="20" selection-end-line="411" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_module_locking.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="959" column="13" lean-forward="true" selection-start-line="959" selection-start-column="13" selection-end-line="959" selection-end-column="13" />
+        <state relative-caret-position="281">
+          <caret line="1203" column="0" lean-forward="true" selection-start-line="1203" selection-start-column="0" selection-end-line="1203" selection-end-column="0" />
           <folding>
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
-            <element signature="e#0#29377#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
+            <element signature="e#0#38075#0" expanded="false" />
           </folding>
         </state>
       </provider>

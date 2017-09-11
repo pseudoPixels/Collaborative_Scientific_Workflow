@@ -12,7 +12,8 @@ var user_email = "";
 //this id remain unique throughout the pipeline for a module
 var unique_module_id = 1;
 
-
+//all the node access requests are kept in the Q to serve as FIFO
+var nodeAccessRequestsQueue = [];
 
 $(document).ready(function(){
 
@@ -259,6 +260,18 @@ function onMessageRecieved(who, msgType, content) {
         case "remote_module_addition":
             onWorkflowModuleAdditionRequest(content.whoAdded, content.newModuleID, content.newModuleName);
             break;
+        case "node_access_request":
+            //var requestInfo ={"nodeID":nodeID, "requestedBy":user_email};
+            onNodeAccessRequest(content.requestedBy, content.nodeID);
+            break;
+        case "node_access_release":
+            onNodeAccessRelease(content.nodeID, content.requestedBy)
+            break;
+        case "parentChanged":
+            onModuleParentChange(content.moduleID, content.newParentID);
+            break;
+
+
 
     }
 }
@@ -688,7 +701,7 @@ function loginFailure(errorCode, message) {
     }
 
     //if the node is itself locked, then its NOT available for the requested user
-    if(theNode.isLocked == false)return false;
+    if(theNode.isLocked == true)return false;
 
     //if the node itself is not locked, check if any of its children are locked or not
     //if any of them are locked, the access is NOT granted...
@@ -705,17 +718,19 @@ function loginFailure(errorCode, message) {
 
   //someone has got the access to this node, so lock it and all its descendants
   Tree.prototype.lockThisNodeAndDescendants = function(newOwner,nodeData,  traversal) {
+    var theNode = this.getNode(nodeData, traversal);
     this.traverseDF_FromNode(theNode, function(node){
          //use helper function to load this node for the corresponding user
-         lockNode(theNode, newOwner);
+         lockNode(node, newOwner);
     });
   }
 
   //someone has released the access to this node, so UNLOCK it and all its descendants
   Tree.prototype.unlockThisNodeAndDescendants = function(nodeData,  traversal) {
+    var theNode = this.getNode(nodeData, traversal);
     this.traverseDF_FromNode(theNode, function(node){
          //use the helper function to unlock the node.
-         unlockNode(theNode);
+         unlockNode(node);
     });
   }
 
@@ -840,7 +855,16 @@ $(".btn_edit_code").live('click',function () {
     $(this).siblings('.edit_code').toggle(1000);
 });
 
-$(".setting_param").live('change',function () {
+
+
+var previousVal;
+$(".setting_param").live("focus", function(){
+  	//console.log($(this).val());
+
+  	//storing previous value to switch back to it in case user does not have permission for the
+  	//specified change.
+    previousVal = $(this).val();
+}).live('change',function () {
     //alert("you changed my value");
     //var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
     //alert(prev_code);
@@ -863,18 +887,97 @@ $(".setting_param").live('change',function () {
 
     //inform of this change to all the other clients...
 
-    workflow.changeParent(myPar.attr('id'), $(this).val(), workflow.traverseDF);
+    var newParent = workflow.getNode($(this).val(), workflow.traverseDF);
 
-    redrawWorkflowStructure();
+    if(newParent.isLocked == false){
+        $(this).val(previousVal);
+        alert("No Access to the Specified Module. Please Request for its Access First and Try ...");
+    }else if(newParent.isLocked==true && newParent.currentOwner != user_email){
+        $(this).val(previousVal);
+        alert("The specified module is NOT Accessable currently. Locked by " + newParent.currentOwner);
+    }else{
+        //workflow.changeParent(myPar.attr('id'), $(this).val(), workflow.traverseDF);
+        //redrawWorkflowStructure();
+        onModuleParentChange(myPar.attr('id'), $(this).val());
+
+        //notify all other about this change for consistency
+        var changeInfo = {"moduleID": myPar.attr('id'), "newParentID":$(this).val()};
+        notifyAll("parentChanged", changeInfo);
+    }
+
+
+
 
 });
+
+
+
+function onModuleParentChange(moduleID, newParentID){
+        //change the view on this client...
+        $("#"+moduleID+" .setting_param").eq(0).val(newParentID);
+
+        //change the object strcuture
+        workflow.changeParent(moduleID, newParentID, workflow.traverseDF);
+
+        //redraw the workflow structure based on this update
+        redrawWorkflowStructure();
+}
 
 
 //lock all the param settings for the provided moduleID
 function lockParamsSettings(moduleToLock){
     //select all the param settings for the module descendants...
     $("#"+moduleToLock+" .setting_param").prop("disabled", true);
-    alert("disabled");
+    //alert("disabled");
+}
+
+
+//unlock the param settings of the provided module id
+function unlockParamsSettings(moduleToUnlock){
+    //select all the param settings for the module descendants...
+    $("#"+moduleToUnlock+" .setting_param").prop("disabled", false);
+}
+
+
+
+//change the request btn state for the use of the client
+function changeRequestBtnState(moduleID, newText, isDisabled, isVisible){
+    $("#"+moduleID+" .node_floor_req").text(newText);
+    $("#"+moduleID+" .node_floor_req").prop('disabled', isDisabled);
+
+    if(isVisible == true)$("#"+moduleID+" .node_floor_req").show();
+    else $("#"+moduleID+" .node_floor_req").hide();
+}
+
+
+//this node and its descendants has been locked by other client
+//so lock these nodes for this client and also change request btn state for later request by this client
+function updateView_lockThisNodeAndDescendants(parentNodeData){
+    var theNode = workflow.getNode(parentNodeData, workflow.traverseDF);
+    workflow.traverseDF_FromNode(theNode, function(node){
+          lockParamsSettings(node.data);
+
+          //change node access btn... so he can request the access for the node later
+          changeRequestBtnState(node.data, "Request Node Access", false, true);
+    });
+}
+
+//This client has got the access for the node and its descendants
+//so unlock the nodes.... and change the request btn state as well
+function updateView_unlockThisNodeAndDescendants(parentNodeData){
+    var theNode = workflow.getNode(parentNodeData, workflow.traverseDF);
+    workflow.traverseDF_FromNode(theNode, function(node){
+          unlockParamsSettings(node.data);
+
+          //change node access btn...
+          //this client is currently using these nodes... so change state for release node Access
+          //hide it for all the children nodes
+          changeRequestBtnState(node.data, "Release Node Access", true, false);
+    });
+
+    //only for the parent show/able the release node access btn
+    changeRequestBtnState(parentNodeData, "Release Node Access", false, true);
+
 }
 
 
@@ -890,6 +993,10 @@ function addModuleToPipeline(whoAdded, moduleID, moduleName){
         var moduleSourceCode_settings = ''
         var moduleSourceCode_main = ''
         var moduleSourceCode_html = ''
+
+        var nodeAccessText;
+        if(whoAdded == user_email)nodeAccessText = "Release Node Access";
+        else nodeAccessText = "Request Node Access";
 
         $.ajax({
             type: "POST",
@@ -920,7 +1027,7 @@ function addModuleToPipeline(whoAdded, moduleID, moduleName){
                 '<!-- Documentation -->' +
                 '<div style="margin:10px;font-size:17px;color:#000000;">' +
                   ' ' + module_name + ' (Module ' + moduleID + ')'+
-                  '<button class="node_floor_req" style="float:right;margin:5px;font-size:13px;">Request Node Access</button>'+'<hr/>' +
+                  '<button class="node_floor_req" style="float:right;margin:5px;font-size:13px;">'+ nodeAccessText +'</button>'+'<hr/>' +
                    ' Documentation: <a style="font-size:12px;color:#000000;" href="#" class="documentation_show_hide">(Show/Hide)</a>' +
                     '<div class="documentation" style="background-color:#888888;display:none;font-size:14px;">' + documentation + '</div>' +
                 '</div>' +
@@ -983,7 +1090,105 @@ function getNextUniqueModuleID(){
 }
 
 function updateNextUniqueModuleID(){
+
     unique_module_id = unique_module_id + 1;
+}
+
+//removes a passed request from the waiting queue
+//called when someone gets access from the queue
+function removeRequestFromQueue(requestInfo){
+    for(var i=0;i<nodeAccessRequestsQueue.length; i++){
+        if(nodeAccessRequestsQueue[i].nodeID == requestInfo.nodeID && nodeAccessRequestsQueue[i].requestedBy == requestInfo.requestedBy){
+            nodeAccessRequestsQueue.splice(i,1);
+        }
+    }
+}
+
+
+//informs if a request is already in the queue
+function isTheRequestAlreadyInQueue(requestInfo){
+    for(var i=0;i<nodeAccessRequestsQueue.length; i++){
+        if(nodeAccessRequestsQueue[i].nodeID == requestInfo.nodeID && nodeAccessRequestsQueue[i].requestedBy == requestInfo.requestedBy){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
+//iterate over the node access requests
+//and dispatch any node request if possible.
+function dispatchNodeRequests(){
+    for(var i=0;i<nodeAccessRequestsQueue.length; i++){
+        var requestInfo = nodeAccessRequestsQueue[i];
+
+        if(workflow.isNodeFloorAvailable(requestInfo.nodeID, workflow.traverseDF)==true){
+            //the node access is now attainable... request to self
+            onNodeAccessRequest(requestInfo.requestedBy, requestInfo.nodeID);
+
+            //also inform all other clients
+            var reqInfo ={"nodeID":requestInfo.nodeID, "requestedBy":requestInfo.requestedBy};
+            notifyAll("node_access_request", reqInfo);
+        }
+    }
+}
+
+//some of the nodes were released
+function onNodeAccessRelease(nodeID, releasedBy){
+    var theNode = workflow.getNode(nodeID, workflow.traverseDF);
+    if(theNode){
+        if(theNode.parent.isLocked == true)throw new Error('Could not Release Child Node. Must release the parent node first.!');
+        //unlock the node and its descendants....
+        workflow.unlockThisNodeAndDescendants(theNode.data, workflow.traverseDF);
+
+        //update the view... lock its view
+        updateView_lockThisNodeAndDescendants(nodeID);
+
+
+        //the nodes released successfully.
+        return true;
+
+    }else{
+        throw new Error('Node does not exist to Release!!!');
+    }
+
+    return false;
+}
+
+
+//someone requested access to a node
+function onNodeAccessRequest(requestedBy, nodeID){
+
+    //if the requested node floor is available, give access to the requester
+    if(workflow.isNodeFloorAvailable(nodeID, workflow.traverseDF) == true){
+        //lock this and all its descendants node for the requested client
+        workflow.lockThisNodeAndDescendants(requestedBy, nodeID, workflow.traverseDF);
+
+        //alert("onNodeAccessRequest: " + requestedBy);
+        //if this client was the requester, unlock parent and disencedants requested nodes
+        if(requestedBy == user_email){
+            updateView_unlockThisNodeAndDescendants(nodeID);//unlock for this client
+        }else{
+            updateView_lockThisNodeAndDescendants(nodeID);//lock this node and its descendants for this client.
+        }
+
+
+        //in case the request was waiting the queue... remove it
+        var requestInfo ={"nodeID":nodeID, "requestedBy":requestedBy};
+        removeRequestFromQueue(requestInfo);
+
+    }
+    //node is not currently accessable (locked by someone else), add the request to the queue
+    else{
+        var requestInfo ={"nodeID":nodeID, "requestedBy":requestedBy};
+        //push the request to the queue if does not already exist in the queue
+        if(isTheRequestAlreadyInQueue(requestInfo) == false){
+            nodeAccessRequestsQueue.push(requestInfo);
+        }
+
+    }
 }
 
 
@@ -991,7 +1196,45 @@ function updateNextUniqueModuleID(){
 $(".node_floor_req").live("click", function(){
     var myPar = $(this).closest(".module");
     var node_id = myPar.attr('id');
-    alert("Node ID: " + node_id);
+
+    if($(this).text() == "Request Node Access"){
+        $(this).prop('disabled', true);
+        $(this).text("Requested");
+
+
+        //update the self state
+        onNodeAccessRequest(user_email, node_id);
+
+
+
+        //inform all other clients of this node access
+        var requestInfo ={"nodeID":node_id, "requestedBy":user_email};
+        notifyAll("node_access_request", requestInfo);
+
+
+
+    }
+    else if($(this).text() == "Release Node Access"){
+        if(onNodeAccessRelease(node_id, user_email)==true){
+            //inform all other clients of this node release
+            var requestInfo ={"nodeID":node_id, "requestedBy":user_email};
+            notifyAll("node_access_release", requestInfo);
+
+            //on this event change... try dispatching eligible requests
+            dispatchNodeRequests();
+
+        }else{
+            alert("Could not Release Child Node Access. Please remove the parent node access First!");
+        }
+
+
+    }else{
+        throw new Error("Error Requesting Node Access!");
+    }
+
+
+
+
 });
 
 
