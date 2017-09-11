@@ -1146,6 +1146,8 @@ function onNodeAccessRelease(nodeID, releasedBy){
         //update the view... lock its view
         updateView_lockThisNodeAndDescendants(nodeID);
 
+        //update the workflow structure view
+        redrawWorkflowStructure();
 
         //the nodes released successfully.
         return true;
@@ -1153,6 +1155,9 @@ function onNodeAccessRelease(nodeID, releasedBy){
     }else{
         throw new Error('Node does not exist to Release!!!');
     }
+
+    //update the workflow structure view
+    redrawWorkflowStructure();
 
     return false;
 }
@@ -1189,6 +1194,9 @@ function onNodeAccessRequest(requestedBy, nodeID){
         }
 
     }
+
+    //update the workflow structure view
+    redrawWorkflowStructure();
 }
 
 
