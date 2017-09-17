@@ -591,6 +591,65 @@ def cvs_module_locking():
 
 
 
+@app.route('/cvs_atrr_level_locking')
+def cvs_atrr_level_locking():
+	module = ''
+	for row in views_by_pipeline_module(g.couch):
+		if row.key == 'rgb2gray':
+			module = PipelineModule.load(row.value)
+
+	moduleSourceCode_main = getModuleCodes(module.code_link_main)
+	moduleSourceCode_settings = getModuleCodes(module.code_link_settings)
+	moduleSourceCode_html = getModuleCodes(module.code_link_html)
+
+	#load user details...
+	row = (views_by_email(g.couch))[session.get('p2irc_user_email')]
+	p2irc_user = P2IRC_User.load(list(row)[0].value)
+	first_name = p2irc_user.first_name
+	last_name = p2irc_user.last_name
+	email = p2irc_user.email
+	user_role = p2irc_user.user_role
+	#store the user role in session
+	session['user_role'] = user_role
+
+	#get the list of all saved pipelines from DB
+	saved_pipelines = getSavedPipelines(session.get('p2irc_user_email'))
+	#get the list of all shared pipelines with this user from DB
+	shared_pipelines = getSharedPipelines(session.get('p2irc_user_email'))
+	#get all other user details
+	all_other_users = getAllUsersDetails(session.get('p2irc_user_email'))
+
+
+
+
+
+
+
+	return render_template('cloud_vision_pipeline_save_attr_level_locking.html',
+	module_name = module.module_name,
+	documentation = module.documentation,
+	moduleSourceCode_settings = moduleSourceCode_settings,
+	moduleSourceCode_main = moduleSourceCode_main,
+	moduleSourceCode_html = html.unescape(moduleSourceCode_html),
+	first_name = first_name,
+	last_name = last_name,
+	email = email,
+	user_role = user_role,
+	saved_pipelines = saved_pipelines,
+	shared_pipelines = shared_pipelines,
+    all_other_users=all_other_users)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -694,8 +753,8 @@ def p2irc_login():
 		#email = p2irc_user.email
 		session['p2irc_user_email'] = email
 		#return redirect(url_for('cvs')) #turn based collaboration... uncomment for this feature
-		return redirect(url_for('cvs_module_locking'))
-
+		#return redirect(url_for('cvs_module_locking')) #modular locking based collaboration... uncomment for this feature
+		return redirect(url_for('cvs_atrr_level_locking')) #attr level locking based collaboration... uncomment for this feature
 
 	#if not row or list(row)[0].value != password:
 	#	return redirect(url_for('p2irc'))
