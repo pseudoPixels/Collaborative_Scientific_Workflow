@@ -270,8 +270,17 @@ function onMessageRecieved(who, msgType, content) {
         case "parentChanged":
             onModuleParentChange(content.moduleID, content.newParentID, content.parentIndex);
             break;
-
-
+        case "paramSettingChanged":
+            //var changeInfo = {"moduleID": myPar.attr('id'), "newSettingValue":$(this).val(), "paramSettingIndex":paramSettingIndex};
+            onParamSettingChange(content.moduleID, content.newSettingValue, content.paramSettingIndex);
+            break;
+        case "lockIndividualParamSetting":
+            //lockInfo = {"moduleID": myPar.attr('id'), "paramSettingIndex":paramSettingIndex};
+            lockOnlyIndividualParamSetting(content.moduleID, content.paramSettingIndex);
+            break;
+        case "unlockIndividualParamSetting":
+            unlockOnlyIndividualParamSetting(content.moduleID, content.paramSettingIndex);
+            break;
 
     }
 }
@@ -914,6 +923,74 @@ $(".setting_param_parent").live("focus", function(){
 
 
 });
+
+
+
+
+
+
+//param settings change
+$(".setting_param").live("focus", function(){
+    var myPar = $(this).closest(".module");
+    var paramSettingIndex = $(this).index("#" + myPar.attr('id') + "  .setting_param");
+    var lockInfo = {"moduleID": myPar.attr('id'), "paramSettingIndex":paramSettingIndex};
+
+    notifyAll("lockIndividualParamSetting", lockInfo);
+
+    previousVal = $(this).val();
+}).live('change',function () {
+    //alert("you changed my value");
+    //var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
+    //alert(prev_code);
+    //$(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val(prev_code + "\n" + $(this).val());
+    $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val('');
+    $(this).siblings(".setting_param").each(function () {
+        //alert($(this).val());
+        var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
+        $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val(prev_code + "\n" + $(this).val());
+    });
+    var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
+    $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val(prev_code + "\n" + $(this).val());
+
+
+
+    //get module id and param information for change in the remote clients
+    var myPar = $(this).closest(".module");
+    //myPar.attr('id');
+    var paramSettingIndex = $(this).index("#" + myPar.attr('id') + "  .setting_param");
+
+    var changeInfo = {"moduleID": myPar.attr('id'), "newSettingValue":$(this).val(), "paramSettingIndex":paramSettingIndex};
+    notifyAll("paramSettingChanged", changeInfo);
+
+
+}).live("blur", function(){
+    var myPar = $(this).closest(".module");
+    var paramSettingIndex = $(this).index("#" + myPar.attr('id') + "  .setting_param");
+    var unlockInfo = {"moduleID": myPar.attr('id'), "paramSettingIndex":paramSettingIndex};
+
+    notifyAll("unlockIndividualParamSetting", unlockInfo);
+
+});
+
+
+
+
+function lockOnlyIndividualParamSetting(moduleID, paramSettingIndex){
+    $("#"+moduleID+" .setting_param").eq(parseInt(paramSettingIndex)).prop('disabled', true);
+}
+
+function unlockOnlyIndividualParamSetting(moduleID, paramSettingIndex){
+    $("#"+moduleID+" .setting_param").eq(parseInt(paramSettingIndex)).prop('disabled', false);
+}
+
+
+
+function onParamSettingChange(moduleID, newSettingValue, paramSettingIndex){
+    $("#"+moduleID+" .setting_param").eq(parseInt(paramSettingIndex)).val(newSettingValue);
+}
+
+
+
 
 
 
