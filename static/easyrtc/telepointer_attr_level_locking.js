@@ -268,7 +268,7 @@ function onMessageRecieved(who, msgType, content) {
             onNodeAccessRelease(content.nodeID, content.requestedBy)
             break;
         case "parentChanged":
-            onModuleParentChange(content.moduleID, content.newParentID);
+            onModuleParentChange(content.moduleID, content.newParentID, content.parentIndex);
             break;
 
 
@@ -860,9 +860,9 @@ $(".btn_edit_code").live('click',function () {
 
 
 var previousVal;
-$(".setting_param").live("focus", function(){
+$(".setting_param_parent").live("focus", function(){
   	//console.log($(this).val());
-
+    //alert("focused...");
   	//storing previous value to switch back to it in case user does not have permission for the
   	//specified change.
     previousVal = $(this).val();
@@ -885,7 +885,10 @@ $(".setting_param").live("focus", function(){
     //get module id and param information for change in the remote clients
     var myPar = $(this).closest(".module");
     //myPar.attr('id');
-    //alert($(this).index("#" + myPar.attr('id') + "  .setting_param"));
+    var parentIndex = $(this).index("#" + myPar.attr('id') + "  .setting_param_parent");
+
+    //alert(parentIndex);
+    //alert("parent changed...");
 
     //inform of this change to all the other clients...
 
@@ -903,7 +906,7 @@ $(".setting_param").live("focus", function(){
         onModuleParentChange(myPar.attr('id'), $(this).val());
 
         //notify all other about this change for consistency
-        var changeInfo = {"moduleID": myPar.attr('id'), "newParentID":$(this).val()};
+        var changeInfo = {"moduleID": myPar.attr('id'), "newParentID":$(this).val(), "parentIndex":parentIndex};
         notifyAll("parentChanged", changeInfo);
     }
 
@@ -914,9 +917,9 @@ $(".setting_param").live("focus", function(){
 
 
 
-function onModuleParentChange(moduleID, newParentID){
+function onModuleParentChange(moduleID, newParentID, parentIndex){
         //change the view on this client...
-        $("#"+moduleID+" .setting_param").eq(0).val(newParentID);
+        $("#"+moduleID+" .setting_param_parent").eq(parseInt(parentIndex)).val(newParentID);
 
         //change the object strcuture
         workflow.changeParent(moduleID, newParentID, workflow.traverseDF);
@@ -1063,10 +1066,10 @@ function addModuleToPipeline(whoAdded, moduleID, moduleName){
             );//end of append
 
             //if I did not added this module... lock the param settings...
-            if(whoAdded != user_email){
+            /*if(whoAdded != user_email){
                 var modID = "module_id_"+moduleID;
                 lockParamsSettings(modID);
-            }
+            }*/
 
                 $('pre code').each(function (i, block) {
                     hljs.highlightBlock(block);

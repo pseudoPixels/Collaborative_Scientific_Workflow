@@ -1,5 +1,5 @@
 <br/>
-Select Input Files Directory: <select  class="setting_param" name="image_location"> <!-- CHANGE IN THIS LINE -->
+Select Input Files Directory: <select  class="setting_param setting_param_parent" name="image_location"> <!-- CHANGE IN THIS LINE -->
       <option value="in_file_path = 'bioFiles/'" selected>Directory 1</option>
       <option value="in_file_path = 'bioFiles_out/'" >Directory 2</option>
       <option value="module_id_1" >From Module 1 Output</option>
@@ -19,4 +19,8 @@ Select Output Files Directory: <select  class="setting_param" name="image_locati
 </select> 
 
 
+<br/><br/>
+
+Select Cleaning Threshold:
+<input type="text" class="setting_param" value="cleaning_threshold=10.0" name="cleaning_threshold" size="45"/>
 <br/><br/>
