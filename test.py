@@ -667,22 +667,25 @@ def webrtctest():
 @app.route('/get_module_details',  methods=['POST'])
 def get_module_details():
 	p_module_key = request.form['p_module_key']
-	module = ''
-	for row in views_by_pipeline_module(g.couch):
-		if row.key == p_module_key: #'rgb2gray'
-			module = PipelineModule.load(row.value)
 
-	moduleSourceCode_main = getModuleCodes(module.code_link_main)
-	moduleSourceCode_settings = getModuleCodes(module.code_link_settings)
-	moduleSourceCode_html = getModuleCodes(module.code_link_html)
+	modulesPath = 'pipeline_modules/'
 
-	
-	return jsonify({ 'module_name':module.module_name,
-	'documentation': module.documentation, 
+
+	moduleSourceCode_main = getModuleCodes(modulesPath+p_module_key+'/'+p_module_key+'_main.py')
+	moduleSourceCode_settings = getModuleCodes(modulesPath+p_module_key+'/'+p_module_key+'_settings.py')
+	moduleSourceCode_html = getModuleCodes(modulesPath+p_module_key+'/'+p_module_key+'_html.txt')
+	module_documentation = getModuleCodes(modulesPath+p_module_key+'/'+p_module_key+'_doc.txt')
+
+
+	return jsonify({ 'module_name':p_module_key,
+	'documentation': module_documentation,
 	'moduleSourceCode_settings': moduleSourceCode_settings,
 	'moduleSourceCode_main': moduleSourceCode_main,
 	'moduleSourceCode_html': moduleSourceCode_html,
 	'user_role': session.get('user_role') })
+
+
+
 
 @app.route('/save_pipeline/',  methods=['POST'])
 def save_pipeline():
