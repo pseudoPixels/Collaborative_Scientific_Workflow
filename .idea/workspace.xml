@@ -20,34 +20,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="670" column="19" lean-forward="false" selection-start-line="670" selection-start-column="19" selection-end-line="670" selection-end-column="19" />
+            <state relative-caret-position="221">
+              <caret line="665" column="0" lean-forward="true" selection-start-line="665" selection-start-column="0" selection-end-line="665" selection-end-column="0" />
               <folding>
                 <element signature="e#0#78#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="biodatacleaning_main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pipeline_modules/biodatacleaning/biodatacleaning_main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="biocalc_main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pipeline_modules/biocalc/biocalc_main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -93,41 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="telepointer_attr_level_locking.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="telepointer_attr_level_locking.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_attr_level_locking.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2600">
-              <caret line="974" column="0" lean-forward="true" selection-start-line="974" selection-start-column="0" selection-end-line="974" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="biodatacleaning_html.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pipeline_modules/biodatacleaning/biodatacleaning_html.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="telepointer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9042">
-              <caret line="411" column="25" lean-forward="false" selection-start-line="411" selection-start-column="20" selection-end-line="411" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="biocalc_html.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pipeline_modules/biocalc/biocalc_html.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="1" column="53" lean-forward="false" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="53" />
+            <state relative-caret-position="-1111">
+              <caret line="1283" column="0" lean-forward="true" selection-start-line="1283" selection-start-column="0" selection-end-line="1283" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -145,12 +95,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getNameForAnEmail</find>
-      <find>releaseFloor</find>
-      <find>onNewFloorRequest</find>
-      <find>addModuleToPipeline</find>
-      <find>user</find>
-      <find>remote_module_addition</find>
       <find>notifyALL</find>
       <find>lockParamsSettings</find>
       <find>lockPara</find>
@@ -169,12 +113,18 @@
       <find>node_access_release</find>
       <find>Requested</find>
       <find>updateView_unlockThisNodeAndDescendants</find>
-      <find>onNodeAccessRequest</find>
       <find>redrawWorkflowStructure</find>
-      <find>parentChanged</find>
-      <find>onModuleParentChange</find>
       <find>case</find>
       <find>lockPar</find>
+      <find>lockOnlyIn</find>
+      <find>redraw</find>
+      <find>onNodeAccessRequest</find>
+      <find>updateView_lo</find>
+      <find>lockParam</find>
+      <find>onModuleParentChange</find>
+      <find>parentChange</find>
+      <find>parentChanged</find>
+      <find>addMo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -203,9 +153,9 @@
         <option value="$PROJECT_DIR$/templates/cloud_vision_pipeline_save_attr_level_locking.js.html" />
         <option value="$PROJECT_DIR$/pipeline_modules/biodatacleaning/biodatacleaning_html.txt" />
         <option value="$PROJECT_DIR$/static/easyrtc/telepointer_module_locking.js" />
-        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_attr_level_locking.js" />
         <option value="$PROJECT_DIR$/pipeline_modules/biodatacleaning/biodatacleaning_doc.txt" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_attr_level_locking.js" />
       </list>
     </option>
   </component>
@@ -240,38 +190,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Collaborative_Scientific_Workflow" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Collaborative_Scientific_Workflow" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Collaborative_Scientific_Workflow" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pipeline_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Collaborative_Scientific_Workflow" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Collaborative_Scientific_Workflow" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pipeline_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="biodatacleaning" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -865,14 +783,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_attr_level_locking.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2600">
-          <caret line="974" column="0" lean-forward="true" selection-start-line="974" selection-start-column="0" selection-end-line="974" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save_attr_level_locking.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1748">
@@ -938,11 +848,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="670" column="19" lean-forward="false" selection-start-line="670" selection-start-column="19" selection-end-line="670" selection-end-column="19" />
+        <state relative-caret-position="221">
+          <caret line="665" column="0" lean-forward="true" selection-start-line="665" selection-start-column="0" selection-end-line="665" selection-end-column="0" />
           <folding>
             <element signature="e#0#78#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_attr_level_locking.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1111">
+          <caret line="1283" column="0" lean-forward="true" selection-start-line="1283" selection-start-column="0" selection-end-line="1283" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

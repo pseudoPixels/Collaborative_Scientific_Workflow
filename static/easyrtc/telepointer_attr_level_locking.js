@@ -265,10 +265,15 @@ function onMessageRecieved(who, msgType, content) {
             onNodeAccessRequest(content.requestedBy, content.nodeID);
             break;
         case "node_access_release":
-            onNodeAccessRelease(content.nodeID, content.requestedBy)
+            onNodeAccessRelease(content.nodeID, content.requestedBy);
             break;
         case "parentChanged":
             onModuleParentChange(content.moduleID, content.newParentID, content.parentIndex);
+            //show notification to all other clients based on setting.
+            if(content.showNotification == true){
+                alert("Incoming Datalink for "+content.moduleID + " changed to "+content.newParentID + " by other users.");
+            }
+
             break;
         case "paramSettingChanged":
             //var changeInfo = {"moduleID": myPar.attr('id'), "newSettingValue":$(this).val(), "paramSettingIndex":paramSettingIndex};
@@ -914,8 +919,18 @@ $(".setting_param_parent").live("focus", function(){
         //redrawWorkflowStructure();
         onModuleParentChange(myPar.attr('id'), $(this).val());
 
+
+
         //notify all other about this change for consistency
-        var changeInfo = {"moduleID": myPar.attr('id'), "newParentID":$(this).val(), "parentIndex":parentIndex};
+        //alert($("#" + myPar.attr('id') + " .action_for_datalink_change").val());
+
+        //get the user choice on notification showing on this datalink change...
+        var showNotification = false;
+        if($("#" + myPar.attr('id') + " .action_for_datalink_change").val() == "ntifyAll")showNotification = true;
+        else showNotification = false;
+
+
+        var changeInfo = {"moduleID": myPar.attr('id'), "newParentID":$(this).val(), "parentIndex":parentIndex, "showNotification":showNotification};
         notifyAll("parentChanged", changeInfo);
     }
 
@@ -1065,6 +1080,16 @@ function updateView_unlockThisNodeAndDescendants(parentNodeData){
 
 
 
+$(".action_for_datalink_change").live("change", function() {
+
+	var parentModuleID = $(this).closest(".module").attr('id');
+    var reqBtn = $("#"+parentModuleID+ " .reqSubworkflowLock");
+    if($(this).val() == "reqSubworkflowLock"){
+    		reqBtn.show();
+    }
+});
+
+
 
 //adds the module to the pipeline. moduleID is unique throughout the whole pipeline
 //moduleName is the name of the module like: rgb2gray, medianFilter and so on
@@ -1100,7 +1125,7 @@ function addModuleToPipeline(whoAdded, moduleID, moduleName){
                 }
 
 
-
+                //'<button class="node_floor_req" style="float:right;margin:5px;font-size:13px;">'+ nodeAccessText +'</button>'+
 
                 //append new module to the pipeline...
                 $("#img_processing_screen").append(
@@ -1109,7 +1134,20 @@ function addModuleToPipeline(whoAdded, moduleID, moduleName){
                 '<!-- Documentation -->' +
                 '<div style="margin:10px;font-size:17px;color:#000000;">' +
                   ' ' + module_name + ' (Module ' + moduleID + ')'+
-                  '<button class="node_floor_req" style="float:right;margin:5px;font-size:13px;">'+ nodeAccessText +'</button>'+'<hr/>' +
+
+
+                    '<select class="action_for_datalink_change" style="float:right;font-size:14px;margin-top:3px;">'+
+                    '    <option value="noAction">None</option>'+
+                    '   <option value="ntifyAll">Notify Others on Change</option>'+
+                    '    <option value="reqSubworkflowLock">Request Subworkflow Locking</option>'+
+                    '</select>'+
+                    '<button class="reqSubworkflowLock" style="float:right;margin-right:2px;display:none;font-size:14px;margin-top:3px;">'+
+                    '    Request Subworkflow Locking'+
+                    '</button> '+
+
+
+
+                  '<hr/>' +
                    ' Documentation: <a style="font-size:12px;color:#000000;" href="#" class="documentation_show_hide">(Show/Hide)</a>' +
                     '<div class="documentation" style="background-color:#888888;display:none;font-size:14px;">' + documentation + '</div>' +
                 '</div>' +
