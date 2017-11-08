@@ -64,7 +64,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-   <link rel="stylesheet" href="{{ url_for('static',filename='highlight/highlight/styles/railscasts.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static',filename='highlight/highlight/styles/github.css') }}">
    <script src="{{ url_for('static',filename='highlight/highlight/highlight.pack.js') }}"></script>
 
 
@@ -334,7 +334,7 @@ background: #000000;
               	  <p class="centered"><a href="profile.html"><img src="{{ url_for('static',filename='assets/img/ui-sam.jpg') }}" class="img-circle" width="60"></a></p>
 
                   
-              	  <h5 class="centered">Golam Mostaeen</h5>
+              	  <h5 class="centered">User 5</h5>
               	  	
                   <li class="mt">
                       <a class="active" href="http://127.0.0.1:5000/ccv">
@@ -438,7 +438,7 @@ background: #000000;
       <section id="main-content">
           <section class="wrapper">
 
-              <div class="row" style="background:#BBBBBB;" >
+              <div class="row" style="background:#EEEEEE;" >
                   <div class="col-lg-9 main-chart" style="width:80%;" id="img_processing_screen">
                 
   
@@ -450,19 +450,20 @@ background: #000000;
 <input type="hidden" id="auto_validation_neuralNet" value="{{ neural_net_response }}"  >
 <input type="hidden" id="auto_validation_svm" value="{{ svm_response }}"  >
 
+                      <!--
 <label class="switch">
       <input class="switch-input" type="checkbox" style="width: 100px !important;" />
       <span class="switch-label" data-on="TP" data-off="FP" style="width: 100px !important;"></span> <span class="switch-handle" ></span> </label>
 
 <input type="range" name="points" min="0" max="10" style="width: 100px !important;">
-
+-->
 
 <div style="width:100%;float:right;">
-  <button class="myButton" style="float:right;margin:5px;background-color:#006600;" id="btn_tp_clone">Very Important</button>
-  <button class="fpButton" style="float:right;margin:5px;background-color:#32c164;" id="btn_si_clone">Somewhat Important</button>
+  <button  style="float:right;margin:5px;" id="btn_tp_clone">True Positive</button>
+  <!--<button class="fpButton" style="float:right;margin:5px;background-color:#32c164;" id="btn_si_clone">Somewhat Important</button>
   <button class="fpButton" style="float:right;margin:5px;background-color:#f48b41;" id="btn_neutral_clone">Neutral</button>
-  <button class="fpButton" style="float:right;margin:5px;background-color:#f47141;" id="btn_ui_clone">Unimportant</button>
-  <button class="fpButton" style="float:right;margin:5px;background-color:#f44242;" id="btn_fp_clone">False Positive</button>  
+  <button class="fpButton" style="float:right;margin:5px;background-color:#f47141;" id="btn_ui_clone">Unimportant</button>-->
+  <button  style="float:right;margin:5px;" id="btn_fp_clone">False Positive</button>
 </div>                 
                       
 <pre style="width:50%; background-color:#333333;float:left;" >
@@ -481,9 +482,13 @@ background: #000000;
   </code>
 </pre>
 
-
-
-
+<div>
+<p>System Clonesets for Validation: Weka</p><br>
+<p>Clone Fragment #1: 'src/main/java/weka/core/mathematicalexpression/Parser.java'</p>
+ <p>Start Line: 913, End Line: 919</p> <br>
+<p>Clone Fragment #2: 'src/main/java/weka/filters/unsupervised/instance/subsetbyexpression/Parser.java'</p>
+<p>Start Line: 859, End Line: 864</p>
+</div>
 
 
 
@@ -548,22 +553,47 @@ background: #000000;
                       <!-- First Member -->
                       <div class="desc">
                       	<div class="thumb">
-                      		<img class="img-circle" src="static/img/happy.png" width="35px" height="35px" align="" id="img_response_neuralnet">
+                      		<!--<img class="img-circle" src="static/img/happy.png" width="35px" height="35px" align="" id="img_response_neuralnet">-->
                       	</div>
                       	<div class="details">
-                      		<p><a href="#" style="color:#ffffff;text-size:15px;">Neural Network</a><br/>
+                      		<p><a href="#" style="color:#ffffff;text-size:15px;">ANN(Backpropagation)</a><br/>
                       		   <span id="txt_response_neuralnet" ></span>
                       		</p>
                       	</div>
                       </div>
+
                       <!-- Second Member -->
                       <div class="desc">
                         <div class="thumb">
-                          <img class="img-circle" src="static/img/happy.png" width="35px" height="35px" align="" id="img_response_svm">
+                          <!--<img class="img-circle" src="static/img/happy.png" width="35px" height="35px" align="" id="img_response_svm">-->
                         </div>
                         <div class="details">
-                          <p><a href="#" style="color:#ffffff;text-size:15px;">SVM</a><br/>
+                          <p><a href="#" style="color:#ffffff;text-size:15px;">Deep Learning</a><br/>
+                             <span id="txt_response_deep"></span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <!-- Second Member -->
+                      <div class="desc">
+                        <div class="thumb">
+                          <!--<img class="img-circle" src="static/img/happy.png" width="35px" height="35px" align="" id="img_response_svm">-->
+                        </div>
+                        <div class="details">
+                          <p><a href="#" style="color:#ffffff;text-size:15px;">K* Classifier</a><br/>
                              <span id="txt_response_svm"></span>
+                          </p>
+                        </div>
+                      </div>
+
+
+                      <div class="desc">
+                        <div class="thumb">
+                          <!--<img class="img-circle" src="static/img/happy.png" width="35px" height="35px" align="" id="img_response_svm">-->
+                        </div>
+                        <div class="details">
+                          <p><a href="#" style="color:#ffffff;text-size:15px;">Bayes Network</a><br/>
+                             <span id="txt_response_bayes"></span>
                           </p>
                         </div>
                       </div>
@@ -582,7 +612,8 @@ background: #000000;
                         </select>
 
                       </div>
-                      <!-- Second Action -->
+                      <!--
+
                       <div class="desc">
                         <div class="thumb">
                           <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
@@ -594,7 +625,7 @@ background: #000000;
                         </div>
                       </div>
                       
-                      <!-- Fourth Action -->
+
                       <div class="desc">
                         <div class="thumb">
                           <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
@@ -605,7 +636,7 @@ background: #000000;
                           </p>
                         </div>
                       </div>
-                      <!-- Fifth Action -->
+
                       <div class="desc">
                         <div class="thumb">
                           <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
@@ -616,7 +647,7 @@ background: #000000;
                           </p>
                         </div>
                       </div>
-
+-->
                         <!-- CALENDAR-->
                         <div id="calendar" class="mb" style="visibility:hidden;">
                             <div class="panel green-panel no-margin">

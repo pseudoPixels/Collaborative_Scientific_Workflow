@@ -1059,9 +1059,10 @@ class WorkflowLockingTurn(Document):
 	workflow_id = TextField()
 	floor_flag = TextField(default='unoccupied')
 	request_queue = ListField(TextField())
+	current_floor_owner = TextField()
 
 
-locking_turn_current_floor_owner = 'NONE'
+locking_turn_current_floor_owner = 'NONESRV'
 
 @app.route('/locking_turn_request_floor/',  methods=['POST'])
 def locking_turn_request_floor():
@@ -1077,6 +1078,8 @@ def locking_turn_request_floor():
 
 			if workflow_locking_doc.floor_flag == "unoccupied":
 				workflow_locking_doc.floor_flag = "occupied"
+				workflow_locking_doc.current_floor_owner = floor_requestor
+				#locking_turn_current_floor_owner = floor_requestor
 				workflow_locking_doc.store()
 				locking_turn_current_floor_owner = floor_requestor
 				haveIGotTheFloor = True
@@ -1107,6 +1110,7 @@ def locking_turn_release_floor():
 			if len(workflow_locking_doc.request_queue)>= 1:
 				#new floor owner
 				locking_turn_current_floor_owner = workflow_locking_doc.request_queue[0]
+				workflow_locking_doc.current_floor_owner = locking_turn_current_floor_owner
 				#pop the new owner from the request Q
 				workflow_locking_doc.request_queue.pop(0)
 				workflow_locking_doc.store()
@@ -1145,6 +1149,27 @@ def locking_turn_get_request_queue():
 	#return as the current owner
 	return jsonify({'floor_requests_queue':request_queue})
 
+
+
+@app.route('/locking_turn_get_current_floor_owner/',  methods=['POST'])
+def locking_turn_get_current_floor_owner():
+	#get the request details
+	#workflow_id = request.form['workflow_id']
+	#get the request details
+	workflow_id = 'workflow_turn_id_1'
+
+	cOwner = ''
+
+	#get the request key for the corresponding workflow id
+	for row in views_by_workflow_locking_turn(g.couch):
+		if row.key == workflow_id:
+			workflow_locking_doc = WorkflowLockingTurn.load(row.value)
+			cOwner = workflow_locking_doc.current_floor_owner
+			break
+
+
+	#return as the current owner
+	return jsonify({'current_floor_owner_srv':cOwner})
 
 
 
