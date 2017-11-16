@@ -1283,7 +1283,7 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
             type: "POST",
             cache: false,
             url: "/locking_module_get_next_module_id/",
-            data: 'workflow_id=' + workflow_id,
+            data: 'workflow_id=' + workflow_id+'&requestor='+user_email,
             success: function (option) {
                 newModuleID = option['next_module_id'];
                 //alert("New Module ID: " + newModuleID);

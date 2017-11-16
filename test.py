@@ -299,7 +299,7 @@ def bio():
 
 
 
-from flaskext.couchdb import Document, TextField,IntegerField ,FloatField, DictField, Mapping,ListField
+from flaskext.couchdb import Document, TextField,IntegerField , BooleanField, FloatField, DictField, Mapping,ListField
 
 
 # class PlantPhenotype(Document):
@@ -1207,14 +1207,19 @@ class WorkflowLockingModule(Document):
 	doc_type = TextField(default='workflow_locking_module')
 	workflow_id = TextField()
 	next_module_id = IntegerField(default=1)
+	module_nodes = ListField(DictField(Mapping.build(
+		nodeID = TextField(),
+		isLocked = BooleanField(),
+		currentOwner = TextField()
+	)))
 
 
 @app.route('/locking_module_get_next_module_id/',  methods=['POST'])
 def locking_module_get_next_module_id():
 	#get the request details
 	workflow_id = request.form['workflow_id']
-	#get the request details
-	#workflow_id = 'workflow_module_id_1'
+	#module creator (default owner)
+	currOwner = request.form['requestor']
 
 	next_module_id = 1
 	#get the request key for the corresponding workflow id
@@ -1222,13 +1227,47 @@ def locking_module_get_next_module_id():
 		if row.key == workflow_id:
 			workflow_locking_doc = WorkflowLockingModule.load(row.value)
 			next_module_id = workflow_locking_doc.next_module_id
+
+			#add the node to the workflow list
+			workflow_locking_doc.module_nodes.append({'nodeID':'module_id_'+str(next_module_id), 'isLocked': True, 'currentOwner': currOwner})
+			#update the next module ID
 			workflow_locking_doc.next_module_id = next_module_id + 1
 			workflow_locking_doc.store()
 			break
 
 
-	#return as the current owner
+	#return the next valid module id
 	return jsonify({'next_module_id':next_module_id})
+
+
+
+@app.route('/locking_module_lock_node/',  methods=['POST'])
+def locking_module_lock_node():
+	#get the request details
+	workflow_id = request.form['workflow_id']
+	node_id = request.form['node_id']
+
+	#the workflow doc with the corresponding workflow id
+	workflow_locking_doc = ''
+
+	#get the request key for the corresponding workflow id
+	for row in views_by_workflow_locking_module(g.couch):
+		if row.key == workflow_id:
+			workflow_locking_doc = WorkflowLockingModule.load(row.value)
+			#found the required workflow doc.
+			break
+
+
+
+	#return as the current owner
+	return jsonify({'next_module_id':1})
+
+
+
+
+
+
+
 
 ################################################################
 ################ MODULE LOCKING BASED ##########################
