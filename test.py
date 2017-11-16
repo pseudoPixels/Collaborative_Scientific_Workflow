@@ -1246,9 +1246,37 @@ def locking_module_lock_node():
 	#get the request details
 	workflow_id = request.form['workflow_id']
 	node_id = request.form['node_id']
+	nodeRequestor = request.form['requestor']
+
+	res = lockUnlockNode(workflow_id, node_id, True, nodeRequestor)
+
+	#return as the current owner
+	return jsonify({'success':res})
+
+
+
+@app.route('/locking_module_unlock_node/',  methods=['POST'])
+def locking_module_unlock_node():
+	#get the request details
+	workflow_id = request.form['workflow_id']
+	node_id = request.form['node_id']
+
+
+	res = lockUnlockNode(workflow_id, node_id, False)
+
+	#return as the current owner
+	return jsonify({'success':res})
+
+
+
+
+
+
+
+def lockUnlockNode(workflow_id, node_id, isLock, nodeRequestor='None'):
 
 	#the workflow doc with the corresponding workflow id
-	workflow_locking_doc = ''
+	workflow_locking_doc = None
 
 	#get the request key for the corresponding workflow id
 	for row in views_by_workflow_locking_module(g.couch):
@@ -1257,14 +1285,16 @@ def locking_module_lock_node():
 			#found the required workflow doc.
 			break
 
+	#if we have found the required doc
+	if workflow_locking_doc != None:
+		for i in range(len(workflow_locking_doc.module_nodes)):
+			if workflow_locking_doc.module_nodes[i]['nodeID'] == node_id:
+				workflow_locking_doc.module_nodes[i]['isLocked'] = isLock
+				workflow_locking_doc.module_nodes[i]['currentOwner'] = nodeRequestor
+				workflow_locking_doc.store()
+				return True
 
-
-	#return as the current owner
-	return jsonify({'next_module_id':1})
-
-
-
-
+	return False
 
 
 

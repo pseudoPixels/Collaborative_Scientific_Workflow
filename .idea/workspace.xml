@@ -20,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="1241" column="0" lean-forward="true" selection-start-line="1241" selection-start-column="0" selection-end-line="1241" selection-end-column="0" />
+            <state relative-caret-position="948">
+              <caret line="1257" column="39" lean-forward="false" selection-start-line="1257" selection-start-column="13" selection-end-line="1257" selection-end-column="39" />
               <folding>
                 <element signature="e#0#78#0" expanded="true" />
               </folding>
@@ -32,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="telepointer_module_locking_srv.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="telepointer_module_locking_srv.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_module_locking_srv.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="1281" column="14" lean-forward="false" selection-start-line="1281" selection-start-column="10" selection-end-line="1281" selection-end-column="14" />
+            <state relative-caret-position="253">
+              <caret line="785" column="0" lean-forward="true" selection-start-line="785" selection-start-column="0" selection-end-line="785" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -54,9 +54,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isIt</find>
-      <find>releaseFloor</find>
-      <find>ccv</find>
       <find>views_by_non_validated_clones</find>
       <find>locking_turn_request_floor</find>
       <find>current_floor_owner</find>
@@ -77,13 +74,16 @@
       <find>option</find>
       <find>onNodeAccessRequest</find>
       <find>isNodeFloorAvailable</find>
-      <find>lockNode</find>
       <find>ListField</find>
       <find>user_validation_result</find>
       <find>auto_validation_result</find>
       <find>onWorkflowModuleAdditionRequest</find>
       <find>ajax</find>
       <find>str</find>
+      <find>node.data</find>
+      <find>workflow_id</find>
+      <find>lockNode</find>
+      <find>unlockThisNodeAndDescendants</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -116,8 +116,8 @@
         <option value="$PROJECT_DIR$/templates/codeclone_validation.html" />
         <option value="$PROJECT_DIR$/static/easyrtc/telepointer_srv.js" />
         <option value="$PROJECT_DIR$/templates/cloud_vision_pipeline_save_module_locking.html" />
-        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_module_locking_srv.js" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_module_locking_srv.js" />
       </list>
     </option>
   </component>
@@ -795,14 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_module_locking_srv.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="1281" column="14" lean-forward="false" selection-start-line="1281" selection-start-column="10" selection-end-line="1281" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="429">
@@ -813,11 +805,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="1241" column="0" lean-forward="true" selection-start-line="1241" selection-start-column="0" selection-end-line="1241" selection-end-column="0" />
+        <state relative-caret-position="948">
+          <caret line="1257" column="39" lean-forward="false" selection-start-line="1257" selection-start-column="13" selection-end-line="1257" selection-end-column="39" />
           <folding>
             <element signature="e#0#78#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_module_locking_srv.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="785" column="0" lean-forward="true" selection-start-line="785" selection-start-column="0" selection-end-line="785" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

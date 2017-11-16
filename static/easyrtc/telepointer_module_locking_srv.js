@@ -752,12 +752,53 @@ function loginFailure(errorCode, message) {
   function lockNode(node, nodeOwner){
     node.isLocked = true;
     node.currentOwner = nodeOwner;
+    var workflow_id = 'workflow_module_id_1';
+
+
+    $.ajax({
+            type: "POST",
+            cache: false,
+            url: "/locking_module_lock_node/",
+            data: 'workflow_id=' + workflow_id+'&requestor='+nodeOwner+'&node_id='+node.data,
+            success: function (option) {
+                success = option['success'];
+                alert("Node Locking Success: " + success);
+            },
+            error: function (xhr, status, error) {
+                alert("Some Error Occured while locking the requested node in Server !");
+            },
+            async: false
+
+        });
+
+
+
+
+
   }
 
   //HELPER FUNCTION: unlock a node
   function unlockNode(node){
     node.isLocked = false;
     node.currentOwner = "NONE";
+
+    var workflow_id = 'workflow_module_id_1';
+
+    $.ajax({
+            type: "POST",
+            cache: false,
+            url: "/locking_module_unlock_node/",
+            data: 'workflow_id=' + workflow_id+'&node_id='+node.data,
+            success: function (option) {
+                success = option['success'];
+                alert("Node Unlocking Success: " + success);
+            },
+            error: function (xhr, status, error) {
+                alert("Some Error Occured while unlocking the requested node in Server !");
+            },
+            async: false
+
+        });
   }
 
    //====================
@@ -1256,7 +1297,7 @@ function onWorkflowModuleAdditionRequest(whoAdded, moduleID, moduleName){
         //add the node to the workflow tree, default parent is 'workflow'
         var addedNode = workflow.add("module_id_"+moduleID, "workflow", workflow.traverseDF);
         //by default the newly added node/module is locked by its creater (unless he releases it)
-        lockNode(addedNode, whoAdded);
+        //lockNode(addedNode, whoAdded); //Now handled in the server while creating the node first time by default
 
 
         //prepare the next valid unique module id
