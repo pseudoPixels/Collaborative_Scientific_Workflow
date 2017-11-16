@@ -93,9 +93,19 @@ views_by_workflow_locking_turn = ViewDefinition('hello', 'workflow_locking_turn'
     ''')
 
 
+views_by_workflow_locking_module = ViewDefinition('hello', 'workflow_locking_module', '''
+    function (doc) {
+         if (doc.doc_type && doc.doc_type == 'workflow_locking_module') {
+            emit(doc.workflow_id, doc._id)
+        };
+    }
+    ''')
+
+
+
 manager = CouchDBManager()
 manager.setup(app)
-manager.add_viewdef([views_by_user, views_by_non_validated_clones, views_by_pipeline_module, views_by_email, views_by_saved_pipeline, views_by_workflow_locking_turn])
+manager.add_viewdef([views_by_user, views_by_non_validated_clones, views_by_pipeline_module, views_by_email, views_by_saved_pipeline, views_by_workflow_locking_turn, views_by_workflow_locking_module])
 manager.sync(app)
 
 
@@ -289,7 +299,7 @@ def bio():
 
 
 
-from flaskext.couchdb import Document, TextField, FloatField, DictField, Mapping,ListField
+from flaskext.couchdb import Document, TextField,IntegerField ,FloatField, DictField, Mapping,ListField
 
 
 # class PlantPhenotype(Document):
@@ -761,8 +771,8 @@ def p2irc_login():
 		#last_name = p2irc_user.last_name
 		#email = p2irc_user.email
 		session['p2irc_user_email'] = email
-		return redirect(url_for('cvs')) #turn based collaboration... uncomment for this feature
-		#return redirect(url_for('cvs_module_locking')) #modular locking based collaboration... uncomment for this feature
+		#return redirect(url_for('cvs')) #turn based collaboration... uncomment for this feature
+		return redirect(url_for('cvs_module_locking')) #modular locking based collaboration... uncomment for this feature
 		#return redirect(url_for('cvs_atrr_level_locking')) #attr level locking based collaboration... uncomment for this feature
 
 	#if not row or list(row)[0].value != password:
@@ -1048,8 +1058,9 @@ def get_tasks():
 
 
 ################################################################
-######## COLLABORATIVE MODULE LOCKING MACHANISMS ###############
+######## COLLABORATIVE LOCKING MACHANISMS ######################
 ################ STARTS HERE ###################################
+################ TURN BASED ####################################
 ################################################################
 
 
@@ -1175,9 +1186,71 @@ def locking_turn_get_current_floor_owner():
 
 
 ################################################################
-######## COLLABORATIVE MODULE LOCKING MACHANISMS ###############
+################ TURN BASED ####################################
+######## COLLABORATIVE LOCKING MACHANISMS ######################
 ################ ENDS HERE #####################################
 ################################################################
+
+
+
+
+#================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+################################################################
+######## COLLABORATIVE LOCKING MACHANISMS ######################
+################ STARTS HERE ###################################
+################ MODULE LOCKING BASED ##########################
+################################################################
+#Model for request management of turn based floor access.
+class WorkflowLockingModule(Document):
+	doc_type = TextField(default='workflow_locking_module')
+	workflow_id = TextField()
+	next_module_id = IntegerField(default=1)
+
+
+@app.route('/locking_module_get_next_module_id/',  methods=['POST'])
+def locking_module_get_next_module_id():
+	#get the request details
+	workflow_id = request.form['workflow_id']
+	#get the request details
+	#workflow_id = 'workflow_module_id_1'
+
+	next_module_id = 1
+	#get the request key for the corresponding workflow id
+	for row in views_by_workflow_locking_module(g.couch):
+		if row.key == workflow_id:
+			workflow_locking_doc = WorkflowLockingModule.load(row.value)
+			next_module_id = workflow_locking_doc.next_module_id
+			workflow_locking_doc.next_module_id = next_module_id + 1
+			workflow_locking_doc.store()
+			break
+
+
+	#return as the current owner
+	return jsonify({'next_module_id':next_module_id})
+
+################################################################
+################ MODULE LOCKING BASED ##########################
+######## COLLABORATIVE LOCKING MACHANISMS ######################
+################ ENDS HERE #####################################
+################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
