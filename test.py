@@ -1212,6 +1212,10 @@ class WorkflowLockingModule(Document):
 		isLocked = BooleanField(),
 		currentOwner = TextField()
 	)))
+	node_access_req_Q = ListField(DictField(Mapping.build(
+		nodeID = TextField(),
+		requestedBy = TextField()
+	)))
 
 
 @app.route('/locking_module_get_next_module_id/',  methods=['POST'])
@@ -1288,12 +1292,19 @@ def lockUnlockNode(workflow_id, node_id, isLock, nodeRequestor='None'):
 	#if we have found the required doc
 	if workflow_locking_doc != None:
 		for i in range(len(workflow_locking_doc.module_nodes)):
-			if workflow_locking_doc.module_nodes[i]['nodeID'] == node_id:
-				workflow_locking_doc.module_nodes[i]['isLocked'] = isLock
-				workflow_locking_doc.module_nodes[i]['currentOwner'] = nodeRequestor
-				workflow_locking_doc.store()
-				return True
+			if workflow_locking_doc.module_nodes[i]['nodeID'] == node_id:#found the required node
+				#if the node we are trying to lock/unlock is already in the
+				#expected state (lock/unlock) then some consistency problem might
+				#be there... return false informing this exception
+				if workflow_locking_doc.module_nodes[i]['isLocked'] == isLock:
+					return False
+				else:
+					workflow_locking_doc.module_nodes[i]['isLocked'] = isLock
+					workflow_locking_doc.module_nodes[i]['currentOwner'] = nodeRequestor
+					workflow_locking_doc.store()
+					return True
 
+	#the required node not found... return failure response...
 	return False
 
 
@@ -1310,11 +1321,72 @@ def lockUnlockNode(workflow_id, node_id, isLock, nodeRequestor='None'):
 
 
 
+#================================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+################################################################
+################# TOOL INTIGRATION STARTS HERE #################
+################################################################
+from flask import  request
+from werkzeug import secure_filename
+
+#app.config['UPLOAD_FOLDER'] =
+
+@app.route('/tool_integration')
+def upload_file():
+   return render_template('tool_integration.html')
+
+
+@app.route('/tool_integration_add_tool_name/',  methods=['POST'])
+def tool_integration_add_tool_name():
+	#get the request details
+	new_tool_name = request.form['tool_name']
+
+	new_tool_location = 'pipeline_modules/' + new_tool_name
+
+	success = False
+
+	if not os.path.exists(new_tool_location):
+		os.makedirs(new_tool_location)
+		success = True
+
+	#return as the current owner
+	return jsonify({'success':success})
+
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def uploader():
+	if request.method == 'POST':
+		new_tool_name = request.values['tool_name_inp']
+		new_tool_location =  new_tool_name
+		success = False
+		if not os.path.exists(new_tool_location):
+			os.makedirs('pipeline_modules/'+new_tool_location)
+			success = True
+
+		if success == True:
+			file_tool_doc = request.files['tool_doc']
+			file_tool_doc.save(os.path.join('pipeline_modules/'+str(new_tool_location)+'/',secure_filename(new_tool_name+'_doc.txt')))
+
+			file_tool_script = request.files['tool_script']
+			file_tool_script.save(os.path.join('pipeline_modules/'+str(new_tool_location)+'/',secure_filename(new_tool_name+'_main.py')))
+
+			file_tool_setting = request.files['tool_setting']
+			file_tool_setting.save(os.path.join('pipeline_modules/'+str(new_tool_location)+'/',secure_filename(new_tool_name+'_settings.py')))
+
+			file_tool_setting_ui = request.files['tool_setting_ui']
+			file_tool_setting_ui.save(os.path.join('pipeline_modules/'+str(new_tool_location)+'/',secure_filename(new_tool_name+'_html.txt')))
+
+			file_tool_additional_file = request.files['tool_additional_file']
+			file_tool_additional_file.save(os.path.join('pipeline_modules/'+str(new_tool_location)+'/',secure_filename(file_tool_additional_file.filename)))
+
+	return 'file uploaded successfully'
 
 
 
-
-
+################################################################
+################# TOOL INTIGRATION ENDS HERE ###################
+################################################################
 
 
 

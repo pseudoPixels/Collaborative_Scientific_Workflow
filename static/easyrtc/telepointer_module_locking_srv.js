@@ -721,7 +721,12 @@ function loginFailure(errorCode, message) {
     var theNode = this.getNode(nodeData, traversal);
     this.traverseDF_FromNode(theNode, function(node){
          //use helper function to load this node for the corresponding user
-         lockNode(node, newOwner);
+         var success = lockNode(node, newOwner);
+         //something wrong happened while locking this node in the server
+         //It is either already locked or the node not found... return false
+         //denoting this failure in locking.
+         if(success == false)return false;
+
     });
   }
 
@@ -730,7 +735,14 @@ function loginFailure(errorCode, message) {
     var theNode = this.getNode(nodeData, traversal);
     this.traverseDF_FromNode(theNode, function(node){
          //use the helper function to unlock the node.
-         unlockNode(node);
+         var success = unlockNode(node);
+          //something wrong happened while unlocking this node in the server
+         //It is either already UNlocked or the node not found... return false
+         //denoting this failure in unlocking.
+         if(success == false)return false;
+
+
+
     });
   }
 
@@ -762,7 +774,8 @@ function loginFailure(errorCode, message) {
             data: 'workflow_id=' + workflow_id+'&requestor='+nodeOwner+'&node_id='+node.data,
             success: function (option) {
                 success = option['success'];
-                alert("Node Locking Success: " + success);
+                //alert("Node Locking Success: " + success);
+                return success;
             },
             error: function (xhr, status, error) {
                 alert("Some Error Occured while locking the requested node in Server !");
@@ -791,7 +804,8 @@ function loginFailure(errorCode, message) {
             data: 'workflow_id=' + workflow_id+'&node_id='+node.data,
             success: function (option) {
                 success = option['success'];
-                alert("Node Unlocking Success: " + success);
+                //alert("Node Unlocking Success: " + success);
+                return success;
             },
             error: function (xhr, status, error) {
                 alert("Some Error Occured while unlocking the requested node in Server !");
