@@ -45,8 +45,8 @@
       <file leaf-file-name="telepointer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="1025" column="30" lean-forward="true" selection-start-line="1025" selection-start-column="30" selection-end-line="1025" selection-end-column="30" />
+            <state relative-caret-position="332">
+              <caret line="1022" column="10" lean-forward="false" selection-start-line="1022" selection-start-column="10" selection-end-line="1022" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -820,8 +820,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="1025" column="30" lean-forward="true" selection-start-line="1025" selection-start-column="30" selection-end-line="1025" selection-end-column="30" />
+        <state relative-caret-position="332">
+          <caret line="1022" column="10" lean-forward="false" selection-start-line="1022" selection-start-column="10" selection-end-line="1022" selection-end-column="10" />
           <folding />
         </state>
       </provider>

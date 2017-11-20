@@ -1000,7 +1000,7 @@ function updateNextUniqueModuleID(){
 
 
     //bio test starts
-$("#design_pipelines_menu_biodatacleaning_id").click(function () {
+$("#design_pipelines_menu_biodatacleaning_id79").click(function () {
 
     //allowed iff the user has the floor currently...
     if(isItMyFloor() == true){
@@ -1023,7 +1023,26 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 //handling any pipeline module addition on click using
 //class for generalisation
 $(".pipeline_modules").click(function(){
-    alert($(this).attr("id"));
+    //alert($(this).attr("id"));
+
+    //allowed iff the user has the floor currently...
+    if(isItMyFloor() == true){
+        var newModuleID = getNextUniqueModuleID();
+        var newModuleName = $(this).attr("id"); //'biodatacleaning';
+        addModuleToPipeline(newModuleID, newModuleName);
+
+        //prepare the next valid unique module id
+        updateNextUniqueModuleID();
+
+        //add the module to all remote clients as well...
+        var moduleInfo = {"newModuleID": newModuleID, "newModuleName": newModuleName};
+        notifyAll("remote_module_addition", moduleInfo);
+    }
+
+
+
+
+
 });
 
 
