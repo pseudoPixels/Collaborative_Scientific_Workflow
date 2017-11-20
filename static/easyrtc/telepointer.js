@@ -1020,6 +1020,19 @@ $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 
 
 
+//handling any pipeline module addition on click using
+//class for generalisation
+$(".pipeline_modules").click(function(){
+    alert($(this).attr("id"));
+});
+
+
+
+
+
+
+
+
 //adds the module to the pipeline. moduleID is unique throughout the whole pipeline
 //moduleName is the name of the module like: rgb2gray, medianFilter and so on
 function addModuleToPipeline(moduleID, moduleName){

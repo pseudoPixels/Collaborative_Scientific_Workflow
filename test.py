@@ -494,6 +494,7 @@ def getAllUsersDetails(thisUserEmail):
 
 
 import html
+import os
 @app.route('/cvs')
 def cvs():
 	module = ''
@@ -522,6 +523,7 @@ def cvs():
 	#get all other user details
 	all_other_users = getAllUsersDetails(session.get('p2irc_user_email'))
 
+	pineline_modules = os.listdir("pipeline_modules/")
 
 
 
@@ -540,7 +542,8 @@ def cvs():
 	user_role = user_role,
 	saved_pipelines = saved_pipelines,
 	shared_pipelines = shared_pipelines,
-    all_other_users=all_other_users)
+    all_other_users=all_other_users,
+    pineline_modules=pineline_modules)
 
 
 
@@ -771,8 +774,8 @@ def p2irc_login():
 		#last_name = p2irc_user.last_name
 		#email = p2irc_user.email
 		session['p2irc_user_email'] = email
-		#return redirect(url_for('cvs')) #turn based collaboration... uncomment for this feature
-		return redirect(url_for('cvs_module_locking')) #modular locking based collaboration... uncomment for this feature
+		return redirect(url_for('cvs')) #turn based collaboration... uncomment for this feature
+		#return redirect(url_for('cvs_module_locking')) #modular locking based collaboration... uncomment for this feature
 		#return redirect(url_for('cvs_atrr_level_locking')) #attr level locking based collaboration... uncomment for this feature
 
 	#if not row or list(row)[0].value != password:
