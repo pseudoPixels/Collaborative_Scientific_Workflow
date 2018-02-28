@@ -94,7 +94,7 @@
 
         <!-- Specific feature files... Uncomment/Comment to remove/add specific features  -->
         <!-- <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/demo_audio_video.js') }}"></script> -->
-        <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/telepointer.js') }}"></script>
+        <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/telepointer_srv.js') }}"></script>
         <!--
         <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/collaboration_controls.js') }}"></script>
         -->
@@ -603,6 +603,18 @@
 
   <button id="chatRoom_send_msg_btn">Send</button>
     </div>
+
+
+  <!-- Audio Strm -->
+  <div id="otherClientsAudio"></div>
+  <!-- Note... this demo should be updated to remove video references -->
+  <div id="videos">
+    <video id="callerAudio"></video>
+    <div id="acceptCallBox"> <!-- Should be initially hidden using CSS -->
+      <div id="acceptCallLabel"></div>
+      <button id="callAcceptButton" >Accept</button> <button id="callRejectButton">Reject</button>
+    </div>
+  </div>
 
 
 

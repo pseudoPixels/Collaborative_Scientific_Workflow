@@ -441,6 +441,9 @@ function onMessageRecieved(who, msgType, content) {
         case "inform_my_details_to_all_other_clients":
             addNewClientToAllOccupantsDetails(content);
             updateOnlineStatusOfClients(all_occupants_details);
+
+            //update the audio call button label
+            updateAudioCallerBtnLabels(all_occupants_details);
             break;
         case "disconnected":
             alert("Disconnected : " + content);
@@ -646,6 +649,16 @@ function updateOnlineStatusOfClients(all_occupants_details){
 }
 
 
+//update the audio call buttons labels for the corresponding user
+//i.e. replace easyrtcid to human readable names
+function updateAudioCallerBtnLabels(all_occupants_details){
+    //then update the online status based on logged in clients.
+    for(var i=0; i<all_occupants_details.length; i++){
+        var easyrtcID = all_occupants_details[i].easyrtcid;
+        $('#btn_audio_call_'+easyrtcID).text(getNameForAnEasyRTCid(easyrtcID));
+    }
+
+}
 
 
 
@@ -666,6 +679,21 @@ function connect() {
     easyrtc.setPeerListener(onMessageRecieved);
     easyrtc.setRoomOccupantListener(userLoggedInListener);
     easyrtc.connect("easyrtc.instantMessaging", loginSuccess, loginFailure);
+
+
+    //For Audio Streaming
+   //console.log("Connecting Audio Strm. Service");
+    easyrtc.enableVideo(false);
+    easyrtc.enableVideoReceive(false);
+    easyrtc.initMediaSource(
+        function(){    // success callback
+          //easyrtc.connect("easyrtc.audioOnly", loginSuccess, loginFailure);
+        },
+        function(errorCode, errmesg){
+          easyrtc.showError(errorCode, errmesg);
+        }  // failure callback
+    );
+
 }
 
 
@@ -690,7 +718,153 @@ function userLoggedInListener (roomName, occupants, isPrimary) {
     informMyDetailsToAllOtherClients(occupants);
 
     //notifyAll('disconnected', "Hello");
+
+
+    //FOR AUDIO STRM
+
+  var otherClientDiv = document.getElementById("otherClientsAudio");
+  for(var easyrtcid in occupants) {
+    var button = document.createElement("button");
+    button.id = "btn_audio_call_" + easyrtcid;
+    button.onclick = function(easyrtcid) {
+      return function() {
+        performCall(easyrtcid);
+      };
+    }(easyrtcid);
+
+    var label = document.createElement("text");
+    label.innerHTML = easyrtc.idToName(getNameForAnEasyRTCid(easyrtcid));
+    button.appendChild(label);
+    otherClientDiv.appendChild(button);
+  }
+
+
+
 }
+
+
+//TMP:: FOR AUDIO CHK START
+function disable(domId) {
+  document.getElementById(domId).disabled = "disabled";
+}
+
+
+function enable(domId) {
+  document.getElementById(domId).disabled = "";
+}
+
+
+
+
+function terminatePage() {
+  easyrtc.disconnect();
+}
+
+
+function hangup() {
+  easyrtc.hangupAll();
+  disable("hangupButton");
+}
+
+
+function clearConnectList() {
+  otherClientDiv = document.getElementById("otherClients");
+  while (otherClientDiv.hasChildNodes()) {
+    otherClientDiv.removeChild(otherClientDiv.lastChild);
+  }
+
+}
+
+
+
+
+function performCall(otherEasyrtcid) {
+  easyrtc.hangupAll();
+  var acceptedCB = function(accepted, caller) {
+    if( !accepted ) {
+      easyrtc.showError("CALL-REJECTED", "Sorry, your call to " + easyrtc.idToName(caller) + " was rejected");
+      enable("otherClients");
+    }
+  };
+  var successCB = function() {
+    enable("hangupButton");
+  };
+  var failureCB = function() {
+    enable("otherClients");
+  };
+  easyrtc.call(otherEasyrtcid, successCB, failureCB, acceptedCB);
+}
+
+
+
+
+
+
+
+function disconnect() {
+  document.getElementById("iam").innerHTML = "logged out";
+  easyrtc.disconnect();
+  console.log("disconnecting from server");
+  enable("connectButton");
+  // disable("disconnectButton");
+  clearConnectList();
+}
+
+
+easyrtc.setStreamAcceptor( function(easyrtcid, stream) {
+  var audio = document.getElementById("callerAudio");
+  easyrtc.setVideoObjectSrc(audio,stream);
+  enable("hangupButton");
+});
+
+
+easyrtc.setOnStreamClosed( function (easyrtcid) {
+  easyrtc.setVideoObjectSrc(document.getElementById("callerAudio"), "");
+  disable("hangupButton");
+});
+
+
+easyrtc.setAcceptChecker(function(easyrtcid, callback) {
+  document.getElementById("acceptCallBox").style.display = "block";
+  if( easyrtc.getConnectionCount() > 0 ) {
+    document.getElementById("acceptCallLabel").textContent = "Drop current call and accept new from " + getNameForAnEasyRTCid( easyrtcid ) + " ?";
+  }
+  else {
+    document.getElementById("acceptCallLabel").textContent = "Accept incoming call from " + getNameForAnEasyRTCid( easyrtcid ) + " ?";
+  }
+  var acceptTheCall = function(wasAccepted) {
+    document.getElementById("acceptCallBox").style.display = "none";
+    if( wasAccepted && easyrtc.getConnectionCount() > 0 ) {
+      easyrtc.hangupAll();
+    }
+    callback(wasAccepted);
+  };
+  document.getElementById("callAcceptButton").onclick = function() {
+    acceptTheCall(true);
+  };
+  document.getElementById("callRejectButton").onclick =function() {
+    acceptTheCall(false);
+  };
+} );
+//TMP:: FOR AUDIO CHK END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //removes any invalid ids (the users of whom have left/disconnect)
@@ -754,6 +928,31 @@ function getNameForAnEmail(clientEmail) {
   //the email not found...
   return "NONE";
 }
+
+
+
+
+
+
+
+
+//returns the corresponding name for a given easyRTCid
+function getNameForAnEasyRTCid(easyrtcID) {
+  for (var i = 0; i < all_occupants_details.length; i++) {
+    if (all_occupants_details[i].easyrtcid == easyrtcID) return all_occupants_details[i].name;
+  }
+
+  //own email id is not available in all_occupants_details...
+  //so return own user_name in that case...
+  if(selfEasyrtcid == easyrtcID)return user_name;
+
+  //the email not found...
+  return "NONE";
+}
+
+
+
+
 
 
 
@@ -834,6 +1033,7 @@ function sendStuffWS(otherEasyrtcid) {
 
 function loginSuccess(easyrtcid) {
     selfEasyrtcid = easyrtcid;
+    console.log("My EasyRTCID: " + easyrtcid);
     //document.getElementById("iam").innerHTML = "I am " + easyrtcid;
 }
 
@@ -1579,7 +1779,7 @@ function getRandomInRange(min, max){
 }
 
 //give some time (120sec)... so others can connect...
-setTimeout(init_workflow_simulation, getRandomInRange(120000,170000) );
+//setTimeout(init_workflow_simulation, getRandomInRange(120000,170000) );
 
 
 
