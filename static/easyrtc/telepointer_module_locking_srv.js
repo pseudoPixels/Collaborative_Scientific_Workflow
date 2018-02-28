@@ -15,6 +15,10 @@ var unique_module_id = 1;
 //all the node access requests are kept in the Q to serve as FIFO
 var nodeAccessRequestsQueue = [];
 
+
+
+
+
 $(document).ready(function(){
 
 //========================================================
@@ -270,9 +274,6 @@ function onMessageRecieved(who, msgType, content) {
         case "parentChanged":
             onModuleParentChange(content.moduleID, content.newParentID, content.parentIndex);
             break;
-
-
-
     }
 }
 
@@ -784,11 +785,10 @@ function loginFailure(errorCode, message) {
 
         });
 
-
-
-
-
   }
+
+
+
 
   //HELPER FUNCTION: unlock a node
   function unlockNode(node){
@@ -1325,7 +1325,7 @@ function onWorkflowModuleAdditionRequest(whoAdded, moduleID, moduleName){
 
 
 
-    //bio test starts
+//bio test starts
 $("#design_pipelines_menu_biodatacleaning_id").click(function () {
 
         //var newModuleID = 1;

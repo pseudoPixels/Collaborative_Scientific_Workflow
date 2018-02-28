@@ -252,9 +252,9 @@ $(document).ready(function(){
 
 
     $('#mycanvas').mousedown(function(e) {
-            var rect = e.currentTarget.getBoundingClientRect(),
-          offsetX = e.clientX - rect.left,
-          offsetY = e.clientY - rect.top;
+      var rect = e.currentTarget.getBoundingClientRect(),
+      offsetX = e.clientX - rect.left,
+      offsetY = e.clientY - rect.top;
 
       var mouseX = e.pageX - this.offsetLeft;
       var mouseY = e.pageY - this.offsetTop;
@@ -268,7 +268,7 @@ $(document).ready(function(){
 
 
     $('#mycanvas').mousemove(function(e) {
-            var rect = e.currentTarget.getBoundingClientRect(),
+          var rect = e.currentTarget.getBoundingClientRect(),
           offsetX = e.clientX - rect.left,
           offsetY = e.clientY - rect.top;
 
@@ -311,6 +311,13 @@ $(document).ready(function(){
       }
     }
     //collaborative white board ends
+
+
+
+
+
+
+
 
 
 
@@ -586,7 +593,6 @@ function updateUI_floorInformation(){
 
 
 /*
-
     //update ui: floor requests queue
     $("#collaboration_controls_floor_requests_queue").text("Floor Requests Queue: ");
     for(var i=0;i < floor_requests_queue.length; i++){
