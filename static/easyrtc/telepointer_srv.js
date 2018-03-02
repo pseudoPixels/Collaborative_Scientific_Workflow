@@ -200,14 +200,6 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-
-
-
-
     //chat room communication
     $("#chatRoom_send_msg_btn").click("on", function(){
 
@@ -244,10 +236,31 @@ $(document).ready(function(){
     var clickDrag = new Array();
     var paint;
 
+
+    //vars for remote draw
+    var remote_clickX = new Array();
+    var remote_clickY = new Array();
+    var remote_clickDrag = new Array();
+    var remote_userDrawer = new Array();
+
     function addClick(x, y, dragging) {
       clickX.push(x);
       clickY.push(y);
       clickDrag.push(dragging);
+
+      var clickInfo = {"userDrawer":user_email, "clickX": x, "clickY": y, "clickDrag": dragging};
+      notifyAll("remote_draw", clickInfo);
+    }
+
+    //add the click information from remote client
+    function remoteAddClick(clickInfo){
+        remote_clickX.push(clickInfo.clickX);
+        remote_clickY.push(clickInfo.clickY);
+        remote_clickDrag.push(clickInfo.clickDrag);
+        remote_userDrawer.push(clickInfo.userDrawer);
+
+        //redraw
+        redraw();
     }
 
 
@@ -298,6 +311,7 @@ $(document).ready(function(){
       context.lineJoin = "round";
       context.lineWidth = 3;
 
+      //self drawing points
       for (var i = 0; i < clickX.length; i++) {
         context.beginPath();
         if (clickDrag[i] && i) {
@@ -309,6 +323,28 @@ $(document).ready(function(){
         context.closePath();
         context.stroke();
       }
+
+      //remote draw points
+      for(var i=0; i <remote_clickX.length; i++){
+        context.beginPath();
+
+
+        /*if (clickDrag[i] && i) {
+          context.moveTo(clickX[i - 1], clickY[i - 1]);
+        } else {
+          context.moveTo(clickX[i] - 1, clickY[i]);
+        }*/
+        context.lineTo(remote_clickX[i], remote_clickY[i]);
+        context.closePath();
+        context.stroke();
+
+      }
+
+
+
+
+
+
     }
     //collaborative white board ends
 
@@ -467,7 +503,9 @@ function onMessageRecieved(who, msgType, content) {
             onModuleSettingsChanged(content);
             break;
 
-
+        case "remote_draw":
+            remoteAddClick(content);
+            break;
 
 
     }
