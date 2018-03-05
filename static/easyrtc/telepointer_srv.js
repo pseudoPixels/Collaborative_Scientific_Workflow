@@ -243,10 +243,30 @@ $(document).ready(function(){
     var remote_clickDrag = new Array();
     var remote_userDrawer = new Array();
 
+
+    //Tools Vars
+    var colorPurple = "#cb3594";
+    var colorGreen = "#659b41";
+    var colorYellow = "#ffcf33";
+    var colorBrown = "#986928";
+
+    var curColor = colorGreen;
+    var clickColor = new Array();
+
+
+    var clickSize = new Array();
+    var curSize = 5;
+
+    var curTool = 'Marker';
+
     function addClick(x, y, dragging) {
       clickX.push(x);
       clickY.push(y);
       clickDrag.push(dragging);
+      if(curTool=='Marker')clickColor.push(curColor);
+      else if(curTool=='Eraser')clickColor.push('#EEE');
+
+      clickSize.push(curSize);
 
       var clickInfo = {"userDrawer":user_email, "clickX": x, "clickY": y, "clickDrag": dragging};
       notifyAll("remote_draw", clickInfo);
@@ -304,16 +324,63 @@ $(document).ready(function(){
     });
 
 
+    $('#whiteBoard_clear').click("on", function(){
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+
+        //clear the draw points from array
+        clickX = [];
+        clickY = [];
+        clickDrag = [];
+        clickColor = [];
+        clickSize = [];
+
+
+        //vars for remote draw
+        remote_clickX = [];
+        remote_clickY = [];
+        remote_clickDrag = [];
+        remote_userDrawer = [];
+
+    });
+
+    $('#whiteBoard_color').on('change', function(){
+        var selectedColor = $(this).val();
+        if(selectedColor=='Green')curColor = colorGreen;
+        else if(selectedColor=='Purple')curColor = colorPurple;
+        else if(selectedColor=='Brown')curColor = colorBrown;
+        else curColor = colorYellow;
+    });
+
+    $('#whiteBoard_brushSize').on('change', function(){
+        var selectedSize = $(this).val();
+
+        if(selectedSize=='Small')curSize = 3;
+        else if(selectedSize=='Normal')curSize = 5;
+        else if(selectedSize=='Large')curSize = 8;
+        else curSize = 12;
+
+    });
+
+    $('#whiteBoard_tool').on('change', function(){
+        var selectedTool = $(this).val();
+
+        if(selectedTool=='Eraser')curTool = 'Eraser';
+        else curTool = 'Marker';
+    });
+
+
+
     function redraw() {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
 
-      context.strokeStyle = "#df4b26";
+      //context.strokeStyle = "#df4b26";
       context.lineJoin = "round";
-      context.lineWidth = 3;
+      //context.lineWidth = 3;
 
       //self drawing points
       for (var i = 0; i < clickX.length; i++) {
         context.beginPath();
+
         if (clickDrag[i] && i) {
           context.moveTo(clickX[i - 1], clickY[i - 1]);
         } else {
@@ -321,6 +388,8 @@ $(document).ready(function(){
         }
         context.lineTo(clickX[i], clickY[i]);
         context.closePath();
+        context.strokeStyle = clickColor[i];
+        context.lineWidth = clickSize[i];
         context.stroke();
       }
 
@@ -328,12 +397,12 @@ $(document).ready(function(){
       for(var i=0; i <remote_clickX.length; i++){
         context.beginPath();
 
-
-        /*if (clickDrag[i] && i) {
-          context.moveTo(clickX[i - 1], clickY[i - 1]);
+        var prevIndexForThisUser = getPreviousDragIndex(i);
+        if (remote_clickDrag[i] && prevIndexForThisUser >= 0) {
+          context.moveTo(remote_clickX[i - 1], remote_clickY[i - 1]);
         } else {
-          context.moveTo(clickX[i] - 1, clickY[i]);
-        }*/
+          context.moveTo(remote_clickX[i] - 1, remote_clickY[i]);
+        }
         context.lineTo(remote_clickX[i], remote_clickY[i]);
         context.closePath();
         context.stroke();
@@ -341,10 +410,23 @@ $(document).ready(function(){
       }
 
 
+    }
+
+    function getPreviousDragIndex(thisIndex){
+        var thisUserDrw = remote_userDrawer[thisIndex];
+        var prevIndx = -1;
+
+        for(var i=thisIndex-1;i >=0; i--){
+            if(remote_userDrawer[i]==thisUserDrw){
+                if(remote_clickDrag[i]==true){
+                    prevIndx = i;
+                }
+                break;
+            }
+        }
 
 
-
-
+        return prevIndx;
     }
     //collaborative white board ends
 
