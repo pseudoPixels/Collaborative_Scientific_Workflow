@@ -734,6 +734,16 @@ def p2irc():
 	return render_template('login.html')
 
 
+
+#TEMP
+@app.route('/p2irc_drag')
+def p2irc_drag():
+	return render_template('login_drag.html')
+
+
+
+
+
 @app.route('/p2irc_signup/',  methods=['POST'])
 def p2irc_signup():
 	first_name = request.form['first_name']

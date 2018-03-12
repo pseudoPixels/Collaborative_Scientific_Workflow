@@ -227,6 +227,10 @@ $(document).ready(function(){
 
 
 
+
+//$( "#draggable" ).draggable();
+
+
     //Collaborative white board
     var canvas = document.getElementById("mycanvas");
     var context = canvas.getContext('2d');
