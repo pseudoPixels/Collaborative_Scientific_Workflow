@@ -926,9 +926,9 @@ def get_next_code_fragments_for_validation():
 		svm_response = ''
 		for response in clone_doc.auto_validation_result:
 			if response['algorithm'] == 'Neural Network':
-				neural_net_response = response['result'];
+				neural_net_response = response['result']
 			if response['algorithm'] == 'SVM':
-				svm_response = response['result'];
+				svm_response = response['result']
 	
 
 	
