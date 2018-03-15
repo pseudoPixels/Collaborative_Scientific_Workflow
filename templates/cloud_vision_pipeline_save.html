@@ -37,7 +37,7 @@
     
     <script src="{{ url_for('static',filename='assets/js/chart-master/Chart.js') }}"></script>
 
-   <script type="text/javascript" src="/static/js_p2irc_apis/jquery.js"></script> 
+   <script type="text/javascript" src="/static/js_p2irc_apis/jquery.js"></script>
 
    
 
@@ -86,7 +86,7 @@
         <script type="text/javascript" src="{{ url_for('static',filename='easyrtc/prettify/prettify.js') }}"></script>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='easyrtc/prettify/prettify.css') }}"/>
         <script type="text/javascript" src="{{ url_for('static',filename='easyrtc/prettify/loadAndFilter.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static',filename='easyrtc/prettify/jquery.min.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static',filename='easyrtc/prettify/jquery.min.js') }}"></script>
         <!--show-->
         <!-- Assumes global locations for socket.io.js and easyrtc.js -->
         <script src="{{ url_for('static',filename='easyrtc/socket.io.js') }}"></script>
@@ -102,6 +102,17 @@
 
 
 
+ <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+      <script type="text/javascript" src="/static/js_p2irc_apis/jquery-ui.js"></script>
+ -->
+
+
+
+
+
+
 
 
 
@@ -110,6 +121,8 @@
   </head>
 <!-- onload="connect()" -->
   <body >
+
+
 
 <style type="text/css">
 .myButton {
@@ -313,6 +326,131 @@
 }
 
 
+
+
+#draggable { width: 150px; height: 150px; padding: 0.5em; background-color:orange;}
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #f00;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+/* Modal Header #5cb85c*/
+.modal-header {
+    padding: 1px 8px;
+    background-color: #FF6347;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {padding: 1px 8px;}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 1px 2px;
+    background-color: #FF6347;
+    color: white;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.3s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 0.7}
+}
+
+
+
+
+
+
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
 </style>
 
 
@@ -322,7 +460,8 @@
 
 
 
-       <!-- Styles used within the demo webRTC-->
+       <!-- Styles used within the demo webRTC                  height:200px;
+                overflow-y:scroll; -->
         <style type="text/css">
             #demoContainer {
                 position:relative;
@@ -331,11 +470,9 @@
                 float:left;
                 width:250px;
                 text-align:center;
-                border: 2px solid black;
             }
             #otherClients {
-                height:200px;
-                overflow-y:scroll;
+
             }
             #callerAudio {
                 /* display:none; */
@@ -379,13 +516,15 @@
             <a href="index.html" class="logo"><b>Collaborative</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
+
+
                 <!--  notification start -->
                 <ul class="nav top-menu">
                     <!-- settings start -->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                        <a   href="#" id="myBtn">
                             <i class="fa fa-tasks"></i>
-                            <span class="badge bg-theme" style="background:#FF6347" >20</span>
+                            <span class="badge bg-theme" style="background:#FF6347" >1</span>
                         </a>
                         <ul class="dropdown-menu extended tasks-bar">
                             <div class="notify-arrow notify-arrow-green"></div>
@@ -457,6 +596,11 @@
                     <li><a class="logout" style="background:#FF6347" href="login.html">Logout</a></li>
             	</ul>
             </div>
+
+
+
+
+
         </header>
       <!--header end-->
       
@@ -587,41 +731,76 @@
 
 
 
-<!-- Collaborative Tools -->
- <a id="id_collaborativeToolsDiv" href="#"> <strong> Collaboration Tools </strong> (show/hide)</a><br/>
-<div id="collaboration_tools" style="display:none;">
 
 
 
-<!-- Chat Room -->
-  <a id="id_chatRoomDiv" href="#"> =======> Chat Room (show/hide)</a><br/>
-    <div id="chatRoom" style="display:none;">
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+      <div class="modal-header">
+    <span class="close">&times;</span>
+    <h4>Collaboration Tools</h4>
+  </div>
+  <div class="modal-body">
+
+      <!-- Tab links -->
+<div class="tab">
+  <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'tab_collabControls')">Collab. Controls</button>
+  <button class="tablinks"  onclick="openTab(event, 'tab_chatRoom')">Collaborative Chatting</button>
+  <button class="tablinks" onclick="openTab(event, 'tab_whiteBoard')">Collab. White Board</button>
+  <button class="tablinks" onclick="openTab(event, 'tab_audio')">Audio Streaming</button>
+  <button class="tablinks" onclick="openTab(event, 'tab_video')">Video Streaming</button>
+
+
+</div>
+
+<!-- Tab content -->
+<div id="tab_chatRoom" class="tabcontent">
+  <h3>Chat Room</h3>
+
+
+    <!-- Chat Room
+  <a id="id_chatRoomDiv" href="#"> =======> Chat Room (show/hide)</a><br/> -->
+    <div id="chatRoom">
   <div id="chatRoom_all_msg" style="overflow-y: auto; height:150px;width:100%;background-color:#EEE;">
   </div>
-
-  <textarea id="chatRoom_send_msg_txt" style="width:350px;"></textarea><br/>
+<br/>
+  <textarea placeholder="Type here..." id="chatRoom_send_msg_txt" style="width:350px;"></textarea><br/>
 
   <button id="chatRoom_send_msg_btn">Send</button>
     </div>
 
+</div>
 
-  <!-- Audio Strm -->
-  <div id="otherClientsAudio"></div>
-  <!-- Note... this demo should be updated to remove video references -->
-  <div id="videos">
+<div id="tab_audio" class="tabcontent">
+
+
+  <!-- Audio Strm
+  <div id="audio_otherClients"></div>
+
+  <div id="videos2">
     <video id="callerAudio"></video>
-    <div id="acceptCallBox"> <!-- Should be initially hidden using CSS -->
-      <div id="acceptCallLabel"></div>
-      <button id="callAcceptButton" >Accept</button> <button id="callRejectButton">Reject</button>
+    <div id="acceptCallBox2">
+      <div id="acceptCallLabel2"></div>
+      <button id="callAcceptButton2" >Accept</button> <button id="callRejectButton2">Reject</button>
     </div>
   </div>
+-->
+
+
+</div>
 
 
 
 
- <!-- White Board -->
-  <a id="id_canvasDiv" href="#"> =======> Collaborative White Board  (show/hide)</a><br/>
-    <div id="whiteBoard" style="display:none;">
+<div id="tab_whiteBoard" class="tabcontent">
+  <h3>Collaborative White Board</h3>
+
+     <!-- White Board
+  <a id="id_canvasDiv" href="#"> =======> Collaborative White Board  (show/hide)</a><br/> -->
+    <div id="whiteBoard" >
         Clear The Board: <button id="whiteBoard_clear">Clear</button>
         Choose A Color: <select id="whiteBoard_color">
                             <option>Green</option>
@@ -641,20 +820,209 @@
                      </select><br/>
   <canvas id="mycanvas" width="800" height="300" style="background-color:#EEE;"></canvas>
     </div>
+</div>
 
 
-     <!-- Collaboration Controls -->
-  <a id="id_collaboration_controls" href="#"> =======> Collaboration Controls (show/hide)</a><br/>
-    <div id="collaboration_controls" style="display:none;background-color:#EEE;padding:5px;">
+<div id="tab_collabControls" class="tabcontent">
+  <h3>Collaborative Controls</h3>
+     <!-- Collaboration Controls
+  <a id="id_collaboration_controls" href="#"> =======> Collaboration Controls (show/hide)</a><br/> -->
+    <div id="collaboration_controls" style="background-color:#EEE;padding:5px;">
 
         <button id="collaboration_controls_request_turn" style="color:white;background-color:darkcyan;">Request Floor</button><br/>
         <br/>
         <p id="collaboration_controls_current_floor_owner">Current Floor Owner: NONE</p>
         <p id="collaboration_controls_floor_requests_queue">Floor Requests Queue: </p>
     </div>
+</div>
+
+
+<div id="tab_video" class="tabcontent">
+     <!-- Collaboration Controls
+  <a id="id_collaboration_controls" href="#"> =======> Collaboration Controls (show/hide)</a><br/> -->
+        <div id="demoContainer">
+          <div id="connectControls">
+
+
+            <input type="checkbox" checked="checked" id="shareAudio" />Share audio
+            <input type="checkbox" checked="checked" id="shareVideo" />Share video<br />
+            <input type="checkbox" checked="checked" id="expectAudio" />Expect audio
+            <input type="checkbox" checked="checked" id="expectVideo" />Expect video<br />
+
+            <input type="checkbox" id="useFreshIce" onclick="easyrtc.setUseFreshIceEachPeerConnection(this.value);"/>Fresh Ice<br />
+            <button id="connectButton" onclick="connect2()">Connect</button>
+            <button id="disconnectButton" onclick="disconnect2()">Disconnect</button>
+            <button id="hangupButton" disabled="disabled" onclick="hangup()">Hangup</button>
+            <div id="iam">Not yet connected...</div>
+            <br />
+
+
+
+            <strong>Connected users:</strong>
+            <div id="otherClients"></div>
+          </div>
+
+          <div id="videos">
+            <video width="100" autoplay="autoplay" id="selfVideo"  class="easyrtcMirror" muted="muted" volume="0"></video>
+            <video width="300" autoplay="autoplay" id="callerVideo"></video>
+            <div id="acceptCallBox"> <!-- Should be initially hidden using CSS -->
+              <div id="acceptCallLabel"></div>
+              <button id="callAcceptButton" >Accept</button> <button id="callRejectButton">Reject</button>
+            </div>
+          </div>
+          <div id="audioSinkButtons">
+          </div>
+        </div>
 
 
 </div>
+
+
+<!-- Collaborative Tools -->
+
+<!-- <a id="id_collaborativeToolsDiv" href="#"> <strong> Collaboration Tools </strong> (show/hide)</a><br/>
+<div id="collaboration_tools">
+-->
+
+
+
+
+
+
+
+
+<br/>
+  <!-- VIDEO STRM -->
+    <!--
+ <div id="demoContainer">
+          <div id="connectControls">
+            <input type="checkbox" checked="checked" id="shareAudio" />Share audio
+            <input type="checkbox" checked="checked" id="shareVideo" />Share video<br />
+            <input type="checkbox" checked="checked" id="expectAudio" />Expect audio
+            <input type="checkbox" checked="checked" id="expectVideo" />Expect video<br />
+
+            <input type="checkbox" id="useFreshIce" onclick="easyrtc.setUseFreshIceEachPeerConnection(this.value);"/>Fresh Ice<br />
+            <button id="connectButton" onclick="connect()">Connect</button>
+            <button id="disconnectButton" onclick="disconnect()">Disconnect</button>
+            <button id="hangupButton" disabled="disabled" onclick="hangup()">Hangup</button>
+            <div id="iam">Not yet connected...</div>
+            <br />
+            <strong>Connected users:</strong>
+            <div id="otherClients"></div>
+          </div>
+
+          <div id="vs_videos">
+            <video autoplay="autoplay" id="selfVideo"  class="easyrtcMirror" muted="muted" volume="0"></video>
+            <video autoplay="autoplay" id="callerVideo"></video>
+            <div id="vs_acceptCallBox">
+              <div id="vs_acceptCallLabel"></div>
+              <button id="vs_callAcceptButton" >Accept</button> <button id="vs_callRejectButton">Reject</button>
+            </div>
+          </div>
+          <div id="audioSinkButtons">
+          </div>
+        </div>
+-->
+
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- </div>-->
+
+  <br>
+
+  </div>
+  <div class="modal-footer">
+    <h6>...</h6>
+  </div>
+
+
+  </div>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+//TABS
+function openTab(evt, tabID) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabID).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+document.getElementById("defaultOpen").click();
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
 <br/>
 
 
@@ -674,7 +1042,7 @@
 
 
  <!--Collaborative Features Contents (WebRTC)-->
-<img src="{{ url_for('static',filename='images/mouse_pointer.png') }}" id="mouse_pointer" style="height:30px;width:30px;z-index:5;position:absolute;"/>
+<!-- <img src="{{ url_for('static',filename='images/mouse_pointer.png') }}" id="mouse_pointer" style="height:30px;width:30px;z-index:5;position:absolute;"/> -->
 <p id="user_name" style="display:none;">{{first_name + " " +last_name}} </p>
 <p id="user_email" style="display:none;">{{email}} </p>
  <div id="telepointer_spawn_point"></div>
