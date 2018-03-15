@@ -861,7 +861,7 @@ function userLoggedInListener (roomName, occupants, isPrimary) {
         performCall(easyrtcid);
       };
     }(easyrtcid);
-    var label = document.createTextNode("Call " + easyrtc.idToName(easyrtcid));
+    var label = document.createTextNode("Call " + getNameForAnEasyRTCid( easyrtc.idToName(easyrtcid) ) );
     button.appendChild(label);
     otherClientDiv.appendChild(button);
   }
@@ -996,6 +996,14 @@ easyrtc.setAcceptChecker(function(easyrtcid, callback) {
 
 
 //TMP: FOR AUDIO+VIDEO STARTS
+
+$("#applyVideoSetting").on('click', function(){
+  easyrtc.enableAudio(document.getElementById("shareAudio").checked);
+  easyrtc.enableVideo(document.getElementById("shareVideo").checked);
+  easyrtc.enableDataChannels(true);
+});
+
+
 var haveSelfVideo = false;
 function disable(domId) {
   document.getElementById(domId).disabled = "disabled";

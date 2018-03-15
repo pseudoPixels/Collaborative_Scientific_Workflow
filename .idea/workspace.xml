@@ -30,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cloud_vision_pipeline_save.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cloud_vision_pipeline_save.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="858" column="0" lean-forward="true" selection-start-line="858" selection-start-column="0" selection-end-line="858" selection-end-column="0" />
+            <state relative-caret-position="111">
+              <caret line="459" column="0" lean-forward="true" selection-start-line="459" selection-start-column="0" selection-end-line="459" selection-end-column="0" />
               <folding>
                 <element signature="e#23574#23581#0" expanded="true" />
                 <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -44,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="telepointer_srv.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="telepointer_srv.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="1058" column="24" lean-forward="false" selection-start-line="1058" selection-start-column="12" selection-end-line="1058" selection-end-column="24" />
+            <state relative-caret-position="473">
+              <caret line="853" column="20" lean-forward="true" selection-start-line="853" selection-start-column="20" selection-end-line="853" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -86,8 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>srv</find>
-      <find>design_pipelines_menu_biodatacleaning_id</find>
       <find>onNodeAccessRequest</find>
       <find>isNodeFloorAvailable</find>
       <find>loginSuccess</find>
@@ -111,11 +109,13 @@
       <find>/p</find>
       <find>id=&quot;videos&quot;</find>
       <find>userLoggedInListener</find>
-      <find>connectControls</find>
       <find>audio_perform</find>
       <find>acceptTheCall</find>
       <find>audio_per</find>
       <find>audio_performCall</find>
+      <find>connectControls</find>
+      <find>Name</find>
+      <find>Call</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -153,8 +153,8 @@
         <option value="$PROJECT_DIR$/static/js_p2irc_apis/jquerynew.js" />
         <option value="$PROJECT_DIR$/templates/login_drag.html" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_srv.js" />
         <option value="$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html" />
+        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_srv.js" />
       </list>
     </option>
   </component>
@@ -833,23 +833,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="1058" column="24" lean-forward="false" selection-start-line="1058" selection-start-column="12" selection-end-line="1058" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="858" column="0" lean-forward="true" selection-start-line="858" selection-start-column="0" selection-end-line="858" selection-end-column="0" />
+        <state relative-caret-position="111">
+          <caret line="459" column="0" lean-forward="true" selection-start-line="459" selection-start-column="0" selection-end-line="459" selection-end-column="0" />
           <folding>
             <element signature="e#23574#23581#0" expanded="true" />
             <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="853" column="20" lean-forward="true" selection-start-line="853" selection-start-column="20" selection-end-line="853" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>

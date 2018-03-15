@@ -468,7 +468,7 @@
             }
             #connectControls {
                 float:left;
-                width:250px;
+                width:350px;
                 text-align:center;
             }
             #otherClients {
@@ -846,11 +846,13 @@
 
             <input type="checkbox" checked="checked" id="shareAudio" />Share audio
             <input type="checkbox" checked="checked" id="shareVideo" />Share video<br />
+              <!--
             <input type="checkbox" checked="checked" id="expectAudio" />Expect audio
             <input type="checkbox" checked="checked" id="expectVideo" />Expect video<br />
 
-            <input type="checkbox" id="useFreshIce" onclick="easyrtc.setUseFreshIceEachPeerConnection(this.value);"/>Fresh Ice<br />
-            <button id="connectButton" onclick="connect2()">Connect</button>
+            <input type="checkbox" id="useFreshIce" onclick="easyrtc.setUseFreshIceEachPeerConnection(this.value);"/>Fresh Ice<br />-->
+
+            <button id="applyVideoSetting" >Apply Changes</button>
             <button id="disconnectButton" onclick="disconnect2()">Disconnect</button>
             <button id="hangupButton" disabled="disabled" onclick="hangup()">Hangup</button>
             <div id="iam">Not yet connected...</div>
