@@ -18,6 +18,9 @@ var unique_module_id = 1;
 
 var iAmDone = false;
 
+//chat application (UI)
+//https://jsfiddle.net/61jeuf9c/22/
+
 $(document).ready(function(){
 
 

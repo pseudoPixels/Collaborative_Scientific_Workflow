@@ -33,22 +33,33 @@
       <file leaf-file-name="cloud_vision_pipeline_save.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="459" column="0" lean-forward="true" selection-start-line="459" selection-start-column="0" selection-end-line="459" selection-end-column="0" />
+            <state relative-caret-position="550">
+              <caret line="1190" column="0" lean-forward="false" selection-start-line="1190" selection-start-column="0" selection-end-line="1190" selection-end-column="0" />
               <folding>
-                <element signature="e#23574#23581#0" expanded="true" />
+                <element signature="e#25764#25771#0" expanded="true" />
                 <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="telepointer_srv.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="newchat.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/easyrtc/online_chat/newchat.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="252" column="0" lean-forward="true" selection-start-line="252" selection-start-column="0" selection-end-line="252" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="telepointer_srv.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="853" column="20" lean-forward="true" selection-start-line="853" selection-start-column="20" selection-end-line="853" selection-end-column="20" />
+            <state relative-caret-position="462">
+              <caret line="21" column="35" lean-forward="true" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -67,7 +78,7 @@
       <file leaf-file-name="easyrtc.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/easyrtc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19756">
+            <state relative-caret-position="839">
               <caret line="898" column="9" lean-forward="true" selection-start-line="898" selection-start-column="9" selection-end-line="898" selection-end-column="9" />
               <folding />
             </state>
@@ -86,10 +97,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onNodeAccessRequest</find>
-      <find>isNodeFloorAvailable</find>
-      <find>loginSuccess</find>
-      <find>cvs</find>
       <find>connect</find>
       <find>all_occupants_details</find>
       <find>addNewClientToAllOccupantsDetails</find>
@@ -116,6 +123,10 @@
       <find>connectControls</find>
       <find>Name</find>
       <find>Call</find>
+      <find>chat</find>
+      <find>chatbox</find>
+      <find>.chatbox</find>
+      <find>toggleChatBox</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -153,8 +164,9 @@
         <option value="$PROJECT_DIR$/static/js_p2irc_apis/jquerynew.js" />
         <option value="$PROJECT_DIR$/templates/login_drag.html" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html" />
         <option value="$PROJECT_DIR$/static/easyrtc/telepointer_srv.js" />
+        <option value="$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html" />
+        <option value="$PROJECT_DIR$/static/easyrtc/online_chat/newchat.js" />
       </list>
     </option>
   </component>
@@ -253,6 +265,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="easyrtc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Collaborative_Scientific_Workflow" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Collaborative_Scientific_Workflow" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="easyrtc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="online_chat" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -515,13 +549,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api_flask.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
@@ -795,14 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/easyrtc/easyrtc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19756">
-          <caret line="898" column="9" lean-forward="true" selection-start-line="898" selection-start-column="9" selection-end-line="898" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js_p2irc_apis/jquery-ui.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="410278">
@@ -833,22 +852,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
+    <entry file="file://$PROJECT_DIR$/static/easyrtc/easyrtc.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="459" column="0" lean-forward="true" selection-start-line="459" selection-start-column="0" selection-end-line="459" selection-end-column="0" />
-          <folding>
-            <element signature="e#23574#23581#0" expanded="true" />
-            <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="839">
+          <caret line="898" column="9" lean-forward="true" selection-start-line="898" selection-start-column="9" selection-end-line="898" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="853" column="20" lean-forward="true" selection-start-line="853" selection-start-column="20" selection-end-line="853" selection-end-column="20" />
+        <state relative-caret-position="462">
+          <caret line="21" column="35" lean-forward="true" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="1190" column="0" lean-forward="false" selection-start-line="1190" selection-start-column="0" selection-end-line="1190" selection-end-column="0" />
+          <folding>
+            <element signature="e#25764#25771#0" expanded="true" />
+            <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/easyrtc/online_chat/newchat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="252" column="0" lean-forward="true" selection-start-line="252" selection-start-column="0" selection-end-line="252" selection-end-column="0" />
           <folding />
         </state>
       </provider>

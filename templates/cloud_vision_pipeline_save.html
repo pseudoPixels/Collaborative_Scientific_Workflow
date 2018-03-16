@@ -95,6 +95,7 @@
         <!-- Specific feature files... Uncomment/Comment to remove/add specific features  -->
         <!-- <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/demo_audio_video.js') }}"></script> -->
         <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/telepointer_srv.js') }}"></script>
+        <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/online_chat/newchat.js') }}"></script>
         <!--
         <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/collaboration_controls.js') }}"></script>
         -->
@@ -490,6 +491,126 @@
                 background-color:pink;
                 padding:15px;
             }
+
+
+       .chatbox {
+	position: fixed;
+	position:expression("absolute");
+	width: 210px;
+	display:none;
+}
+
+.chatboxhead {
+	background-color: #f99d39;
+	padding:7px;
+	color: #ffffff;
+
+	border-right:1px solid #f99d39;
+	border-left:1px solid #f99d39;
+}
+
+.chatboxblink {
+	background-color: #176689;
+	border-right:1px solid #176689;
+	border-left:1px solid #176689;
+}
+
+.chatboxcontent {
+	font-family: arial,sans-serif;
+	font-size: 13px;
+	color: #333333;
+	height:200px;
+	width:211px;
+	overflow-y:auto;
+	overflow-x:auto;
+	padding:7px;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #eeeeee;
+	background-color: #ffffff;
+	line-height: 1.3em;
+}
+
+.chatboxinput {
+	padding: 5px;
+	background-color: #ffffff;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+}
+
+.chatboxtextarea {
+	width: 206px;
+	height:44px;
+	padding:3px 0pt 3px 3px;
+	border: 1px solid #eeeeee;
+	margin: 1px;
+	overflow:hidden;
+}
+
+.chatboxtextareaselected {
+	border: 2px solid #f99d39;
+	margin:0;
+}
+
+.chatboxmessage {
+	margin-left:1em;
+}
+
+.chatboxinfo {
+	margin-left:-1em;
+	color:#666666;
+
+}
+
+.chatboxmessagefrom {
+	margin-left:-1em;
+	font-weight: bold;
+}
+
+.chatboxmessagecontent {
+}
+
+.chatboxoptions {
+	float: right;
+}
+
+.chatboxoptions a {
+	text-decoration: none;
+	color: white;
+	font-weight:bold;
+	font-family:Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+}
+
+.chatboxtitle {
+	float: left;
+}
+
+@charset "utf-8";
+/*
+ * CSS Document
+ * Written by Ryan Yonzon
+ * http://ryan.rawswift.com/
+ */
+
+html, body {
+	margin:0px; /* FF hack: or we'll have double scrollbar showing on the browser */
+	overflow:hidden; /* hide browser's main scrollbar */
+
+}
+
+#main_container {
+	width:100%;
+	background-color:#ffffff; /* DO NOT REMOVE THIS; or you'll have issue w/ the scrollbar, when the mouse pointer is on a white space */
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height:100%;	/* this will make sure that the height will extend at the bottom */
+	position:absolute; /* container div must be absolute, for our fixed bar to work */
+}
+
+
+
+
         </style>
         <!--show-->
 
@@ -1048,6 +1169,44 @@ document.getElementById("defaultOpen").click();
 <p id="user_name" style="display:none;">{{first_name + " " +last_name}} </p>
 <p id="user_email" style="display:none;">{{email}} </p>
  <div id="telepointer_spawn_point"></div>
+
+
+
+
+
+
+
+
+<!-- FLOATING CHAT STARTS -->
+<div id="main_container">
+
+<a href="javascript:void(0)" onclick="javascript:chatWith('janedoe')">Chat With Jane Doe</a>
+<a href="javascript:void(0)" onclick="javascript:chatWith('babydoe')">Chat With Baby Doe</a>
+<a href="javascript:void(0)" onclick="javascript:chatWith('babydoe2')">Chat With Baby Doe2</a>
+<!-- YOUR BODY HERE -->
+
+</div>
+
+<script>
+
+</script>
+
+
+<!-- FLOATING CHAT ENDS  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
