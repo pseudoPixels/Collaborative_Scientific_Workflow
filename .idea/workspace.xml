@@ -33,10 +33,10 @@
       <file leaf-file-name="cloud_vision_pipeline_save.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="1411" column="23" lean-forward="true" selection-start-line="1411" selection-start-column="23" selection-end-line="1411" selection-end-column="23" />
+            <state relative-caret-position="177">
+              <caret line="1421" column="48" lean-forward="false" selection-start-line="1421" selection-start-column="39" selection-end-line="1421" selection-end-column="48" />
               <folding>
-                <element signature="e#25764#25771#0" expanded="true" />
+                <element signature="e#25756#25763#0" expanded="true" />
                 <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -48,8 +48,8 @@
       <file leaf-file-name="newchat.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/online_chat/newchat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="268" column="0" lean-forward="true" selection-start-line="268" selection-start-column="0" selection-end-line="268" selection-end-column="0" />
+            <state relative-caret-position="299">
+              <caret line="265" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="361" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -58,8 +58,8 @@
       <file leaf-file-name="telepointer_srv.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="534" column="0" lean-forward="true" selection-start-line="534" selection-start-column="0" selection-end-line="534" selection-end-column="0" />
+            <state relative-caret-position="579">
+              <caret line="2402" column="0" lean-forward="true" selection-start-line="2402" selection-start-column="0" selection-end-line="2402" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,16 +97,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>callerAudio</find>
-      <find>function notifyAll</find>
-      <find>addToChatRoomConversation</find>
-      <find>remoteAddClick</find>
-      <find>click(</find>
-      <find>change(</find>
-      <find>connect(</find>
-      <find>/p</find>
-      <find>id=&quot;videos&quot;</find>
-      <find>userLoggedInListener</find>
       <find>audio_perform</find>
       <find>acceptTheCall</find>
       <find>audio_per</find>
@@ -118,7 +108,6 @@
       <find>chatbox</find>
       <find>.chatbox</find>
       <find>toggleChatBox</find>
-      <find>checkChatBoxInputKey</find>
       <find>startChatSession</find>
       <find>chatHeartbeat</find>
       <find>getNameForAnEmail</find>
@@ -127,6 +116,17 @@
       <find>createChatBox</find>
       <find>chat_room_msg</find>
       <find>notifyAll</find>
+      <find>function notifyAll</find>
+      <find>getNameForAn</find>
+      <find>function no</find>
+      <find>function noti</find>
+      <find>addT</find>
+      <find>addTo</find>
+      <find>sendP2pTextMsg</find>
+      <find>chatWi</find>
+      <find>checkChatBoxInputKey</find>
+      <find>chatboxtextarea</find>
+      <find>.live</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,9 +164,9 @@
         <option value="$PROJECT_DIR$/static/js_p2irc_apis/jquerynew.js" />
         <option value="$PROJECT_DIR$/templates/login_drag.html" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_srv.js" />
-        <option value="$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html" />
         <option value="$PROJECT_DIR$/static/easyrtc/online_chat/newchat.js" />
+        <option value="$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html" />
+        <option value="$PROJECT_DIR$/static/easyrtc/telepointer_srv.js" />
       </list>
     </option>
   </component>
@@ -860,12 +860,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/easyrtc/online_chat/newchat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="265" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="361" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="1411" column="23" lean-forward="true" selection-start-line="1411" selection-start-column="23" selection-end-line="1411" selection-end-column="23" />
+        <state relative-caret-position="177">
+          <caret line="1421" column="48" lean-forward="false" selection-start-line="1421" selection-start-column="39" selection-end-line="1421" selection-end-column="48" />
           <folding>
-            <element signature="e#25764#25771#0" expanded="true" />
+            <element signature="e#25756#25763#0" expanded="true" />
             <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -873,18 +881,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/easyrtc/online_chat/newchat.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="268" column="0" lean-forward="true" selection-start-line="268" selection-start-column="0" selection-end-line="268" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/easyrtc/telepointer_srv.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="534" column="0" lean-forward="true" selection-start-line="534" selection-start-column="0" selection-end-line="534" selection-end-column="0" />
+        <state relative-caret-position="579">
+          <caret line="2402" column="0" lean-forward="true" selection-start-line="2402" selection-start-column="0" selection-end-line="2402" selection-end-column="0" />
           <folding />
         </state>
       </provider>

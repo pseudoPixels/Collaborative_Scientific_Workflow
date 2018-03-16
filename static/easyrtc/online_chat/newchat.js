@@ -256,6 +256,16 @@ function toggleChatBoxGrowth(chatboxtitle) {
 
 }
 
+
+
+function addToChat(fromID, fromName, msg){
+    $("#chatbox_" +fromID +" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+ fromName +':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+msg+'</span></div>');
+}
+
+
+
+
+
 function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 
 	if(event.keyCode == 13 && event.shiftKey == 0)  {
@@ -270,6 +280,11 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 				message = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;");
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+user_name+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+message+'</span></div>');
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
+
+
+
+                    sendP2pTextMsg(chatboxtitle, message);
+
 
 		}
 		chatHeartbeatTime = minChatHeartbeat;

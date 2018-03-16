@@ -95,8 +95,8 @@
         <!-- Specific feature files... Uncomment/Comment to remove/add specific features  -->
         <!-- <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/demo_audio_video.js') }}"></script> -->
         <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/telepointer_srv.js') }}"></script>
-        <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/online_chat/newchat.js') }}"></script>
-        <!--
+       <!-- <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/online_chat/newchat.js') }}"></script>
+
         <script type="text/javascript"  src="{{ url_for('static',filename='easyrtc/collaboration_controls.js') }}"></script>
         -->
 
@@ -1419,7 +1419,7 @@ $('.letuschat').on('click', function() {
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
                         </div>
                         <div class="details">
-                          <p><a onclick="javascript:chatWith('{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}', '{{dict_item['userName']}}')" href="javascript:void(0)">{{dict_item['userName']}}</a>
+                          <p><a class="userThumb" userEmail="{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}" userName="{{dict_item['userName']}}" href="javascript:void(0)">{{dict_item['userName']}}</a>
                               <!-- Initially the online status is offline for all the users -->
                               <span class="online_status" id="online_status_{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}"> (Offline)</span>
 
