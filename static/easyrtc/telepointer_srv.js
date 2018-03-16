@@ -2082,7 +2082,7 @@ function getRandomInRange(min, max){
 
 
 
-
+$("#chatbox_janedoe .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+'Test User'+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+'Test Message'+'</span></div>');
 
 
 });
