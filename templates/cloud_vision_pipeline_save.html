@@ -1419,7 +1419,7 @@ $('.letuschat').on('click', function() {
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
                         </div>
                         <div class="details">
-                          <p><a href="#">{{dict_item['userName']}}</a>
+                          <p><a onclick="javascript:chatWith('{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}', '{{dict_item['userName']}}')" href="javascript:void(0)">{{dict_item['userName']}}</a>
                               <!-- Initially the online status is offline for all the users -->
                               <span class="online_status" id="online_status_{{dict_item['userEmail']|replace('@', '_')|replace('.', '_')}}"> (Offline)</span>
 

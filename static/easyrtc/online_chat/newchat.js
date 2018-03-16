@@ -60,12 +60,12 @@ function restructureChatBoxes() {
 	}
 }
 
-function chatWith(chatuser) {
-	createChatBox(chatuser);
+function chatWith(chatuser, displayTitle) {
+	createChatBox(chatuser, false, displayTitle);
 	$("#chatbox_"+chatuser+" .chatboxtextarea").focus();
 }
 //createChatBox('golamMostaeen', false);
-function createChatBox(chatboxtitle,minimizeChatBox) {
+function createChatBox(chatboxtitle,minimizeChatBox, displayTitle='User Name') {
 	if ($("#chatbox_"+chatboxtitle).length > 0) {
 		if ($("#chatbox_"+chatboxtitle).css('display') == 'none') {
 			$("#chatbox_"+chatboxtitle).css('display','block');
@@ -77,7 +77,7 @@ function createChatBox(chatboxtitle,minimizeChatBox) {
 
 	$(" <div />" ).attr("id","chatbox_"+chatboxtitle)
 	.addClass("chatbox")
-	.html('<div class="chatboxhead"><div class="chatboxtitle">'+chatboxtitle+'</div><div class="chatboxoptions"><a style="font-size: 9px;" href="javascript:void(0)">Call  </a> <a href="javascript:void(0)" onclick="javascript:toggleChatBoxGrowth(\''+chatboxtitle+'\')">-</a> <a href="javascript:void(0)" onclick="javascript:closeChatBox(\''+chatboxtitle+'\')">X</a></div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" onkeydown="javascript:return checkChatBoxInputKey(event,this,\''+chatboxtitle+'\');"></textarea></div>')
+	.html('<div class="chatboxhead"><div class="chatboxtitle">'+displayTitle+'</div><div class="chatboxoptions"><a style="font-size: 9px;" href="javascript:void(0)">Call  </a> <a href="javascript:void(0)" onclick="javascript:toggleChatBoxGrowth(\''+chatboxtitle+'\')">-</a> <a href="javascript:void(0)" onclick="javascript:closeChatBox(\''+chatboxtitle+'\')">X</a></div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" onkeydown="javascript:return checkChatBoxInputKey(event,this,\''+chatboxtitle+'\');"></textarea></div>')
 	.appendTo($( "body" ));
 
 	$("#chatbox_"+chatboxtitle).css('bottom', '0px');
@@ -268,7 +268,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 		if (message != '') {
 
 				message = message.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;");
-				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+username+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+message+'</span></div>');
+				$("#chatbox_"+chatboxtitle+" .chatboxcontent").append('<div class="chatboxmessage"><span class="chatboxmessagefrom">'+user_name+':&nbsp;&nbsp;</span><span class="chatboxmessagecontent">'+message+'</span></div>');
 				$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
 
 		}
