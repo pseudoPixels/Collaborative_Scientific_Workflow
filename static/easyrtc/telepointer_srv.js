@@ -551,14 +551,16 @@ function notifyAll(messageType, message){
 
 function sendP2pTextMsg(toEmail, message){
     var telegram = {"fromID": convertEmailToID(user_email),"fromName":user_name ,"message":message};
-    easyrtcid.sendDataWS(getEasyRtcidFromEmail(toEmail), "P2P_MSG", telegram);
+    easyrtc.sendDataWS(getEasyRtcidFromEmail(toEmail), "P2P_MSG", telegram);
+    //alert("conv->"+getEasyRtcidFromEmail('gm_gmail_com'));
+    //alert("norm->"+getEasyRtcidFromEmail('gm@gmail.com'));
 }
 
 
 function onP2pMsgReceived(telegram){
-    chatWith(telegram.fromID, telegram.fromName);
-    addToChat(telegram.fromID, telegram.fromName, telegram.message);
-
+    chatWith($.trim(convertEmailToID(telegram.fromID) ), $.trim(telegram.fromName));
+    //alert("fromID->"+telegram.fromID+"<->fromName"+telegram.fromName+"<-");
+    addToChat($.trim(convertEmailToID(telegram.fromID) ), $.trim(telegram.fromName), telegram.message);
 }
 
 
@@ -583,6 +585,9 @@ function onMessageRecieved(who, msgType, content) {
             break;
         case "chat_room_msg":
             addToChatRoomConversation(content);
+            break;
+        case "P2P_MSG":
+            onP2pMsgReceived(content);
             break;
         case "floor_owner_changed":
             onFloorOwnerChanged(content);
@@ -1252,11 +1257,14 @@ function getNameForAnEasyRTCid(easyrtcID) {
 
 //get easyrtcid for an email
 function getEasyRtcidFromEmail(userEmail){
+    //console.log('User Email ==>' + userEmail);
     for(var i=0; i<all_occupants_details.length; i++){
-        if(all_occupants_details[i].email == userEmail)return all_occupants_details[i].easyrtcid;
+        //convert both to the same format for comparison
+        if($.trim(convertEmailToID( all_occupants_details[i].email )) == $.trim(convertEmailToID(userEmail)))return all_occupants_details[i].easyrtcid;
+        //console.log("->"+all_occupants_details[i].email + "<->" + all_occupants_details[i].easyrtcid);
     }
 
-    if(user_email == userEmail)return selfEasyrtcid;
+    if( $.trim(convertEmailToID(user_email)) == $.trim(convertEmailToID(userEmail)))return selfEasyrtcid;
 
     return 'NONE';
 }
@@ -2196,7 +2204,7 @@ function createChatBox(chatboxtitle,minimizeChatBox, displayTitle='User Name') {
 
 	$(" <div />" ).attr("id","chatbox_"+chatboxtitle)
 	.addClass("chatbox")
-	.html('<div class="chatboxhead"><div class="chatboxtitle">'+displayTitle+'</div><div class="chatboxoptions"><a style="font-size: 9px;" href="javascript:void(0)">Call  </a> <a href="javascript:void(0)" onclick="javascript:toggleChatBoxGrowth(\''+chatboxtitle+'\')">-</a> <a href="javascript:void(0)" onclick="javascript:closeChatBox(\''+chatboxtitle+'\')">X</a></div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" chatboxtitle="'+chatboxtitle+'"></textarea></div>')
+	.html('<div class="chatboxhead"><div class="chatboxtitle">'+displayTitle+'</div><div class="chatboxoptions"><a style="font-size: 9px;" href="javascript:void(0)">Call  </a> <a href="javascript:void(0)" class="minimizeChatBox" chatboxtitle="'+chatboxtitle+'">-</a> <a href="javascript:void(0)" class="closeChatBox" chatboxtitle="'+chatboxtitle+'">X</a></div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" chatboxtitle="'+chatboxtitle+'"></textarea></div>')
 	.appendTo($( "body" ));
 
 	$("#chatbox_"+chatboxtitle).css('bottom', '0px');
@@ -2218,6 +2226,7 @@ function createChatBox(chatboxtitle,minimizeChatBox, displayTitle='User Name') {
 
 	chatBoxes.push(chatboxtitle);
 
+/*
 	if (minimizeChatBox == 1) {
 		minimizedChatBoxes = new Array();
 
@@ -2236,7 +2245,7 @@ function createChatBox(chatboxtitle,minimizeChatBox, displayTitle='User Name') {
 			$('#chatbox_'+chatboxtitle+' .chatboxinput').css('display','none');
 		}
 	}
-
+*/
 	chatboxFocus[chatboxtitle] = false;
 
 	$("#chatbox_"+chatboxtitle+" .chatboxtextarea").blur(function(){
@@ -2402,7 +2411,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 
 
 
-                    sendP2pTextMsg(chatboxtitle, message);
+                sendP2pTextMsg(chatboxtitle, message);
 
 
 		}
@@ -2483,7 +2492,7 @@ function startChatSession(){
 
 
 function chatWith(chatuser, displayTitle) {
-	createChatBox(chatuser, false, displayTitle);
+	createChatBox(chatuser, 1, displayTitle);
 	$("#chatbox_"+chatuser+" .chatboxtextarea").focus();
 }
 
@@ -2495,9 +2504,16 @@ $(".userThumb").on('click', function(){
 
 $(".chatboxtextarea").live('keydown', function(event){
     checkChatBoxInputKey(event, this, $(this).attr('chatboxtitle'));
+    //alert($(this).attr('chatboxtitle'));
 });
 
+$(".closeChatBox").live('click', function(){
+    closeChatBox($(this).attr('chatboxtitle'));
+});
 
+$(".minimizeChatBox").live('click', function(){
+    toggleChatBoxGrowth($(this).attr('chatboxtitle'));
+});
 
 
 });
