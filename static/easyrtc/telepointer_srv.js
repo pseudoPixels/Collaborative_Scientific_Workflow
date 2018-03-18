@@ -2204,7 +2204,7 @@ function createChatBox(chatboxtitle,minimizeChatBox, displayTitle='User Name') {
 
 	$(" <div />" ).attr("id","chatbox_"+chatboxtitle)
 	.addClass("chatbox")
-	.html('<div class="chatboxhead"><div class="chatboxtitle">'+displayTitle+'</div><div class="chatboxoptions"><a style="font-size: 9px;" href="javascript:void(0)">Call  </a> <a href="javascript:void(0)" class="minimizeChatBox" chatboxtitle="'+chatboxtitle+'">-</a> <a href="javascript:void(0)" class="closeChatBox" chatboxtitle="'+chatboxtitle+'">X</a></div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" chatboxtitle="'+chatboxtitle+'"></textarea></div>')
+	.html('<div class="chatboxhead"><div class="chatboxtitle">'+displayTitle+'</div><div class="chatboxoptions"><a style="font-size: 9px;" href="javascript:void(0)" class="chatBoxCall" chatboxtitle="'+ chatboxtitle +'">Call  </a> <a href="javascript:void(0)" class="minimizeChatBox" chatboxtitle="'+chatboxtitle+'">-</a> <a href="javascript:void(0)" class="closeChatBox" chatboxtitle="'+chatboxtitle+'">X</a></div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" chatboxtitle="'+chatboxtitle+'"></textarea></div>')
 	.appendTo($( "body" ));
 
 	$("#chatbox_"+chatboxtitle).css('bottom', '0px');
@@ -2513,6 +2513,11 @@ $(".closeChatBox").live('click', function(){
 
 $(".minimizeChatBox").live('click', function(){
     toggleChatBoxGrowth($(this).attr('chatboxtitle'));
+});
+
+$(".chatBoxCall").live('click', function(){
+    //alert("Call->" + $(this).attr('chatboxtitle') + "<-");
+    performCall(getEasyRtcidFromEmail($.trim($(this).attr('chatboxtitle'))));
 });
 
 
