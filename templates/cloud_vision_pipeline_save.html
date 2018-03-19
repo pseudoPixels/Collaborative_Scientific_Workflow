@@ -176,44 +176,6 @@
 
 
 
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
 
 
 
@@ -335,20 +297,18 @@
 #draggable { width: 150px; height: 150px; padding: 0.5em; background-color:orange;}
 
 
-
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    display: block; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 500; /* Sit on top */
+    //padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    height: 450px; /* Full height */
+    //overflow: auto;/* Enable scroll if needed */
+    //background-color: rgb(0,0,0); /* Fallback color */
+    //background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
@@ -415,12 +375,6 @@
 }
 
 
-
-
-
-
-
-/* Style the tab */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
@@ -455,6 +409,9 @@
     border: 1px solid #ccc;
     border-top: none;
 }
+
+
+
 </style>
 
 
@@ -733,7 +690,7 @@ html, body {
       *********************************************************************************************************************************************************** -->
       <!--sidebar start-->
       <aside>
-          <div id="sidebar"  class="nav-collapse ">
+          <div id="sidebar" style="z-index:500;" class="nav-collapse">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
@@ -1183,10 +1140,11 @@ document.getElementById("defaultOpen").click();
 <!-- FLOATING CHAT STARTS -->
 <div id="main_container">
 
+    <!--
 <a href="javascript:void(0)" onclick="javascript:chatWith('janedoe')">Chat With Jane Doe</a>
 <a href="javascript:void(0)" onclick="javascript:chatWith('babydoe')">Chat With Baby Doe</a>
 <a href="javascript:void(0)" onclick="javascript:chatWith('babydoe2')">Chat With Baby Doe2</a>
-<!-- YOUR BODY HERE -->
+ YOUR BODY HERE -->
 
 </div>
 
@@ -1345,7 +1303,7 @@ $('.letuschat').on('click', function() {
       RIGHT SIDEBAR CONTENT
       *********************************************************************************************************************************************************** -->                  
                   
-                  <div class="col-lg-3 ds" style="width:20%;">
+                  <div class="col-lg-3 ds" style="width:20%;" id="availableUsers">
                    
 
                        <!-- USERS ONLINE SECTION -->
@@ -1415,9 +1373,10 @@ $('.letuschat').on('click', function() {
                     -->
 
 
+
                    <!-- Fetching the user list from the database -->
                   {% for dict_item in all_other_users %}
-                      <div class="desc">
+                      <div class="desc" >
                         <div class="thumb">
                           <img class="img-circle" src="static/assets/img_outputs/pp.png" width="35px" height="35px" align="">
                         </div>
@@ -1586,7 +1545,17 @@ $('.letuschat').on('click', function() {
 
   <script>
   $( function() {
-    $( "#draggable" ).draggable();
+    $( "#myModal" ).draggable({
+                opacity: 0.85, snap:true
+    });
+    $("#availableUsers").draggable({
+                opacity: 0.85, snap:true
+    });
+    $("#sidebar").draggable({
+                opacity: 0.85, snap:true
+    });
+    $( "#myModal" ).resizable({handles: "n, e, s, w, se, sw, nw, ne"});
+
   } );
   </script>
 

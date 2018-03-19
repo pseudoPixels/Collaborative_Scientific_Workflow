@@ -43,10 +43,11 @@
       <file leaf-file-name="cloud_vision_pipeline_save.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="1583" column="75" lean-forward="false" selection-start-line="1583" selection-start-column="75" selection-end-line="1583" selection-end-column="75" />
+            <state relative-caret-position="375">
+              <caret line="691" column="13" lean-forward="true" selection-start-line="691" selection-start-column="13" selection-end-line="691" selection-end-column="13" />
               <folding>
-                <element signature="e#25844#25851#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#aside#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#24943#24950#0" expanded="true" />
                 <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -125,14 +126,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>function no</find>
-      <find>function noti</find>
-      <find>addT</find>
-      <find>addTo</find>
-      <find>checkChatBoxInputKey</find>
-      <find>chatboxtextarea</find>
-      <find>onP2pMsgReceived</find>
-      <find>sendP2pTextMsg</find>
       <find>addNewClientToAllOccupantsDetails</find>
       <find>all_occupants_details</find>
       <find>getEasyRtcidFromEmail</find>
@@ -155,6 +148,14 @@
       <find>fa-bars</find>
       <find>sub-menu</find>
       <find>fa-chevron-down</find>
+      <find>tab</find>
+      <find>myModal</find>
+      <find>modal</find>
+      <find>.modal</find>
+      <find>nav-collapse</find>
+      <find>#sidebar</find>
+      <find>z-index</find>
+      <find>sidebar</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -1032,10 +1033,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/cloud_vision_pipeline_save.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="1583" column="75" lean-forward="false" selection-start-line="1583" selection-start-column="75" selection-end-line="1583" selection-end-column="75" />
+        <state relative-caret-position="375">
+          <caret line="691" column="13" lean-forward="true" selection-start-line="691" selection-start-column="13" selection-end-line="691" selection-end-column="13" />
           <folding>
-            <element signature="e#25844#25851#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#aside#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#24943#24950#0" expanded="true" />
             <element signature="n#style#0;n#canvas#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#section#0;n#section#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
