@@ -1400,23 +1400,23 @@ function loginFailure(errorCode, message) {
 //==========================================================================
 
 //source code in pre tag... toggle show/hide
-$(".code_show_hide").live('click', function () {
+$(".code_show_hide").on('click', function () {//here
     $(this).siblings('.pre_highlighted_code').children(".highlighted_code").toggle(1000);
 });
 
-$(".documentation_show_hide").live('click', function () {
+$(".documentation_show_hide").on('click', function () {//here
     $(this).siblings('.documentation').toggle(300);
 });
 
-$(".settings_show_hide").live('click', function () {
+$(".settings_show_hide").on('click', function () {//here
     $(this).siblings('.settings').toggle(300);
 });
 
-$(".btn_edit_code").live('click',function () {
+$(".btn_edit_code").on('click',function () {//here
     $(this).siblings('.edit_code').toggle(1000);
 });
 
-$(".setting_param").live('change',function () {
+$(".setting_param").on('change',function () {//here
     //alert("you changed my value");
     //var prev_code = $(this).parent().parent().siblings(".setting_section").children(".edit_code").find(".code_settings").val();
     //alert(prev_code);
@@ -2502,20 +2502,20 @@ $(".userThumb").on('click', function(){
     //alert($(this).attr('userEmail'));
 });
 
-$(".chatboxtextarea").live('keydown', function(event){
+$(document).on('keydown', ".chatboxtextarea" ,function(event){//here
     checkChatBoxInputKey(event, this, $(this).attr('chatboxtitle'));
     //alert($(this).attr('chatboxtitle'));
 });
 
-$(".closeChatBox").live('click', function(){
+$(document).on('click',".closeChatBox", function(){//here
     closeChatBox($(this).attr('chatboxtitle'));
 });
 
-$(".minimizeChatBox").live('click', function(){
+$(document).on('click', ".minimizeChatBox" ,function(){//here
     toggleChatBoxGrowth($(this).attr('chatboxtitle'));
 });
 
-$(".chatBoxCall").live('click', function(){
+$(document).on('click',".chatBoxCall" ,function(){//here
     //alert("Call->" + $(this).attr('chatboxtitle') + "<-");
     performCall(getEasyRtcidFromEmail($.trim($(this).attr('chatboxtitle'))));
 });
